@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agency AI — The E-Commerce Growth Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #F9F7F4;
+      --orange: #FF3D00;
+      --orange-dim: rgba(255, 61, 0, 0.12);
+      --lime: #C8FF00;
+      --gray-100: #F0EDE8;
+      --gray-200: #D8D4CE;
+      --gray-400: #8A8680;
+      --gray-600: #4A4845;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: var(--orange);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--orange);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s;
+      transform: translate(-50%, -50%);
+      opacity: 0.5;
+    }
+    a, button { cursor: none; }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(249, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      transition: padding 0.3s;
+    }
+
+    .logo {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--black);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.6; }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-cta {
+      background: var(--black);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover {
+      background: var(--orange) !important;
+      color: var(--white) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      position: fixed;
+      top: 73px;
+      left: 0; right: 0;
+      z-index: 99;
+      background: var(--black);
+      overflow: hidden;
+      height: 34px;
+      display: flex;
+      align-items: center;
+    }
+    .ticker-track {
+      display: flex;
+      animation: ticker-scroll 28s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0 40px;
+      opacity: 0.9;
+    }
+    .ticker-item span {
+      color: var(--lime);
+      margin-right: 6px;
+    }
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding: 180px 48px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(8,8,8,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8,8,8,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-blob {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(255,61,0,0.08) 0%, transparent 70%);
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      animation: blob-drift 8s ease-in-out infinite alternate;
+    }
+    @keyframes blob-drift {
+      from { transform: translateY(-55%) scale(1); }
+      to   { transform: translateY(-45%) scale(1.08); }
+    }
+
+    .hero-left { position: relative; z-index: 2; }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      border: 1px solid var(--orange);
+      padding: 5px 12px;
+      border-radius: 1px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fade-up 0.6s 0.2s forwards;
+    }
+    .hero-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .hero-headline {
+      font-family: var(--display);
+      font-size: clamp(72px, 8vw, 120px);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fade-up 0.7s 0.35s forwards;
+    }
+    .hero-headline em {
+      font-style: normal;
+      color: var(--orange);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--gray-600);
+      max-width: 440px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fade-up 0.7s 0.5s forwards;
+    }
+    .hero-sub strong { color: var(--black); font-weight: 600; }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      opacity: 0;
+      animation: fade-up 0.7s 0.65s forwards;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border: none;
+      border-radius: 2px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,61,0,0.35); }
+
+    .btn-secondary {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--black);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--black);
+      transition: gap 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { gap: 14px; color: var(--orange); border-color: var(--orange); }
+
+    .hero-right {
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fade-up 0.8s 0.7s forwards;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .stat-card {
+      background: var(--black);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .stat-card:hover::before { transform: scaleX(1); }
+    .stat-card:nth-child(2) { background: var(--orange); }
+    .stat-card:nth-child(3) { background: var(--gray-100); }
+    .stat-card:nth-child(4) { background: var(--black); }
+
+    .stat-number {
+      font-family: var(--display);
+      font-size: 52px;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .stat-card:nth-child(2) .stat-number { color: var(--white); }
+    .stat-card:nth-child(3) .stat-number { color: var(--black); }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .stat-card:nth-child(2) .stat-label { color: rgba(255,255,255,0.75); }
+    .stat-card:nth-child(3) .stat-label { color: var(--gray-400); }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { position: relative; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    .section-headline {
+      font-family: var(--display);
+      font-size: clamp(48px, 5vw, 80px);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+
+    /* ── PROBLEM ── */
+    .problem {
+      background: var(--black);
+      padding: 120px 0;
+      overflow: hidden;
+    }
+    .problem .section-label { color: var(--lime); }
+    .problem .section-label::before { background: var(--lime); }
+
+    .problem-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .problem-headline {
+      font-family: var(--display);
+      font-size: clamp(48px, 5vw, 72px);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .problem-headline em {
+      font-style: normal;
+      color: var(--lime);
+    }
+
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .problem-list li {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 2px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .problem-list li:hover {
+      border-color: rgba(200,255,0,0.25);
+      background: rgba(200,255,0,0.04);
+    }
+    .problem-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .problem-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .problem-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+    }
+
+    /* ── FEATURES ── */
+    .features { padding: 120px 0; background: var(--white); }
+
+    .features-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 72px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .feature-card {
+      padding: 48px 40px;
+      background: var(--gray-100);
+      border-radius: 2px;
+      transition: transform 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); background: #ECEAE5; }
+    .feature-card:hover::after { transform: scaleX(1); }
+    .feature-card.featured {
+      background: var(--black);
+      grid-column: span 1;
+    }
+    .feature-card.featured:hover { background: #1a1a1a; }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .feature-title {
+      font-family: var(--display);
+      font-size: 32px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .feature-card.featured .feature-title { color: var(--white); }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+    .feature-card.featured .feature-desc { color: rgba(255,255,255,0.55); }
+
+    .feature-tag {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      padding: 4px 10px;
+      border: 1px solid var(--orange-dim);
+      background: var(--orange-dim);
+      border-radius: 1px;
+    }
+    .feature-card.featured .feature-tag {
+      color: var(--lime);
+      border-color: rgba(200,255,0,0.2);
+      background: rgba(200,255,0,0.08);
+    }
+
+    /* ── MARQUEE DIVIDER ── */
+    .marquee-section {
+      background: var(--orange);
+      padding: 20px 0;
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      animation: marquee-left 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: var(--display);
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .marquee-item::after {
+      content: '×';
+      color: rgba(255,255,255,0.4);
+    }
+    @keyframes marquee-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { padding: 120px 0; background: var(--gray-100); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 72px;
+    }
+    .step {
+      padding: 40px 32px;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .step-number {
+      font-family: var(--display);
+      font-size: 80px;
+      line-height: 1;
+      color: var(--gray-100);
+      position: absolute;
+      top: 16px; right: 20px;
+      letter-spacing: 0;
+      transition: color 0.3s;
+    }
+    .step:hover .step-number { color: var(--orange-dim); }
+    .step-icon { font-size: 28px; margin-bottom: 20px; }
+    .step-title {
+      font-family: var(--display);
+      font-size: 26px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    .step-desc { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+
+    /* ── INTEGRATIONS ── */
+    .integrations { padding: 120px 0; background: var(--white); }
+    .integrations-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .int-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .int-card {
+      background: var(--black);
+      padding: 32px 28px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .int-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+    .int-logo {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+    }
+    .int-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .int-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--lime);
+      letter-spacing: 0.08em;
+    }
+    .int-card.coming { opacity: 0.4; }
+    .int-card.coming .int-status { color: var(--gray-400); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 120px 0; background: var(--black); }
+    .testimonials .section-headline { color: var(--white); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+    .testi-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 40px;
+      border-radius: 2px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .testi-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,61,0,0.3);
+    }
+    .testi-stars {
+      color: var(--orange);
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    .testi-quote {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 28px;
+      font-style: italic;
+      font-weight: 300;
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .testi-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display);
+      font-size: 18px;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .testi-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .testi-role {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ── PRICING ── */
+    .pricing { padding: 120px 0; background: var(--white); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 72px;
+    }
+
+    .plan {
+      background: var(--gray-100);
+      padding: 48px 40px;
+      border-radius: 2px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .plan:hover { transform: translateY(-4px); }
+    .plan.popular {
+      background: var(--black);
+      transform: scale(1.03);
+      z-index: 1;
+    }
+    .plan.popular:hover { transform: scale(1.03) translateY(-4px); }
+
+    .plan-badge {
+      position: absolute;
+      top: -1px; left: 50%; transform: translateX(-50%);
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 0 0 3px 3px;
+    }
+
+    .plan-name {
+      font-family: var(--display);
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .plan.popular .plan-name { color: var(--white); }
+
+    .plan-desc { font-size: 13px; color: var(--gray-400); margin-bottom: 28px; }
+    .plan.popular .plan-desc { color: rgba(255,255,255,0.5); }
+
+    .plan-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .plan-amount {
+      font-family: var(--display);
+      font-size: 64px;
+      line-height: 1;
+      color: var(--black);
+    }
+    .plan.popular .plan-amount { color: var(--white); }
+    .plan-currency { font-family: var(--display); font-size: 24px; color: var(--gray-400); }
+    .plan-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-bottom: 32px;
+    }
+    .plan.popular .plan-period { color: rgba(255,255,255,0.4); }
+
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .plan-features li {
+      font-size: 14px;
+      color: var(--gray-600);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .plan.popular .plan-features li { color: rgba(255,255,255,0.7); }
+    .plan-features li::before {
+      content: '✓';
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .btn-plan {
+      width: 100%;
+      text-align: center;
+      padding: 14px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--sans);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--black);
+      color: var(--black);
+      border-radius: 2px;
+      display: block;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-plan:hover { background: var(--black); color: var(--white); transform: translateY(-1px); }
+    .plan.popular .btn-plan {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--white);
+    }
+    .plan.popular .btn-plan:hover { background: #e03000; border-color: #e03000; }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      padding: 140px 48px;
+      background: var(--orange);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: 'GROW';
+      font-family: var(--display);
+      font-size: 340px;
+      line-height: 1;
+      color: rgba(255,255,255,0.07);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .cta-headline {
+      font-family: var(--display);
+      font-size: clamp(52px, 6vw, 96px);
+      line-height: 0.9;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-white {
+      background: var(--white);
+      color: var(--orange);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 40px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.25); }
+    .btn-outline-white {
+      border: 2px solid rgba(255,255,255,0.6);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 40px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      padding: 80px 48px 40px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-brand .logo-dot { animation: none; }
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-col-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+    }
+    .footer-copy span { color: var(--orange); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav { padding: 18px 28px; }
+      .hero { padding: 160px 28px 80px; grid-template-columns: 1fr; }
+      .hero-right { order: -1; }
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .problem-inner { grid-template-columns: 1fr; gap: 48px; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .integrations-inner { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+      .plan.popular { transform: scale(1); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .container { padding: 0 28px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .features-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .cta-actions { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="logo">
+      <div class="logo-dot"></div>
+      Agency AI
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#" class="nav-cta">Get Started Free</a></li>
+    </ul>
+  </nav>
+
+  <!-- Ticker tape -->
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item"><span>↑</span> $25M+ Shopify Sales Driven</span>
+      <span class="ticker-item"><span>✦</span> 20,000+ Active Users</span>
+      <span class="ticker-item"><span>↑</span> Meta Ads Automated</span>
+      <span class="ticker-item"><span>✦</span> Google Ads Optimized</span>
+      <span class="ticker-item"><span>↑</span> AI Design Studio</span>
+      <span class="ticker-item"><span>✦</span> Copy Generator Included</span>
+      <span class="ticker-item"><span>↑</span> Fortune 500 Optimization</span>
+      <span class="ticker-item"><span>✦</span> Launch in Minutes</span>
+      <span class="ticker-item"><span>↑</span> $25M+ Shopify Sales Driven</span>
+      <span class="ticker-item"><span>✦</span> 20,000+ Active Users</span>
+      <span class="ticker-item"><span>↑</span> Meta Ads Automated</span>
+      <span class="ticker-item"><span>✦</span> Google Ads Optimized</span>
+      <span class="ticker-item"><span>↑</span> AI Design Studio</span>
+      <span class="ticker-item"><span>✦</span> Copy Generator Included</span>
+      <span class="ticker-item"><span>↑</span> Fortune 500 Optimization</span>
+      <span class="ticker-item"><span>✦</span> Launch in Minutes</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-blob"></div>
+
+    <div class="hero-left">
+      <div class="hero-label">E-Commerce Growth Engine</div>
+      <h1 class="hero-headline">
+        Scale Your<br/>
+        <em>Ad Revenue</em><br/>
+        With AI
+      </h1>
+      <p class="hero-sub">
+        Agency AI automates your <strong>Meta & Google Ads</strong> with an AI design studio and copy generator — built around your brand. Launch faster, optimize automatically, track everything in one place.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">
+          Start Free Today
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#" class="btn-secondary">
+          Watch Demo
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-count="25" data-suffix="M+">0</div>
+          <div class="stat-label">In Shopify<br/>Sales Driven</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="20" data-suffix="K+">0</div>
+          <div class="stat-label">Active Store<br/>Owners</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="3" data-suffix="×">0</div>
+          <div class="stat-label">Average ROAS<br/>Improvement</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="500" data-suffix="+">0</div>
+          <div class="stat-label">Fortune 500<br/>Techniques</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="problem-inner">
+        <div class="reveal">
+          <div class="section-label">The Owner's Dilemma</div>
+          <h2 class="problem-headline">
+            Growing Takes<br/>
+            Time You<br/>
+            Don't <em>Have</em>
+          </h2>
+        </div>
+        <ul class="problem-list reveal reveal-delay-2">
+          <li>
+            <div class="problem-icon">⏱</div>
+            <div>
+              <div class="problem-title">Ad management eats your day</div>
+              <div class="problem-desc">Constantly tweaking bids, swapping creatives, and A/B testing burns hours that belong on product and customer experience.</div>
+            </div>
+          </li>
+          <li>
+            <div class="problem-icon">💸</div>
+            <div>
+              <div class="problem-title">Agencies cost a fortune</div>
+              <div class="problem-desc">$3K–$10K/month for an agency that runs the same playbook for everyone. You're subsidizing their overhead, not your growth.</div>
+            </div>
+          </li>
+          <li>
+            <div class="problem-icon">📉</div>
+            <div>
+              <div class="problem-title">Slow iteration kills momentum</div>
+              <div class="problem-desc">By the time you've briefed a designer and copywriter, your competitor has already tested 12 new ad variations.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features-header">
+        <div class="reveal">
+          <div class="section-label">What We Built</div>
+          <h2 class="section-headline">Everything You<br/>Need to <span style="color:var(--orange)">Scale</span></h2>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <p style="font-size:14px; color:var(--gray-400); max-width:260px; line-height:1.8; text-align:right;">
+            Six integrated tools that replace your entire paid media stack — at a fraction of the cost.
+          </p>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-title">Meta Ads<br/>Automation</div>
+          <p class="feature-desc">AI launches and optimizes your Facebook & Instagram campaigns around the clock. No manual bid management, ever.</p>
+          <span class="feature-tag">Auto-optimize</span>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">📈</div>
+          <div class="feature-title">Google Ads<br/>Engine</div>
+          <p class="feature-desc">Performance Max campaigns powered by your product catalog. Search, Shopping, Display — all automated and tracked.</p>
+          <span class="feature-tag">Full-funnel</span>
+        </div>
+
+        <div class="feature-card featured reveal reveal-delay-2">
+          <div class="feature-icon">✦</div>
+          <div class="feature-title">AI Design<br/>Studio</div>
+          <p class="feature-desc">Generate on-brand ad creatives in seconds. Feed it your brand kit and watch it produce scroll-stopping visuals.</p>
+          <span class="feature-tag">Brand-aware</span>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">✍️</div>
+          <div class="feature-title">Copy<br/>Generator</div>
+          <p class="feature-desc">Persuasive headlines, body copy, and CTAs generated from your product data — tested and refined automatically.</p>
+          <span class="feature-tag">A/B tested</span>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon">📊</div>
+          <div class="feature-title">Unified<br/>Analytics</div>
+          <p class="feature-desc">Every channel, every metric — one dashboard. See true ROAS across Meta and Google without spreadsheet gymnastics.</p>
+          <span class="feature-tag">Real-time</span>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">Instant<br/>Launch</div>
+          <p class="feature-desc">Connect your Shopify store in 60 seconds. Agency AI pulls your products, builds your first campaign, and goes live.</p>
+          <span class="feature-tag">60-second setup</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee divider -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Launch Faster</span>
+      <span class="marquee-item">Grow Smarter</span>
+      <span class="marquee-item">Scale Without Limits</span>
+      <span class="marquee-item">AI-Powered Ads</span>
+      <span class="marquee-item">More Revenue</span>
+      <span class="marquee-item">Less Work</span>
+      <span class="marquee-item">Launch Faster</span>
+      <span class="marquee-item">Grow Smarter</span>
+      <span class="marquee-item">Scale Without Limits</span>
+      <span class="marquee-item">AI-Powered Ads</span>
+      <span class="marquee-item">More Revenue</span>
+      <span class="marquee-item">Less Work</span>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Simple by Design</div>
+        <h2 class="section-headline">Up & Running<br/>in <span style="color:var(--orange)">4 Steps</span></h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-number">01</div>
+          <div class="step-icon">🏪</div>
+          <div class="step-title">Connect Shopify</div>
+          <p class="step-desc">One-click integration pulls your products, brand assets, and customer data — nothing to configure manually.</p>
+        </div>
+        <div class="step reveal reveal-delay-1">
+          <div class="step-number">02</div>
+          <div class="step-icon">🎨</div>
+          <div class="step-title">Set Your Brand</div>
+          <p class="step-desc">Upload your logo, choose your palette, write your brand voice. The AI learns your style and never deviates.</p>
+        </div>
+        <div class="step reveal reveal-delay-2">
+          <div class="step-number">03</div>
+          <div class="step-icon">🚀</div>
+          <div class="step-title">Launch Campaigns</div>
+          <p class="step-desc">AI generates creatives and copy, selects audiences, sets budgets — and launches your first ads in minutes.</p>
+        </div>
+        <div class="step reveal reveal-delay-3">
+          <div class="step-number">04</div>
+          <div class="step-icon">📈</div>
+          <div class="step-title">Watch It Grow</div>
+          <p class="step-desc">The engine optimizes 24/7. Winning ads get more budget. Losers get paused. Your ROAS compounds over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrations -->
+  <section class="integrations">
+    <div class="container">
+      <div class="integrations-inner">
+        <div class="reveal">
+          <div class="section-label">Integrations</div>
+          <h2 class="section-headline">Plugs Into<br/>Your <span style="color:var(--orange)">Stack</span></h2>
+          <p style="font-size:15px; color:var(--gray-600); margin-top:20px; max-width:380px; line-height:1.8;">
+            Built for the e-commerce ecosystem. Connect where you sell and advertise — everything syncs automatically.
+          </p>
+          <a href="#" class="btn-secondary" style="margin-top:36px; width:fit-content;">
+            See All Integrations
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="int-cards reveal reveal-delay-2">
+          <div class="int-card">
+            <div class="int-logo" style="background:rgba(24,119,242,0.15); font-size:36px;">𝑓</div>
+            <div class="int-name">Meta Ads</div>
+            <div class="int-status">● Live</div>
+          </div>
+          <div class="int-card">
+            <div class="int-logo" style="background:rgba(66,133,244,0.15);">
+              <svg width="32" height="32" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            </div>
+            <div class="int-name">Google Ads</div>
+            <div class="int-status">● Live</div>
+          </div>
+          <div class="int-card">
+            <div class="int-logo" style="background:rgba(149,191,71,0.15); font-size:32px;">🛍</div>
+            <div class="int-name">Shopify</div>
+            <div class="int-status">● Live</div>
+          </div>
+          <div class="int-card coming">
+            <div class="int-logo" style="background:rgba(255,255,255,0.05); font-size:28px;">📧</div>
+            <div class="int-name">Klaviyo</div>
+            <div class="int-status">— Coming Soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label" style="color:var(--lime); --before-bg:var(--lime);">
+          <span style="display:flex;align-items:center;gap:10px;">
+            <span style="width:24px;height:1px;background:var(--lime);display:inline-block;"></span>
+            Real Results
+          </span>
+        </div>
+        <h2 class="section-headline" style="color:var(--white);">Stores That<br/><span style="color:var(--orange)">Scaled</span> With Us</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"We went from $8K/mo to $47K/mo in ad revenue in 90 days. The AI figured out our best audience faster than any human could."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">S</div>
+            <div>
+              <div class="testi-name">Sarah Chen</div>
+              <div class="testi-role">Founder · Luminary Skincare</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal reveal-delay-1">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"I was spending $4K/month on an agency getting mediocre results. Agency AI costs a tenth of that and outperforms them consistently."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">M</div>
+            <div>
+              <div class="testi-name">Marcus Williams</div>
+              <div class="testi-role">CEO · Forge Athletics</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal reveal-delay-2">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"The AI design studio alone is worth it. Professional ad creatives in seconds, not weeks. My ROAS went from 1.8× to 4.2× in six weeks."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">J</div>
+            <div>
+              <div class="testi-name">Jamie Rodriguez</div>
+              <div class="testi-role">Owner · Casa Verde Home</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="reveal" style="text-align:center; margin-bottom:0;">
+        <div class="section-label" style="justify-content:center;">Simple Pricing</div>
+        <h2 class="section-headline">No Surprises.<br/>Just <span style="color:var(--orange)">Results.</span></h2>
+        <p style="font-size:15px; color:var(--gray-400); margin-top:16px;">All plans include a 14-day free trial. No credit card required.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="plan reveal">
+          <div class="plan-name">Starter</div>
+          <div class="plan-desc">For stores just getting started with paid ads</div>
+          <div class="plan-price">
+            <span class="plan-currency">$</span>
+            <span class="plan-amount">49</span>
+          </div>
+          <div class="plan-period">/ month · billed monthly</div>
+          <ul class="plan-features">
+            <li>1 Shopify store</li>
+            <li>Meta Ads automation</li>
+            <li>AI copy generator</li>
+            <li>Basic analytics</li>
+            <li>Email support</li>
+          </ul>
+          <a href="#" class="btn-plan">Start Free Trial</a>
+        </div>
+
+        <div class="plan popular reveal reveal-delay-1">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-name" style="color:var(--white);">Growth</div>
+          <div class="plan-desc" style="color:rgba(255,255,255,0.5);">For scaling stores that need the full toolkit</div>
+          <div class="plan-price">
+            <span class="plan-currency" style="color:rgba(255,255,255,0.4);">$</span>
+            <span class="plan-amount" style="color:var(--white);">149</span>
+          </div>
+          <div class="plan-period" style="color:rgba(255,255,255,0.4);">/ month · billed monthly</div>
+          <ul class="plan-features">
+            <li>3 Shopify stores</li>
+            <li>Meta + Google Ads automation</li>
+            <li>AI design studio</li>
+            <li>AI copy generator</li>
+            <li>Advanced analytics & ROAS tracking</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#" class="btn-plan">Start Free Trial</a>
+        </div>
+
+        <div class="plan reveal reveal-delay-2">
+          <div class="plan-name">Agency</div>
+          <div class="plan-desc">For agencies managing multiple client stores</div>
+          <div class="plan-price">
+            <span class="plan-currency">$</span>
+            <span class="plan-amount">399</span>
+          </div>
+          <div class="plan-period">/ month · billed monthly</div>
+          <ul class="plan-features">
+            <li>Unlimited stores</li>
+            <li>Meta + Google Ads automation</li>
+            <li>AI design studio (unlimited)</li>
+            <li>White-label reporting</li>
+            <li>API access</li>
+            <li>Dedicated account manager</li>
+          </ul>
+          <a href="#" class="btn-plan">Start Free Trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="cta-headline">Ready to<br/>Outgrow<br/>The Competition?</h2>
+    <p class="cta-sub">Join 20,000+ Shopify store owners who automated their growth with Agency AI.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-white">Start Free — No Card Needed</a>
+      <a href="#" class="btn-outline-white">Schedule a Demo</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <div class="logo-dot"></div>
+          Agency AI
+        </div>
+        <p class="footer-tagline">The most affordable e-commerce growth engine on the market. Launch, optimize, and scale — all on autopilot.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="#">Features</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Integrations</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Agency AI, Inc. Built with <span>♥</span> for Shopify merchants.</div>
+      <div class="footer-copy">Powered by the same playbook as <span>Fortune 500</span> brands.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+        ring.style.transform = 'translate(-50%, -50%) scale(1.4)';
+        ring.style.opacity = '0.2';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        ring.style.transform = 'translate(-50%, -50%) scale(1)';
+        ring.style.opacity = '0.5';
+      });
+    });
+
+    // Counter animation
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const val = Math.floor(eased * target);
+        el.textContent = (target >= 100 ? val : val === target ? val : val) + (progress >= 1 ? suffix : '');
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Scroll reveal + counter trigger
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Counter trigger
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    // Nav shrink on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.padding = '14px 48px';
+        nav.style.borderBottomColor = 'var(--gray-200)';
+      } else {
+        nav.style.padding = '20px 48px';
+      }
+    });
+  </script>
+</body>
+</html>
