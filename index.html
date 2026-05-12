@@ -13,9 +13,13 @@
     :root {
       --black: #080808;
       --white: #F9F7F4;
-      --orange: #FF3D00;
-      --orange-dim: rgba(255, 61, 0, 0.12);
-      --lime: #C8FF00;
+      --accent-blue: #1D8CFF;
+      --accent-blue-dim: rgba(29, 140, 255, 0.14);
+      --accent-green: #34D399;
+      --accent-green-dim: rgba(52, 211, 153, 0.12);
+      --orange: var(--accent-blue);
+      --orange-dim: var(--accent-blue-dim);
+      --lime: var(--accent-green);
       --gray-100: #F0EDE8;
       --gray-200: #D8D4CE;
       --gray-400: #8A8680;
@@ -195,7 +199,7 @@
       width: 600px;
       height: 600px;
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(255,61,0,0.08) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(29,140,255,0.12) 0%, transparent 70%);
       right: -100px;
       top: 50%;
       transform: translateY(-50%);
@@ -299,7 +303,7 @@
       transition: transform 0.3s;
     }
     .btn-primary:hover::after { transform: translateX(0); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,61,0,0.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(29,140,255,0.3); }
 
     .btn-secondary {
       font-family: var(--sans);
@@ -407,6 +411,70 @@
       text-transform: uppercase;
     }
 
+    /* ── VIDEO ── */
+    .video-section {
+      padding: 120px 0 110px;
+      background:
+        radial-gradient(circle at top left, rgba(29,140,255,0.12), transparent 34%),
+        linear-gradient(180deg, #edf7ff 0%, var(--white) 45%);
+    }
+
+    .video-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 44px;
+      align-items: end;
+    }
+
+    .video-copy {
+      max-width: 440px;
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-top: 20px;
+    }
+
+    .video-shell {
+      background: var(--black);
+      padding: 18px;
+      border-radius: 24px;
+      box-shadow: 0 28px 80px rgba(8, 8, 8, 0.16);
+      border: 1px solid rgba(29,140,255,0.16);
+    }
+
+    .video-frame-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .video-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 0 5px rgba(52,211,153,0.14);
+    }
+
+    .video-shell video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      background: #020202;
+      object-fit: cover;
+    }
+
     /* ── PROBLEM ── */
     .problem {
       background: var(--black);
@@ -456,9 +524,19 @@
       background: rgba(200,255,0,0.04);
     }
     .problem-icon {
-      font-size: 22px;
+      width: 28px;
+      height: 28px;
+      color: var(--lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
       margin-top: 2px;
+    }
+    .problem-icon svg, .feature-icon svg, .step-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
     .problem-title {
       font-size: 15px;
@@ -521,8 +599,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      color: var(--accent-blue);
     }
+    .feature-card.featured .feature-icon { color: var(--lime); }
 
     .feature-title {
       font-family: var(--display);
@@ -618,7 +697,12 @@
       transition: color 0.3s;
     }
     .step:hover .step-number { color: var(--orange-dim); }
-    .step-icon { font-size: 28px; margin-bottom: 20px; }
+    .step-icon {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 20px;
+      color: var(--accent-blue);
+    }
     .step-title {
       font-family: var(--display);
       font-size: 26px;
@@ -628,6 +712,162 @@
       color: var(--black);
     }
     .step-desc { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+
+    /* ── AI CALL ── */
+    .ai-call {
+      padding: 120px 0;
+      background:
+        radial-gradient(circle at top right, rgba(52,211,153,0.1), transparent 30%),
+        linear-gradient(180deg, #f4fbf9 0%, var(--white) 55%);
+    }
+
+    .call-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .call-copy {
+      margin-top: 20px;
+      max-width: 440px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--gray-600);
+    }
+
+    .call-points {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .call-points li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-family: var(--mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+    }
+
+    .call-points li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 0 6px rgba(52,211,153,0.12);
+      flex-shrink: 0;
+    }
+
+    .call-card {
+      padding: 28px;
+      border-radius: 28px;
+      background: #07131f;
+      color: var(--white);
+      box-shadow: 0 32px 80px rgba(7, 19, 31, 0.24);
+    }
+
+    .call-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .call-kicker {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.48);
+      margin-bottom: 8px;
+    }
+
+    .call-title {
+      font-family: var(--display);
+      font-size: 34px;
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .call-badge {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(52,211,153,0.14);
+      border: 1px solid rgba(52,211,153,0.24);
+      color: var(--accent-green);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .call-thread {
+      display: grid;
+      gap: 14px;
+    }
+
+    .call-bubble {
+      max-width: 88%;
+      padding: 16px 18px;
+      border-radius: 18px;
+    }
+
+    .call-bubble-label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    .call-bubble p {
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .call-bubble-founder {
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.92);
+    }
+
+    .call-bubble-agent {
+      margin-left: auto;
+      background: linear-gradient(135deg, rgba(29,140,255,0.22), rgba(52,211,153,0.22));
+      border: 1px solid rgba(29,140,255,0.24);
+      color: var(--white);
+    }
+
+    .call-summary {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.76);
+    }
+
+    .call-summary span {
+      display: block;
+      margin-bottom: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-green);
+    }
 
     /* ── INTEGRATIONS ── */
     .integrations { padding: 120px 0; background: var(--white); }
@@ -696,7 +936,7 @@
     }
     .testi-card:hover {
       background: rgba(255,255,255,0.07);
-      border-color: rgba(255,61,0,0.3);
+      border-color: rgba(29,140,255,0.28);
     }
     .testi-stars {
       color: var(--orange);
@@ -853,7 +1093,48 @@
       border-color: var(--orange);
       color: var(--white);
     }
-    .plan.popular .btn-plan:hover { background: #e03000; border-color: #e03000; }
+    .plan.popular .btn-plan:hover { background: #1569c0; border-color: #1569c0; }
+
+    /* ── FAQ ── */
+    .faq {
+      padding: 120px 0;
+      background: #eff7f6;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+
+    .faq-item {
+      padding: 36px 34px;
+      background: var(--white);
+      border-top: 3px solid transparent;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-green);
+      box-shadow: 0 16px 40px rgba(8, 8, 8, 0.06);
+    }
+
+    .faq-item h3 {
+      font-family: var(--display);
+      font-size: 30px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 14px;
+    }
+
+    .faq-item p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--gray-600);
+    }
 
     /* ── CTA SECTION ── */
     .cta-section {
@@ -1010,12 +1291,15 @@
       nav { padding: 18px 28px; }
       .hero { padding: 160px 28px 80px; grid-template-columns: 1fr; }
       .hero-right { order: -1; }
+      .video-layout { grid-template-columns: 1fr; }
+      .call-layout { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(4, 1fr); }
       .problem-inner { grid-template-columns: 1fr; gap: 48px; }
       .features-grid { grid-template-columns: 1fr 1fr; }
       .steps { grid-template-columns: 1fr 1fr; }
       .integrations-inner { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
       .plan.popular { transform: scale(1); }
       .footer-top { grid-template-columns: 1fr 1fr; }
@@ -1096,7 +1380,7 @@
           Start Free Today
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#" class="btn-secondary">
+        <a href="#video" class="btn-secondary">
           Watch Demo
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 5.5l4 2.5-4 2.5V5.5z" fill="currentColor"/></svg>
         </a>
@@ -1125,6 +1409,28 @@
     </div>
   </section>
 
+  <!-- Video -->
+  <section class="video-section" id="video">
+    <div class="container video-layout">
+      <div class="reveal">
+        <div class="section-label">Product Walkthrough</div>
+        <h2 class="section-headline">Watch The<br/><span style="color:var(--accent-blue)">Growth Engine</span><br/>In Motion</h2>
+        <p class="video-copy">
+          See how Agency AI turns founder requests into campaign actions, creative direction, and approval-ready recommendations without the usual agency lag.
+        </p>
+      </div>
+      <div class="video-shell reveal reveal-delay-1">
+        <div class="video-frame-label">
+          <span class="video-status-dot"></span>
+          Live product demo
+        </div>
+        <video controls playsinline preload="metadata">
+          <source src="https://res.cloudinary.com/dn71ngylo/video/upload/v1759252335/Agency_Ai_video_1_xwubxm.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
   <!-- Problem -->
   <section class="problem" id="problem">
     <div class="container">
@@ -1139,21 +1445,36 @@
         </div>
         <ul class="problem-list reveal reveal-delay-2">
           <li>
-            <div class="problem-icon">⏱</div>
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 9v4l2.6 1.8M9 3h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <div>
               <div class="problem-title">Ad management eats your day</div>
               <div class="problem-desc">Constantly tweaking bids, swapping creatives, and A/B testing burns hours that belong on product and customer experience.</div>
             </div>
           </li>
           <li>
-            <div class="problem-icon">💸</div>
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M12 7.2v9.6M14.8 9.5c0-1.2-1-2-2.8-2-1.8 0-2.8.8-2.8 2 0 1 .7 1.7 2.5 2 2 .3 3.1 1 3.1 2.4 0 1.3-1.1 2.1-2.8 2.1-1.8 0-3-.8-3-2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <div>
               <div class="problem-title">Agencies cost a fortune</div>
               <div class="problem-desc">$3K–$10K/month for an agency that runs the same playbook for everyone. You're subsidizing their overhead, not your growth.</div>
             </div>
           </li>
           <li>
-            <div class="problem-icon">📉</div>
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6v12h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M7.5 9.5l3.2 3.2 2.8-2.8 3 3 1.8-1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <div>
               <div class="problem-title">Slow iteration kills momentum</div>
               <div class="problem-desc">By the time you've briefed a designer and copywriter, your competitor has already tested 12 new ad variations.</div>
@@ -1181,42 +1502,71 @@
 
       <div class="features-grid">
         <div class="feature-card reveal">
-          <div class="feature-icon">🎯</div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
           <div class="feature-title">Meta Ads<br/>Automation</div>
           <p class="feature-desc">AI launches and optimizes your Facebook & Instagram campaigns around the clock. No manual bid management, ever.</p>
           <span class="feature-tag">Auto-optimize</span>
         </div>
 
         <div class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon">📈</div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 18h16M7 15V9M12 15V6M17 15v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
           <div class="feature-title">Google Ads<br/>Engine</div>
           <p class="feature-desc">Performance Max campaigns powered by your product catalog. Search, Shopping, Display — all automated and tracked.</p>
           <span class="feature-tag">Full-funnel</span>
         </div>
 
         <div class="feature-card featured reveal reveal-delay-2">
-          <div class="feature-icon">✦</div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9-1.9 5.1-1.9-5.1-5.1-1.9 5.1-1.9L12 3.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="feature-title">AI Design<br/>Studio</div>
           <p class="feature-desc">Generate on-brand ad creatives in seconds. Feed it your brand kit and watch it produce scroll-stopping visuals.</p>
           <span class="feature-tag">Brand-aware</span>
         </div>
 
         <div class="feature-card reveal reveal-delay-1">
-          <div class="feature-icon">✍️</div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 17.5l1.5-4.7L15.8 4.5l3.7 3.7-8.3 8.3L6 17.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M13.7 6.5l3.7 3.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
           <div class="feature-title">Copy<br/>Generator</div>
           <p class="feature-desc">Persuasive headlines, body copy, and CTAs generated from your product data — tested and refined automatically.</p>
           <span class="feature-tag">A/B tested</span>
         </div>
 
         <div class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon">📊</div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="5" y="10" width="3" height="8" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
+              <rect x="10.5" y="6" width="3" height="12" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
+              <rect x="16" y="8" width="3" height="10" rx="1.2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </div>
           <div class="feature-title">Unified<br/>Analytics</div>
           <p class="feature-desc">Every channel, every metric — one dashboard. See true ROAS across Meta and Google without spreadsheet gymnastics.</p>
           <span class="feature-tag">Real-time</span>
         </div>
 
         <div class="feature-card reveal reveal-delay-3">
-          <div class="feature-icon">⚡</div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M13 3L6.5 13h4.1L10 21l7.5-11h-4.2L13 3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="feature-title">Instant<br/>Launch</div>
           <p class="feature-desc">Connect your Shopify store in 60 seconds. Agency AI pulls your products, builds your first campaign, and goes live.</p>
           <span class="feature-tag">60-second setup</span>
@@ -1253,27 +1603,93 @@
       <div class="steps">
         <div class="step reveal">
           <div class="step-number">01</div>
-          <div class="step-icon">🏪</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 9.5h14V19H5V9.5zM4 9.5l1.3-4h13.4l1.3 4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M9 19v-4h6v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
           <div class="step-title">Connect Shopify</div>
           <p class="step-desc">One-click integration pulls your products, brand assets, and customer data — nothing to configure manually.</p>
         </div>
         <div class="step reveal reveal-delay-1">
           <div class="step-number">02</div>
-          <div class="step-icon">🎨</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4.5c-4.7 0-8.5 3.2-8.5 7.3 0 3.6 3.1 6.4 7 6.4h1.3c1.1 0 1.9.8 1.9 1.9 0 .8.7 1.4 1.5 1.4 3 0 5.3-3 5.3-7 0-5.4-3.7-10-8.5-10z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <circle cx="8" cy="11" r="1" fill="currentColor"/>
+              <circle cx="12" cy="9" r="1" fill="currentColor"/>
+              <circle cx="15.5" cy="12" r="1" fill="currentColor"/>
+            </svg>
+          </div>
           <div class="step-title">Set Your Brand</div>
           <p class="step-desc">Upload your logo, choose your palette, write your brand voice. The AI learns your style and never deviates.</p>
         </div>
         <div class="step reveal reveal-delay-2">
           <div class="step-number">03</div>
-          <div class="step-icon">🚀</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M13.5 5.5c2.7.2 4.8 2.3 5 5-.9 2.2-2.7 4-4.9 4.9-2.7-.2-4.8-2.3-5-5 .9-2.2 2.7-4 4.9-4.9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M10 14l-2.8 2.8M14 10l2.8-2.8M8 16l-1 3 3-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="step-title">Launch Campaigns</div>
           <p class="step-desc">AI generates creatives and copy, selects audiences, sets budgets — and launches your first ads in minutes.</p>
         </div>
         <div class="step reveal reveal-delay-3">
           <div class="step-number">04</div>
-          <div class="step-icon">📈</div>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4.5 18.5H19.5M7 14.5l3-3 2.6 2.6 4.4-5.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="step-title">Watch It Grow</div>
           <p class="step-desc">The engine optimizes 24/7. Winning ads get more budget. Losers get paused. Your ROAS compounds over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Call -->
+  <section class="ai-call" id="ai-call">
+    <div class="container call-layout">
+      <div class="reveal">
+        <div class="section-label">AI Operator</div>
+        <h2 class="section-headline">Talk To Your<br/><span style="color:var(--accent-blue)">Growth Agent</span></h2>
+        <p class="call-copy">
+          Instead of waiting on a weekly agency recap, you can ask for the move you want, review the recommendation, and approve it when it is ready.
+        </p>
+        <ul class="call-points">
+          <li>Founder-friendly approvals</li>
+          <li>Campaign actions with context</li>
+          <li>Meta + Google guidance in one place</li>
+        </ul>
+      </div>
+      <div class="call-card reveal reveal-delay-1">
+        <div class="call-header">
+          <div>
+            <div class="call-kicker">Live Strategy Call</div>
+            <div class="call-title">AI agent</div>
+          </div>
+          <div class="call-badge">Connected</div>
+        </div>
+        <div class="call-thread">
+          <div class="call-bubble call-bubble-founder">
+            <span class="call-bubble-label">Founder</span>
+            <p>We need to scale Meta without adding agency overhead. What should move first?</p>
+          </div>
+          <div class="call-bubble call-bubble-agent">
+            <span class="call-bubble-label">AI agent</span>
+            <p>I would launch three new creative angles, shift budget to the top ad set, and keep every change queued for your approval.</p>
+          </div>
+          <div class="call-bubble call-bubble-founder">
+            <span class="call-bubble-label">Founder</span>
+            <p>Queue it up and show me the approvals before anything goes live.</p>
+          </div>
+        </div>
+        <div class="call-summary">
+          <span>Call summary</span>
+          3 creative tests prepared, 1 budget reallocation suggested, and a fresh approval queue ready for review.
         </div>
       </div>
     </div>
@@ -1337,34 +1753,34 @@
       <div class="testi-grid">
         <div class="testi-card reveal">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote">"We went from $8K/mo to $47K/mo in ad revenue in 90 days. The AI figured out our best audience faster than any human could."</p>
+          <p class="testi-quote">"Agency AI has outperformed both our internal ad efforts and every agency we've ever worked with."</p>
           <div class="testi-author">
-            <div class="testi-avatar">S</div>
+            <div class="testi-avatar">L</div>
             <div>
-              <div class="testi-name">Sarah Chen</div>
-              <div class="testi-role">Founder · Luminary Skincare</div>
+              <div class="testi-name">Lola Hemp</div>
+              <div class="testi-role">Customer · lolahemp.com</div>
             </div>
           </div>
         </div>
         <div class="testi-card reveal reveal-delay-1">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote">"I was spending $4K/month on an agency getting mediocre results. Agency AI costs a tenth of that and outperforms them consistently."</p>
+          <p class="testi-quote">"Since launching with Agency AI we've seen an almost 200% increase in ROI."</p>
           <div class="testi-author">
-            <div class="testi-avatar">M</div>
+            <div class="testi-avatar">V</div>
             <div>
-              <div class="testi-name">Marcus Williams</div>
-              <div class="testi-role">CEO · Forge Athletics</div>
+              <div class="testi-name">Vapor95</div>
+              <div class="testi-role">Customer · vapor95.com</div>
             </div>
           </div>
         </div>
         <div class="testi-card reveal reveal-delay-2">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote">"The AI design studio alone is worth it. Professional ad creatives in seconds, not weeks. My ROAS went from 1.8× to 4.2× in six weeks."</p>
+          <p class="testi-quote">"Great marketing app, improved our Meta ROAS and saves our marketing team a ton time."</p>
           <div class="testi-author">
-            <div class="testi-avatar">J</div>
+            <div class="testi-avatar">E</div>
             <div>
-              <div class="testi-name">Jamie Rodriguez</div>
-              <div class="testi-role">Owner · Casa Verde Home</div>
+              <div class="testi-name">Epic Hoodie</div>
+              <div class="testi-role">Customer · epichoodie.com</div>
             </div>
           </div>
         </div>
@@ -1437,6 +1853,34 @@
           </ul>
           <a href="#" class="btn-plan">Start Free Trial</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="reveal" style="max-width:720px;">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-headline">Questions Before<br/><span style="color:var(--accent-blue)">You Launch</span></h2>
+      </div>
+      <div class="faq-grid">
+        <article class="faq-item reveal">
+          <h3>Does Agency AI replace my agency?</h3>
+          <p>Agency AI replaces the repetitive execution layer and surfaces approval-ready actions, so you keep control without paying agency overhead for every optimization.</p>
+        </article>
+        <article class="faq-item reveal reveal-delay-1">
+          <h3>What does it actually automate?</h3>
+          <p>It helps automate campaign setup, creative direction, copy generation, optimization recommendations, and the approval workflow around your paid growth stack.</p>
+        </article>
+        <article class="faq-item reveal reveal-delay-2">
+          <h3>Is this built for Shopify brands?</h3>
+          <p>Yes. The positioning, proof points, and integrations are built around Shopify merchants that need faster paid growth execution across Meta and Google.</p>
+        </article>
+        <article class="faq-item reveal reveal-delay-3">
+          <h3>How much control do I keep?</h3>
+          <p>You stay in charge of approvals, brand direction, and launch decisions while Agency AI handles the heavy operational lift underneath.</p>
+        </article>
       </div>
     </div>
   </section>
