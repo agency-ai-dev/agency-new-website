@@ -1390,20 +1390,20 @@
     <div class="hero-right">
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number" data-count="25" data-suffix="M+">0</div>
-          <div class="stat-label">In Shopify<br/>Sales Driven</div>
+          <div class="stat-number" data-count="25" data-prefix="$" data-suffix="M+">0</div>
+          <div class="stat-label">Founder Shopify<br/>Revenue</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-count="20" data-suffix="K+">0</div>
-          <div class="stat-label">Active Store<br/>Owners</div>
+          <div class="stat-number" data-count="80" data-suffix="%+">0</div>
+          <div class="stat-label">Less Time On<br/>Ad Ops</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-count="3" data-suffix="×">0</div>
-          <div class="stat-label">Average ROAS<br/>Improvement</div>
+          <div class="stat-number">5.0 ★</div>
+          <div class="stat-label">Shopify App Store<br/>Rating</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number" data-count="500" data-suffix="+">0</div>
-          <div class="stat-label">Fortune 500<br/>Techniques</div>
+          <div class="stat-number" data-count="13" data-suffix="+">0</div>
+          <div class="stat-label">Years Building<br/>On Shopify</div>
         </div>
       </div>
     </div>
@@ -1422,7 +1422,7 @@
       <div class="video-shell reveal reveal-delay-1">
         <div class="video-frame-label">
           <span class="video-status-dot"></span>
-          Live product demo
+          How We Help Founders
         </div>
         <video controls playsinline preload="metadata">
           <source src="https://res.cloudinary.com/dn71ngylo/video/upload/v1759252335/Agency_Ai_video_1_xwubxm.mp4" type="video/mp4" />
@@ -1976,6 +1976,7 @@
     function animateCounter(el) {
       const target = parseInt(el.dataset.count);
       const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
       const duration = 1800;
       const start = performance.now();
       function update(now) {
@@ -1983,9 +1984,9 @@
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         const val = Math.floor(eased * target);
-        el.textContent = (target >= 100 ? val : val === target ? val : val) + (progress >= 1 ? suffix : '');
+        el.textContent = prefix + val + (progress >= 1 ? suffix : '');
         if (progress < 1) requestAnimationFrame(update);
-        else el.textContent = target + suffix;
+        else el.textContent = prefix + target + suffix;
       }
       requestAnimationFrame(update);
     }
