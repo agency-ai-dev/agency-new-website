@@ -910,10 +910,10 @@
     }
     .testi-card:hover {
       background: rgba(255,255,255,0.07);
-      border-color: rgba(29,140,255,0.28);
+      border-color: rgba(52,211,153,0.28);
     }
     .testi-stars {
-      color: var(--orange);
+      color: var(--lime);
       font-size: 16px;
       letter-spacing: 2px;
       margin-bottom: 20px;
@@ -925,21 +925,30 @@
       margin-bottom: 28px;
       font-style: italic;
       font-weight: 300;
+      flex: 1;
+    }
+    .testi-card {
+      display: flex;
+      flex-direction: column;
     }
     .testi-author {
       display: flex;
       align-items: center;
       gap: 14px;
+      margin-top: auto;
     }
-    .testi-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--orange);
+    .testi-logo-wrap {
+      width: 48px; height: 48px;
+      border-radius: 8px;
+      background: #fff;
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--display);
-      font-size: 18px;
-      color: var(--white);
       flex-shrink: 0;
+      overflow: hidden;
+      padding: 4px;
+    }
+    .testi-logo-wrap img {
+      width: 100%; height: 100%;
+      object-fit: contain;
     }
     .testi-name {
       font-size: 14px;
@@ -1886,7 +1895,9 @@
           <div class="testi-stars">★★★★★</div>
           <p class="testi-quote">"Agency AI has outperformed both our internal ad efforts and every agency we've ever worked with."</p>
           <div class="testi-author">
-            <div class="testi-avatar">L</div>
+            <div class="testi-logo-wrap">
+              <img src="assets/logos/lola-hemp.webp" alt="Lola Hemp logo"/>
+            </div>
             <div>
               <div class="testi-name">Lola Hemp</div>
               <div class="testi-role">Customer · lolahemp.com</div>
@@ -1897,7 +1908,9 @@
           <div class="testi-stars">★★★★★</div>
           <p class="testi-quote">"Since launching with Agency AI we've seen an almost 200% increase in ROI."</p>
           <div class="testi-author">
-            <div class="testi-avatar">V</div>
+            <div class="testi-logo-wrap" style="background:#000;">
+              <img src="assets/logos/vapor95.png" alt="Vapor95 logo"/>
+            </div>
             <div>
               <div class="testi-name">Vapor95</div>
               <div class="testi-role">Customer · vapor95.com</div>
@@ -1908,7 +1921,9 @@
           <div class="testi-stars">★★★★★</div>
           <p class="testi-quote">"Great marketing app, improved our Meta ROAS and saves our marketing team a ton time."</p>
           <div class="testi-author">
-            <div class="testi-avatar">E</div>
+            <div class="testi-logo-wrap" style="background:#000;">
+              <img src="assets/logos/epic-hoodie.svg" alt="Epic Hoodie logo"/>
+            </div>
             <div>
               <div class="testi-name">Epic Hoodie</div>
               <div class="testi-role">Customer · epichoodie.com</div>
