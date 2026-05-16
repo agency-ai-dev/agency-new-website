@@ -93,6 +93,58 @@
     }
     .nav-cta:hover { opacity: 0.8; }
 
+    /* hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      z-index: 200;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        background: rgba(249, 247, 244, 0.98);
+        backdrop-filter: blur(16px);
+        z-index: 150;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        font-size: 16px;
+        color: var(--black);
+      }
+      .nav-cta {
+        padding: 14px 32px !important;
+        font-size: 15px !important;
+      }
+    }
+
     /* ── ARTICLE LAYOUT ── */
     .about-wrap {
       max-width: 700px;
@@ -241,7 +293,6 @@
 
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
-      .nav-links { gap: 16px; }
       .about-wrap { padding: 120px 20px 80px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       footer { padding: 48px 20px 24px; }
@@ -253,10 +304,13 @@
   <!-- Navigation -->
   <div class="site-header">
     <nav>
-      <a href="index.html" class="logo">
+      <a href="/" class="logo">
         <img src="assets/logos/agency-ai-icon-black.svg" alt="" style="height:36px;width:auto;"/>
         Agency AI
       </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
       <ul class="nav-links">
         <li><a href="index.html#features">Features</a></li>
         <li><a href="index.html#how">How It Works</a></li>
@@ -350,5 +404,21 @@
     </div>
   </footer>
 
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+    });
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
+      });
+    });
+  </script>
 </body>
 </html>
