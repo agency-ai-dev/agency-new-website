@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Agency AI | AI for Shopify Meta + Google ads</title>
+  <meta name="description" content="Built by operators who scaled Shopify stores to the top 0.1% globally. AI that manages Meta and Google as one funnel, optimizing spend and creative 24/7." />
+  <link rel="icon" type="image/svg+xml" href="assets/logos/agency-ai-icon-black.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #F9F7F4;
+      --accent-blue: #1D8CFF;
+      --accent-green: #34D399;
+      --gray-100: #F0EDE8;
+      --gray-200: #D8D4CE;
+      --gray-400: #8A8680;
+      --gray-600: #4A4845;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    a { cursor: pointer; }
+
+    /* ── NAVIGATION ── */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(249, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .logo {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--black);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-cta {
+      background: var(--black);
+      color: var(--white) !important;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1002;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    body.menu-open { overflow: hidden; }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        background: rgba(249, 247, 244, 0.98);
+        backdrop-filter: blur(16px);
+        z-index: 1001;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 16px; color: var(--black); }
+      .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
+    }
+
+    /* ── ARTICLE LAYOUT ── */
+    .about-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 160px 32px 120px;
+    }
+
+    .about-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 28px;
+    }
+
+    .about-wrap h1 {
+      font-family: var(--display);
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      color: var(--black);
+      margin-bottom: 40px;
+    }
+
+    .about-lead {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--black);
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .about-wrap h2 {
+      font-family: var(--display);
+      font-size: clamp(26px, 3.5vw, 38px);
+      letter-spacing: 0.02em;
+      color: var(--black);
+      margin-top: 72px;
+      margin-bottom: 28px;
+    }
+
+    .about-wrap p {
+      color: var(--gray-600);
+      margin-bottom: 28px;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .about-wrap p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .about-wrap a.inline-link {
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--accent-blue);
+      transition: color 0.15s;
+    }
+    .about-wrap a.inline-link:hover { color: var(--accent-blue); }
+
+    .cta-block {
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .btn-install {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-install:hover { opacity: 0.8; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 64px 48px 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-copy span { color: rgba(255,255,255,0.5); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .about-wrap { padding: 120px 20px 80px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      footer { padding: 48px 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="site-header">
+    <nav>
+      <a href="/" class="logo">
+        <img src="assets/logos/agency-ai-icon-black.svg" alt="" style="height:36px;width:auto;"/>
+        Agency AI
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+        <li><a href="index.html#pricing">Pricing</a></li>
+        <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta">Get Started Free</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Article -->
+  <main>
+    <article class="about-wrap">
+
+      <div class="about-label">About</div>
+
+      <h1>Built by operators who burned the ad budget first.</h1>
+
+      <p class="about-lead">Built by operators who scaled Shopify stores to the top 0.1%.</p>
+
+      <p>Agency AI started where most good tools start. Out of frustration.</p>
+
+      <p>We spent over a decade operating Shopify stores. We scaled one of them into the top 0.1% of merchants globally. And every single day of that decade, we ran into the same wall. Managing paid ads at scale on Meta and Google is a job that never ends and never gets easier.</p>
+
+      <p>Budgets that should have shifted at 2am sat untouched until Monday morning. Campaigns that were quietly bleeding ran live for days because nobody was watching that specific account at that specific hour. Creative tests took weeks to launch, weeks to read, and by the time we had a winner the trend had already moved on. Performance data lived across four dashboards, none of them talking to each other. The "recommendations" coming out of Meta and Google were optimized for Meta and Google, not for our margins.</p>
+
+      <h2>Channels don't win on their own.</h2>
+
+      <p>But the deeper problem was structural. Meta did not know what Google was doing. Google did not know what Meta was doing. Both platforms were buying audiences and reading performance in their own silos, and we were the ones expected to sit in the middle and stitch the funnel back together. CPM spikes on Meta that should have triggered a budget shift to Google. Branded search quietly cannibalizing Performance Max. Audience overlap burning spend on the same customer three times. The signals were there. Nobody was reading them across channels.</p>
+
+      <p>We tried the obvious fixes. We hired agencies. We hired in-house buyers. We built spreadsheets that pulled data from APIs and tried to flag the worst offenders. We wrote internal SOPs that nobody followed past month three because the work was tedious and the wins felt invisible. The good operators we worked with were genuinely good. They were also human, and they slept, and they had other accounts.</p>
+
+      <p>What kept us going was a simple belief. The signals a great media buyer reads every day — CPA, ROAS, CPM, frequency, cannibalization between campaigns, audience overlap, share of voice on branded search — are all knowable and all available. Reading them at the same time, across both platforms, every hour, is not a job for a person. It is a job for AI.</p>
+
+      <p>The creative side was the same story. Spinning up new variants meant briefing a designer, waiting on revisions, uploading assets, building the campaign, launching, waiting. By the time the variant was live the insight that triggered it was already cold.</p>
+
+      <p>After enough of these cycles we asked the obvious question. Why is every Shopify merchant doing the same manual work from scratch, every day, on accounts that already produce enough signal to be optimized by something better than a human at a desk?</p>
+
+      <h2>What we built.</h2>
+
+      <p>That is the gap <a href="https://apps.shopify.com/agency-ai" class="inline-link">Agency AI</a> fills. An AI that reads every signal across Meta and Google together, not as separate islands. A creative studio that turns insight into live ad variants in minutes instead of weeks. Recommendations that account for your margins, your inventory, your cross-channel cannibalization, and the simple fact that in 2026 ecommerce, channels do not win or lose on their own. The funnel wins or loses together.</p>
+
+      <p>We built the tool we wished had existed when we were scaling our own stores. It is running for merchants now.</p>
+
+      <div class="cta-block">
+        <a href="https://apps.shopify.com/agency-ai" class="btn-install">Install Agency AI on Shopify</a>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/logos/agency-ai-icon-white.svg" alt="" style="height:36px;width:auto;"/>
+          Agency AI
+        </div>
+        <p class="footer-tagline">The most affordable e-commerce growth engine on the market. Launch, optimize, and scale — all on autopilot.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#how">How It Works</a></li>
+          <li><a href="index.html#pricing">Pricing</a></li>
+          <li><a href="index.html#integrations">Integrations</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Agency AI, Inc. Built with <span>♥</span> for Shopify merchants.</div>
+      <div class="footer-copy">Built by operators. Tuned for <span style="color:#5E8EE0;">Shopify</span>.</div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+      document.body.classList.toggle('menu-open', open);
+    });
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
+        document.body.classList.remove('menu-open');
+      });
+    });
+  </script>
+</body>
+</html>

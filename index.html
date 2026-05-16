@@ -115,6 +115,54 @@
       transform: translateY(-1px) !important;
     }
 
+    /* ── MOBILE MENU ── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1002;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    body.menu-open { overflow: hidden; }
+
+    @media (max-width: 640px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        background: rgba(249, 247, 244, 0.98);
+        backdrop-filter: blur(16px);
+        z-index: 1001;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 16px; color: var(--black); }
+      .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
+    }
+
     /* ── TICKER ── */
     .ticker-wrap {
       position: relative;
@@ -1459,10 +1507,14 @@
       <img src="assets/logos/agency-ai-icon-black.svg" alt="" style="height:36px;width:auto;"/>
       Agency AI
     </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How It Works</a></li>
       <li><a href="#pricing">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta">Get Started Free</a></li>
     </ul>
   </nav>
@@ -2180,6 +2232,24 @@
       } else {
         nav.style.padding = '20px 48px';
       }
+    });
+
+    // Mobile menu
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open);
+      document.body.classList.toggle('menu-open', open);
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', false);
+        document.body.classList.remove('menu-open');
+      });
     });
   </script>
 </body>
