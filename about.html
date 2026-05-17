@@ -403,20 +403,22 @@
   <script>
     const toggle = document.querySelector('.nav-toggle');
     const links = document.querySelector('.nav-links');
+    const navEl = document.querySelector('nav');
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', false);
+      document.body.classList.remove('menu-open');
+      navEl.style.backdropFilter = '';
+    }
     toggle.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       toggle.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open);
       document.body.classList.toggle('menu-open', open);
+      navEl.style.backdropFilter = open ? 'none' : '';
     });
-    links.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        links.classList.remove('open');
-        toggle.classList.remove('open');
-        toggle.setAttribute('aria-expanded', false);
-        document.body.classList.remove('menu-open');
-      });
-    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   </script>
 </body>
 </html>
