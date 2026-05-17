@@ -2237,20 +2237,24 @@
     // Mobile menu
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navEl = document.querySelector('nav');
+    function closeMenu() {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', false);
+      document.body.classList.remove('menu-open');
+      navEl.style.backdropFilter = '';
+    }
     navToggle.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
       navToggle.classList.toggle('open', open);
       navToggle.setAttribute('aria-expanded', open);
       document.body.classList.toggle('menu-open', open);
+      // backdrop-filter creates a containing block that traps position:fixed children;
+      // disable it while the overlay is open so it covers the full viewport
+      navEl.style.backdropFilter = open ? 'none' : '';
     });
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', false);
-        document.body.classList.remove('menu-open');
-      });
-    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   </script>
 </body>
 </html>
