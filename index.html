@@ -688,6 +688,7 @@
       display: flex;
       animation: marquee-left 20s linear infinite;
       white-space: nowrap;
+      will-change: transform;
     }
     .marquee-item {
       font-family: var(--display);
@@ -695,14 +696,13 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--white);
-      padding: 0 32px;
       display: flex;
       align-items: center;
-      gap: 32px;
     }
     .marquee-item::after {
       content: '×';
       color: rgba(255,255,255,0.4);
+      margin: 0 40px;
     }
     @keyframes marquee-left {
       0% { transform: translateX(0); }
