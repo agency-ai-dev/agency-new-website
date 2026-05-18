@@ -686,8 +686,8 @@
     }
     .marquee-track {
       display: flex;
-      animation: marquee-left 20s linear infinite;
       white-space: nowrap;
+      will-change: transform;
     }
     .marquee-item {
       font-family: var(--display);
@@ -695,18 +695,13 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--white);
-      padding: 0 32px;
       display: flex;
       align-items: center;
-      gap: 32px;
     }
     .marquee-item::after {
       content: '×';
       color: rgba(255,255,255,0.4);
-    }
-    @keyframes marquee-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      margin: 0 40px;
     }
 
     /* ── HOW IT WORKS ── */
@@ -1481,7 +1476,6 @@
     @media (max-width: 1024px) {
       nav { padding: 18px 28px; }
       .hero { padding: 160px 28px 80px; grid-template-columns: 1fr; }
-      .hero-right { order: -1; }
       .video-layout { grid-template-columns: 1fr; }
       .call-layout { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(4, 1fr); }
@@ -1507,6 +1501,12 @@
       .features-header { flex-direction: column; align-items: flex-start; gap: 20px; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
       .cta-actions { flex-direction: column; align-items: center; }
+      .how { padding: 60px 0; }
+      .ai-call { padding: 60px 0; overflow: hidden; }
+      .call-layout { grid-template-columns: 1fr; }
+      .call-card { display: none; }
+      .integrations { padding: 60px 0; overflow: hidden; }
+      .integrations-inner { grid-template-columns: 1fr; }
     }
   </style>
 
@@ -2264,7 +2264,7 @@
         <ul class="footer-links">
           <li><a href="#">Features</a></li>
           <li><a href="#">How It Works</a></li>
-          <li><a href="#">Pricing</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
           <li><a href="#">Integrations</a></li>
         </ul>
       </div>
@@ -2292,6 +2292,24 @@
   </footer>
 
   <script>
+
+    // Smooth marquee (rAF-driven to avoid CSS animation restart glitch)
+    (function() {
+      const track = document.querySelector('.marquee-track');
+      if (!track) return;
+      let pos = 0;
+      let halfWidth = 0;
+      function measure() { halfWidth = track.scrollWidth / 2; }
+      measure();
+      window.addEventListener('resize', measure);
+      function tick() {
+        pos += 0.7;
+        if (pos >= halfWidth) pos -= halfWidth;
+        track.style.transform = 'translateX(' + (-pos) + 'px)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
 
     // Counter animation
     function animateCounter(el) {
