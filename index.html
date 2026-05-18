@@ -686,7 +686,6 @@
     }
     .marquee-track {
       display: flex;
-      animation: marquee-left 20s linear infinite;
       white-space: nowrap;
       will-change: transform;
     }
@@ -703,10 +702,6 @@
       content: '×';
       color: rgba(255,255,255,0.4);
       margin: 0 40px;
-    }
-    @keyframes marquee-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
     }
 
     /* ── HOW IT WORKS ── */
@@ -2292,6 +2287,24 @@
   </footer>
 
   <script>
+
+    // Smooth marquee (rAF-driven to avoid CSS animation restart glitch)
+    (function() {
+      const track = document.querySelector('.marquee-track');
+      if (!track) return;
+      let pos = 0;
+      let halfWidth = 0;
+      function measure() { halfWidth = track.scrollWidth / 2; }
+      measure();
+      window.addEventListener('resize', measure);
+      function tick() {
+        pos += 0.7;
+        if (pos >= halfWidth) pos -= halfWidth;
+        track.style.transform = 'translateX(' + (-pos) + 'px)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
 
     // Counter animation
     function animateCounter(el) {
