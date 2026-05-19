@@ -249,11 +249,24 @@
       border-top: 1px solid var(--gray-200);
     }
 
+    .about-pullquote {
+      border-left: 3px solid var(--accent-blue);
+      margin: 0 0 28px 0;
+      padding: 4px 0 4px 24px;
+    }
+    .about-pullquote p {
+      font-style: italic;
+      color: var(--accent-blue) !important;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 0 !important;
+    }
+
     .btn-install {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--black);
+      background: var(--accent-blue);
       color: var(--white);
       font-family: var(--sans);
       font-size: 15px;
@@ -378,7 +391,9 @@
 
       <p>The creative side was the same story. Spinning up new variants meant briefing a designer, waiting on revisions, uploading assets, building the campaign, launching, waiting. By the time the variant was live the insight that triggered it was already cold.</p>
 
-      <p>After enough of these cycles we asked the obvious question. Why is every Shopify merchant doing the same manual work from scratch, every day, on accounts that already produce enough signal to be optimized by something better than a human at a desk?</p>
+      <div class="about-pullquote">
+        <p>After enough of these cycles we asked the obvious question. Why is every Shopify merchant doing the same manual work from scratch, every day, on accounts that already produce enough signal to be optimized by something better than a human at a desk?</p>
+      </div>
 
       <h2>What we built</h2>
 
