@@ -3,45 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Agency AI | AI for Shopify Meta + Google ads</title>
-  <meta name="description" content="Built by operators who scaled Shopify stores to the top 0.1% globally. AI that manages Meta and Google as one funnel, optimizing spend and creative 24/7." />
-  <link rel="canonical" href="https://www.agencyai.app/about" />
+  <title>Blog | Agency AI — Shopify Marketing Insights</title>
+  <meta name="description" content="Case studies, guides, and insights from the Agency AI team on running profitable Meta and Google ads for Shopify stores." />
+  <link rel="canonical" href="https://www.agencyai.app/blog" />
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.agencyai.app/about" />
-  <meta property="og:title" content="About Agency AI | AI for Shopify Meta + Google ads" />
-  <meta property="og:description" content="Built by operators who scaled Shopify stores to the top 0.1% globally. AI that manages Meta and Google as one funnel, optimizing spend and creative 24/7." />
+  <meta property="og:url" content="https://www.agencyai.app/blog" />
+  <meta property="og:title" content="Blog | Agency AI — Shopify Marketing Insights" />
+  <meta property="og:description" content="Case studies, guides, and insights from the Agency AI team on running profitable Meta and Google ads for Shopify stores." />
   <meta property="og:site_name" content="Agency AI" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="About Agency AI | AI for Shopify Meta + Google ads" />
-  <meta name="twitter:description" content="Built by operators who scaled Shopify stores to the top 0.1% globally. AI that manages Meta and Google as one funnel, optimizing spend and creative 24/7." />
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "url": "https://www.agencyai.app/about",
-    "name": "About Agency AI",
-    "description": "Built by operators who scaled Shopify stores to the top 0.1% globally.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Agency AI, LLC",
-      "url": "https://www.agencyai.app/",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "30 N Gould St Ste R",
-        "addressLocality": "Sheridan",
-        "addressRegion": "WY",
-        "postalCode": "82801",
-        "addressCountry": "US"
-      }
-    }
-  }
-  </script>
+  <meta name="twitter:title" content="Blog | Agency AI — Shopify Marketing Insights" />
+  <meta name="twitter:description" content="Case studies, guides, and insights from the Agency AI team on running profitable Meta and Google ads for Shopify stores." />
 
   <link rel="icon" type="image/png" href="assets/logos/agency-favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -65,24 +39,18 @@
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--white);
       color: var(--black);
       font-family: var(--sans);
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1.75;
       overflow-x: hidden;
     }
-
     a { cursor: pointer; }
 
-    /* ── NAVIGATION ── */
-    .site-header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-    }
+    /* ── NAV ── */
+    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
     nav {
       display: flex;
       align-items: center;
@@ -131,27 +99,19 @@
     }
     .nav-cta:hover { opacity: 0.8; }
 
-    /* hamburger */
     .nav-toggle {
       display: none;
       flex-direction: column;
       justify-content: center;
       gap: 5px;
-      width: 36px;
-      height: 36px;
-      background: none;
-      border: none;
-      padding: 4px;
-      cursor: pointer;
-      position: relative;
-      z-index: 1002;
+      width: 36px; height: 36px;
+      background: none; border: none;
+      padding: 4px; cursor: pointer;
+      position: relative; z-index: 1002;
     }
     .nav-toggle span {
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: var(--black);
-      border-radius: 2px;
+      display: block; width: 100%; height: 2px;
+      background: var(--black); border-radius: 2px;
       transition: transform 0.25s, opacity 0.25s;
       transform-origin: center;
     }
@@ -161,14 +121,13 @@
     body.menu-open { overflow: hidden; }
 
     @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
       .nav-toggle { display: flex; }
       .nav-links {
         display: none;
-        position: fixed;
-        inset: 0;
+        position: fixed; inset: 0;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; align-items: center;
         gap: 32px;
         background: rgba(249, 247, 244, 0.98);
         backdrop-filter: blur(16px);
@@ -179,14 +138,14 @@
       .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
     }
 
-    /* ── ARTICLE LAYOUT ── */
-    .about-wrap {
-      max-width: 700px;
+    /* ── BLOG LISTING ── */
+    .blog-wrap {
+      max-width: 800px;
       margin: 0 auto;
       padding: 160px 32px 120px;
     }
 
-    .about-label {
+    .blog-label {
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -195,89 +154,101 @@
       margin-bottom: 28px;
     }
 
-    .about-wrap h1 {
+    .blog-wrap h1 {
       font-family: var(--display);
-      font-size: clamp(42px, 6vw, 72px);
+      font-size: clamp(36px, 5vw, 60px);
       line-height: 1.05;
       letter-spacing: 0.01em;
-      color: var(--black);
-      margin-bottom: 40px;
+      margin-bottom: 16px;
     }
 
-    .about-lead {
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 1.6;
-      color: var(--black);
-      margin-bottom: 48px;
+    .blog-subtitle {
+      font-size: 17px;
+      color: var(--gray-600);
+      margin-bottom: 64px;
       padding-bottom: 48px;
       border-bottom: 1px solid var(--gray-200);
+      line-height: 1.7;
     }
 
-    .about-wrap h2 {
-      font-family: var(--display);
-      font-size: clamp(26px, 3.5vw, 38px);
-      letter-spacing: 0.02em;
-      color: var(--black);
-      margin-top: 72px;
-      margin-bottom: 28px;
-    }
+    .post-list { display: flex; flex-direction: column; gap: 0; }
 
-    .about-wrap p {
-      color: var(--gray-600);
-      margin-bottom: 28px;
-      font-size: 18px;
-      line-height: 1.8;
-    }
-
-    .about-wrap p:last-of-type {
-      margin-bottom: 0;
-    }
-
-    .about-wrap a.inline-link {
-      color: var(--black);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--accent-blue);
-      transition: color 0.15s;
-    }
-    .about-wrap a.inline-link:hover { color: var(--accent-blue); }
-
-    .cta-block {
-      margin-top: 64px;
-      padding-top: 48px;
-      border-top: 1px solid var(--gray-200);
-    }
-
-    .about-pullquote {
-      border-left: 3px solid var(--accent-blue);
-      margin: 0 0 28px 0;
-      padding: 4px 0 4px 24px;
-    }
-    .about-pullquote p {
-      font-style: italic;
-      color: var(--accent-blue) !important;
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 0 !important;
-    }
-
-    .btn-install {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--accent-blue);
-      color: var(--white);
-      font-family: var(--sans);
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 16px 32px;
-      border-radius: 8px;
+    .post-card {
+      display: block;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--gray-200);
       text-decoration: none;
+      color: inherit;
       transition: opacity 0.2s;
     }
-    .btn-install:hover { opacity: 0.8; }
+    .post-card:first-child { border-top: none; }
+    .post-card:hover { opacity: 0.75; }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .post-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      text-transform: uppercase;
+    }
+    .post-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .post-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      background: rgba(29, 140, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .post-read {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray-400);
+      letter-spacing: 0.06em;
+      margin-left: auto;
+    }
+
+    .post-card h2 {
+      font-family: var(--display);
+      font-size: clamp(22px, 3vw, 32px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      color: var(--black);
+    }
+
+    .post-excerpt {
+      font-size: 16px;
+      color: var(--gray-600);
+      line-height: 1.75;
+      max-width: 600px;
+    }
+
+    .post-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+    }
+    .post-cta::after { content: '→'; }
 
     /* ── FOOTER ── */
     footer {
@@ -332,15 +303,12 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .footer-copy {
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
-    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
     .footer-copy span { color: rgba(255,255,255,0.5); }
 
     @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .about-wrap { padding: 120px 20px 80px; }
+      .blog-wrap { padding: 120px 20px 80px; }
+      .post-read { margin-left: 0; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       footer { padding: 48px 20px 24px; }
     }
@@ -348,7 +316,6 @@
 </head>
 <body>
 
-  <!-- Navigation -->
   <div class="site-header">
     <nav>
       <a href="/" class="logo">
@@ -367,48 +334,50 @@
     </nav>
   </div>
 
-  <!-- Article -->
   <main>
-    <article class="about-wrap">
+    <div class="blog-wrap">
 
-      <div class="about-label">About</div>
+      <div class="blog-label">Blog</div>
+      <h1>Insights &amp; Case Studies</h1>
+      <p class="blog-subtitle">Guides, results, and ideas from the Agency AI team on running profitable paid ads for Shopify stores.</p>
 
-      <h1>Built by operators who scaled Shopify stores to the top 0.1%</h1>
+      <div class="post-list">
 
-<p>Agency AI started where most good tools start. Out of frustration.</p>
+        <a href="blog/2026-04-20-vapor95-meta-ads-case-study.html" class="post-card">
+          <div class="post-meta">
+            <span class="post-date">Apr 20, 2026</span>
+            <div class="post-tags">
+              <span class="post-tag">Case Study</span>
+              <span class="post-tag">Meta Ads</span>
+              <span class="post-tag">Ecommerce</span>
+            </div>
+            <span class="post-read">3 min read</span>
+          </div>
+          <h2>How Vapor95 Reduced Meta Ad Costs by 59% Using Agency AI</h2>
+          <p class="post-excerpt">Vapor95 paused Meta ads for three months after disappointing results. After switching to Agency AI they cut CPA from $52 to $21.50 — a 59% reduction — and reported a 200% increase in ROI.</p>
+          <span class="post-cta">Read case study</span>
+        </a>
 
-      <p>We spent over a decade operating Shopify stores. We scaled one of them into the top 0.1% of merchants globally. And every single day of that decade, we ran into the same wall. Managing paid ads at scale on Meta and Google is a job that never ends and never gets easier.</p>
+        <a href="blog/2025-01-01-facebook-instagram-shopify-setup.html" class="post-card">
+          <div class="post-meta">
+            <span class="post-date">Jan 1, 2025</span>
+            <div class="post-tags">
+              <span class="post-tag">Tutorial</span>
+              <span class="post-tag">Shopify</span>
+              <span class="post-tag">Facebook</span>
+              <span class="post-tag">Instagram</span>
+            </div>
+            <span class="post-read">4 min read</span>
+          </div>
+          <h2>Set Up Facebook &amp; Instagram with Shopify (2025) – Full Integration Guide</h2>
+          <p class="post-excerpt">Learn how to connect your Shopify store with Facebook &amp; Instagram using the Meta app. Step-by-step guide to sync your catalog, run ads, and sell on social media.</p>
+          <span class="post-cta">Read guide</span>
+        </a>
 
-      <p>Budgets that should have shifted at 2am sat untouched until Monday morning. Campaigns that were quietly bleeding ran live for days because nobody was watching that specific account at that specific hour. Creative tests took weeks to launch, weeks to read, and by the time we had a winner the trend had already moved on. Performance data lived across four dashboards, none of them talking to each other. The "recommendations" coming out of Meta and Google were optimized for Meta and Google, not for our margins.</p>
-
-      <h2>Channels don't win on their own</h2>
-
-      <p>But the deeper problem was structural. Meta did not know what Google was doing. Google did not know what Meta was doing. Both platforms were buying audiences and reading performance in their own silos, and we were the ones expected to sit in the middle and stitch the funnel back together. CPM spikes on Meta that should have triggered a budget shift to Google. Branded search quietly cannibalizing Performance Max. Audience overlap burning spend on the same customer three times. The signals were there. Nobody was reading them across channels.</p>
-
-      <p>We tried the obvious fixes. We hired agencies. We hired in-house buyers. We built spreadsheets that pulled data from APIs and tried to flag the worst offenders. We wrote internal SOPs that nobody followed past month three because the work was tedious and the wins felt invisible. The good operators we worked with were genuinely good. They were also human, and they slept, and they had other accounts.</p>
-
-      <p>What kept us going was a simple belief. The signals a great media buyer reads every day, CPA, ROAS, CPM, frequency, cannibalization between campaigns, audience overlap, share of voice on branded search, are all knowable and all available. Reading them at the same time, across both platforms, every hour, is not a job for a person. It is a job for AI.</p>
-
-      <p>The creative side was the same story. Spinning up new variants meant briefing a designer, waiting on revisions, uploading assets, building the campaign, launching, waiting. By the time the variant was live the insight that triggered it was already cold.</p>
-
-      <div class="about-pullquote">
-        <p>After enough of these cycles we asked the obvious question. Why is every Shopify merchant doing the same manual work from scratch, every day, on accounts that already produce enough signal to be optimized by something better than a human at a desk?</p>
       </div>
-
-      <h2>What we built</h2>
-
-      <p>That is the gap <a href="https://apps.shopify.com/agency-ai" class="inline-link">Agency AI</a> fills. An AI that reads every signal across Meta and Google together, not as separate islands. A creative studio that turns insight into live ad variants in minutes instead of weeks. Recommendations that account for your margins, your inventory, your cross-channel cannibalization, and the simple fact that in 2026 ecommerce, channels do not win or lose on their own. The funnel wins or loses together.</p>
-
-      <p>We built the tool we wished had existed when we were scaling our own stores. It is running for merchants now.</p>
-
-      <div class="cta-block">
-        <a href="https://apps.shopify.com/agency-ai" class="btn-install">Install Agency AI on Shopify</a>
-      </div>
-
-    </article>
+    </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="footer-top">
       <div>
