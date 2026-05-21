@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Set Up Google &amp; YouTube with Shopify (2026) – Complete Guide</title>
+  <meta name="description" content="Connect your Shopify store to Google Merchant Center, Google Ads, and YouTube. Learn how to sync products, enable free listings, and run smart campaigns with this 2026 tutorial." />
+  <link rel="canonical" href="https://www.agencyai.app/blog/2026-05-21-google-youtube-shopify-setup" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.agencyai.app/blog/2026-05-21-google-youtube-shopify-setup" />
+  <meta property="og:title" content="How to Set Up Google &amp; YouTube with Shopify (2026) – Complete Guide" />
+  <meta property="og:description" content="Step-by-step 2026 guide to connect your Shopify store with Google Merchant Center, Google Ads, and YouTube — sync products, enable free listings, and run smart campaigns." />
+  <meta property="og:image" content="https://www.agencyai.app/assets/blog/google-youtube-shopify-hero.png" />
+  <meta property="og:site_name" content="Agency AI" />
+  <meta property="article:published_time" content="2026-05-21" />
+  <meta property="article:author" content="Agency AI Team" />
+  <meta property="article:tag" content="Shopify" />
+  <meta property="article:tag" content="Google" />
+  <meta property="article:tag" content="YouTube" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Set Up Google &amp; YouTube with Shopify (2026) – Complete Guide" />
+  <meta name="twitter:description" content="Step-by-step 2026 guide to connect your Shopify store with Google Merchant Center, Google Ads, and YouTube." />
+  <meta name="twitter:image" content="https://www.agencyai.app/assets/blog/google-youtube-shopify-hero.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Set Up Google & YouTube with Shopify (2026)",
+    "datePublished": "2026-05-21",
+    "author": { "@type": "Organization", "name": "Agency AI Team" },
+    "publisher": { "@type": "Organization", "name": "Agency AI", "url": "https://www.agencyai.app/" },
+    "description": "Step-by-step guide to connect your Shopify store with Google Merchant Center, Google Ads, and YouTube using the Google & YouTube app.",
+    "step": [
+      { "@type": "HowToStep", "name": "Install the Google & YouTube App", "position": 1 },
+      { "@type": "HowToStep", "name": "Connect Your Google Account", "position": 2 },
+      { "@type": "HowToStep", "name": "Sync Products to Google Merchant Center", "position": 3 },
+      { "@type": "HowToStep", "name": "Enable Free Listings & Ads", "position": 4 },
+      { "@type": "HowToStep", "name": "Connect Your YouTube Channel", "position": 5 }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="../assets/logos/agency-favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #F9F7F4;
+      --accent-blue: #1D8CFF;
+      --accent-green: #34D399;
+      --gray-100: #F0EDE8;
+      --gray-200: #D8D4CE;
+      --gray-400: #8A8680;
+      --gray-600: #4A4845;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+      --display: 'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+    a { cursor: pointer; }
+
+    /* ── NAV ── */
+    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 48px;
+      background: rgba(249, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .logo {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--black);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-cta {
+      background: var(--black);
+      color: var(--white) !important;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none; border: none;
+      padding: 4px; cursor: pointer;
+      position: relative; z-index: 1002;
+    }
+    .nav-toggle span {
+      display: block; width: 100%; height: 2px;
+      background: var(--black); border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    body.menu-open { overflow: hidden; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed; inset: 0;
+        flex-direction: column;
+        justify-content: center; align-items: center;
+        gap: 32px;
+        background: rgba(249, 247, 244, 0.98);
+        backdrop-filter: blur(16px);
+        z-index: 1001;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 16px; color: var(--black); }
+      .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
+    }
+
+    /* ── ARTICLE ── */
+    .post-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 160px 32px 120px;
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-back::before { content: '←'; }
+    .post-back:hover { color: var(--black); }
+
+    .post-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .post-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      background: rgba(29, 140, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .post-wrap h1 {
+      font-family: var(--display);
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      margin-bottom: 24px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--gray-400);
+      letter-spacing: 0.06em;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--gray-200);
+      flex-wrap: wrap;
+    }
+
+    /* Hero image */
+    .post-hero {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      margin: 0 0 48px;
+    }
+
+    .post-wrap h2 {
+      font-family: var(--display);
+      font-size: clamp(22px, 3vw, 32px);
+      letter-spacing: 0.02em;
+      margin-top: 56px;
+      margin-bottom: 20px;
+    }
+
+    .post-wrap p {
+      color: var(--gray-600);
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+
+    .post-wrap ul, .post-wrap ol {
+      margin: 0 0 24px 0;
+      padding-left: 24px;
+    }
+    .post-wrap ul li, .post-wrap ol li {
+      color: var(--gray-600);
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+    .post-wrap ul li strong, .post-wrap ol li strong { color: var(--black); }
+
+    /* Step blocks */
+    .step-block {
+      display: flex;
+      gap: 20px;
+      margin: 40px 0 32px;
+      padding: 28px 24px;
+      background: var(--gray-100);
+      border-radius: 10px;
+    }
+    .step-number {
+      font-family: var(--display);
+      font-size: 36px;
+      color: var(--accent-blue);
+      line-height: 1;
+      min-width: 40px;
+    }
+    .step-content h3 {
+      font-family: var(--display);
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    .step-content p {
+      font-size: 16px;
+      margin-bottom: 8px !important;
+    }
+    .step-content ul {
+      margin-bottom: 0 !important;
+    }
+    .step-content ul li { font-size: 15px; }
+
+    /* Prerequisites */
+    .prereq-box {
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+    .prereq-box-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 16px;
+    }
+    .prereq-box ul { margin-bottom: 0; }
+    .prereq-box ul li { font-size: 15px; }
+
+    /* Video embed */
+    .video-wrap {
+      margin: 40px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: var(--black);
+    }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .video-caption {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--gray-400);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* Troubleshooting */
+    .troubleshoot-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .troubleshoot-item:last-child { border-bottom: none; }
+    .troubleshoot-q {
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+    .troubleshoot-a {
+      color: var(--gray-600);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Callout */
+    .callout {
+      border-left: 3px solid var(--accent-blue);
+      padding: 4px 0 4px 24px;
+      margin: 40px 0;
+    }
+    .callout p {
+      font-size: 17px;
+      color: var(--gray-600) !important;
+      line-height: 1.7;
+      margin-bottom: 16px !important;
+    }
+    .callout .btn-callout {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-blue);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .callout .btn-callout:hover { opacity: 0.85; }
+
+    /* CTA block */
+    .post-cta-block {
+      margin-top: 64px;
+      padding: 40px;
+      background: var(--black);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .post-cta-block p {
+      color: rgba(255,255,255,0.65) !important;
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+    .post-cta-block .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent-blue);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .post-cta-block .btn:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 64px 48px 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer-copy span { color: rgba(255,255,255,0.5); }
+
+    @media (max-width: 768px) {
+      .post-wrap { padding: 120px 20px 80px; }
+      .step-block { flex-direction: column; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      footer { padding: 48px 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="site-header">
+    <nav>
+      <a href="/" class="logo">
+        <img src="../assets/logos/agencyailogo-black.png" alt="Agency AI" style="height:80px;width:160px;"/>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="../pricing.html">Pricing</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta">Get Started Free</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main>
+    <article class="post-wrap">
+
+      <a href="../blog.html" class="post-back">All posts</a>
+
+      <div class="post-tags">
+        <span class="post-tag">Tutorial</span>
+        <span class="post-tag">Shopify</span>
+        <span class="post-tag">Google</span>
+        <span class="post-tag">YouTube</span>
+      </div>
+
+      <h1>How to Set Up Google &amp; YouTube with Shopify (2026) – Complete Guide</h1>
+
+      <div class="post-meta">
+        <span>May 21, 2026</span>
+        <span>Agency AI Team</span>
+        <span>5 min read</span>
+      </div>
+
+      <img class="post-hero" src="../assets/blog/google-youtube-shopify-hero.png" alt="Integrate Google and YouTube with Shopify" width="1536" height="1024" />
+
+      <p>Bringing your Shopify store to Google and YouTube is one of the fastest ways to reach high-intent shoppers. With the Google &amp; YouTube app by Shopify, you can sync your product catalog, run ads, and track performance — all in one place. This tutorial walks you through setting it up, step by step.</p>
+
+      <h2>Before You Start</h2>
+
+      <div class="prereq-box">
+        <div class="prereq-box-title">Prerequisites</div>
+        <ul>
+          <li>A Shopify store with products added and a primary domain set</li>
+          <li>A Google Account (Gmail)</li>
+          <li>A Google Merchant Center account</li>
+          <li>A Google Ads account (if you plan to run paid campaigns)</li>
+          <li>A YouTube channel connected to your Google account (for shopping on YouTube)</li>
+        </ul>
+      </div>
+
+      <p><strong>Tip:</strong> If you don't have a Google Merchant Center or Ads account yet, Shopify will help you create them during setup.</p>
+
+      <h2>The Setup Steps</h2>
+
+      <div class="step-block">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Install the Google &amp; YouTube App</h3>
+          <p>From your Shopify admin, go to <strong>Apps &amp; sales channels</strong> and open the <strong>Shopify App Store</strong>. Search for <strong>Google &amp; YouTube by Shopify</strong>, then click <strong>Install</strong> and <strong>Add app</strong>. This app is the hub for all your Google integrations — Shopping, Ads, and YouTube.</p>
+        </div>
+      </div>
+
+      <div class="step-block">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Connect Your Google Account</h3>
+          <p>Open the Google &amp; YouTube app and click <strong>Connect Google Account</strong>. Log in and grant Shopify permission to access:</p>
+          <ul>
+            <li>Google Merchant Center</li>
+            <li>Google Ads</li>
+            <li>YouTube (optional but recommended)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-block">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Sync Products to Google Merchant Center</h3>
+          <p>Select the product feed you want to submit (default: <strong>All Products</strong>), then choose your target country and language. Set your shipping settings (Shopify often syncs these automatically) and confirm your tax settings — especially for U.S. stores. Click <strong>Complete Setup</strong> to start syncing. Products are submitted to Google for review, which typically takes 1–3 days.</p>
+        </div>
+      </div>
+
+      <div class="step-block">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Enable Free Listings &amp; Ads</h3>
+          <p>Once your products are approved, enable <strong>Free Listings</strong> to show up in Google Shopping and Google Search at no cost. To go further, turn on a <strong>Performance Max</strong> campaign:</p>
+          <ul>
+            <li>Smart bidding promotes products across Search, Shopping, Gmail, YouTube, and Display</li>
+            <li>Set a daily budget and choose your product feed</li>
+            <li>Google builds the ads automatically from your product data and assets</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-block">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h3>Connect Your YouTube Channel</h3>
+          <p>If you want to sell on YouTube, confirm your channel is eligible for shopping features, then connect it inside the app. Choose the products to feature, approve the YouTube Shopping terms, and your products can appear below videos, in the channel store tab, and during livestreams.</p>
+        </div>
+      </div>
+
+      <h2>Optimize Your Listings</h2>
+
+      <p>To maximize reach and approval rates:</p>
+      <ul>
+        <li>Use <strong>high-resolution product images</strong></li>
+        <li>Write <strong>clear product titles and descriptions</strong></li>
+        <li>Include accurate <strong>GTINs or MPNs</strong> — Google uses these to identify items</li>
+        <li>Monitor product status and fix any issues flagged in the app dashboard</li>
+      </ul>
+
+      <h2>Common Issues &amp; Fixes</h2>
+
+      <div class="troubleshoot-item">
+        <div class="troubleshoot-q">Products disapproved</div>
+        <div class="troubleshoot-a">Check for policy violations or missing information like images, GTINs, or shipping rates.</div>
+      </div>
+      <div class="troubleshoot-item">
+        <div class="troubleshoot-q">Ads not showing</div>
+        <div class="troubleshoot-a">Confirm your daily budget, feed approval status, and that the campaign is active.</div>
+      </div>
+      <div class="troubleshoot-item">
+        <div class="troubleshoot-q">Merchant Center errors</div>
+        <div class="troubleshoot-a">Use the Diagnostics tab inside your Merchant Center account to find and resolve flagged issues.</div>
+      </div>
+
+      <h2>You're Ready to Sell on Google &amp; YouTube</h2>
+
+      <p>With everything connected, your Shopify products are now discoverable across some of the internet's most-used platforms:</p>
+      <ul>
+        <li>Google Shopping (free + paid)</li>
+        <li>Google Search</li>
+        <li>YouTube</li>
+        <li>Gmail</li>
+        <li>Discover Feed</li>
+      </ul>
+
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/FxgIhL4zEHM"
+          title="How to Set Up the Google &amp; YouTube App on Shopify"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="video-caption">Video walkthrough — How to Set Up the Google &amp; YouTube App on Shopify</p>
+
+      <div class="callout">
+        <p>Managing Google Shopping, Performance Max, and YouTube campaigns alongside your Shopify store is time-consuming. Agency AI automates your entire marketing workflow — campaign structure, creative generation, bidding, and optimization — across Google and Meta simultaneously.</p>
+        <a href="https://apps.shopify.com/agency-ai" class="btn-callout">Try Agency AI Free</a>
+      </div>
+
+      <div class="post-cta-block">
+        <p>Free to install. Only pay when your campaigns are live.</p>
+        <a href="https://apps.shopify.com/agency-ai" class="btn">Install Agency AI on Shopify</a>
+      </div>
+
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <img src="../assets/logos/agencyailogo.png" alt="Agency AI" style="height:80px;width:160px;"/>
+        </div>
+        <p class="footer-tagline">The most affordable e-commerce growth engine on the market. Launch, optimize, and scale — all on autopilot.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#how">How It Works</a></li>
+          <li><a href="../pricing.html">Pricing</a></li>
+          <li><a href="/#integrations">Integrations</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="../privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Agency AI, Inc. Built with <span>♥</span> for Shopify merchants.</div>
+      <div class="footer-copy">Built by operators. Tuned for <span style="color:#5E8EE0;">Shopify</span>.</div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    const navEl = document.querySelector('nav');
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', false);
+      document.body.classList.remove('menu-open');
+      navEl.style.backdropFilter = '';
+    }
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+      document.body.classList.toggle('menu-open', open);
+      navEl.style.backdropFilter = open ? 'none' : '';
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  </script>
+</body>
+</html>
