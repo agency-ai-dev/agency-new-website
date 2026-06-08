@@ -3,19 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog | Agency AI — Shopify Marketing Insights</title>
-  <meta name="description" content="Case studies, guides, and insights from the Agency AI team on running profitable Meta and Google ads for Shopify stores." />
-  <link rel="canonical" href="https://www.agencyai.app/blog" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.agencyai.app/blog" />
-  <meta property="og:title" content="Blog | Agency AI — Shopify Marketing Insights" />
-  <meta property="og:description" content="Case studies, guides, and insights from the Agency AI team on running profitable Meta and Google ads for Shopify stores." />
-  <meta property="og:site_name" content="Agency AI" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Blog | Agency AI — Shopify Marketing Insights" />
-  <meta name="twitter:description" content="Case studies, guides, and insights from the Agency AI team on running profitable Meta and Google ads for Shopify stores." />
+  <title>Terms of Service | Agency AI</title>
+  <meta name="description" content="Agency AI terms of service — the rules and conditions for using our platform." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.agencyai.app/terms-of-service" />
 
   <link rel="icon" type="image/png" href="assets/logos/agency-favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -99,6 +90,7 @@
     }
     .nav-cta:hover { opacity: 0.8; }
 
+    /* hamburger */
     .nav-toggle {
       display: none;
       flex-direction: column;
@@ -138,14 +130,14 @@
       .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
     }
 
-    /* ── BLOG LISTING ── */
-    .blog-wrap {
-      max-width: 800px;
+    /* ── CONTENT ── */
+    .policy-wrap {
+      max-width: 700px;
       margin: 0 auto;
       padding: 160px 32px 120px;
     }
 
-    .blog-label {
+    .policy-label {
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -154,7 +146,7 @@
       margin-bottom: 28px;
     }
 
-    .blog-wrap h1 {
+    .policy-wrap h1 {
       font-family: var(--display);
       font-size: clamp(36px, 5vw, 60px);
       line-height: 1.05;
@@ -162,93 +154,49 @@
       margin-bottom: 16px;
     }
 
-    .blog-subtitle {
-      font-size: 17px;
-      color: var(--gray-600);
-      margin-bottom: 64px;
-      padding-bottom: 48px;
-      border-bottom: 1px solid var(--gray-200);
-      line-height: 1.7;
-    }
-
-    .post-list { display: flex; flex-direction: column; gap: 0; }
-
-    .post-card {
-      display: block;
-      padding: 40px 0;
-      border-bottom: 1px solid var(--gray-200);
-      text-decoration: none;
-      color: inherit;
-      transition: opacity 0.2s;
-    }
-    .post-card:first-child { border-top: none; }
-    .post-card:hover { opacity: 0.75; }
-
-    .post-meta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-    .post-date {
+    .policy-meta {
       font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--gray-400);
-      text-transform: uppercase;
-    }
-    .post-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .post-tag {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-blue);
-      background: rgba(29, 140, 255, 0.08);
-      padding: 3px 8px;
-      border-radius: 3px;
-    }
-    .post-read {
-      font-family: var(--mono);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--gray-400);
       letter-spacing: 0.06em;
-      margin-left: auto;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--gray-200);
     }
 
-    .post-card h2 {
+    .policy-wrap h2 {
       font-family: var(--display);
       font-size: clamp(22px, 3vw, 32px);
       letter-spacing: 0.02em;
-      line-height: 1.1;
-      margin-bottom: 14px;
-      color: var(--black);
+      margin-top: 56px;
+      margin-bottom: 20px;
     }
 
-    .post-excerpt {
-      font-size: 16px;
+    .policy-wrap p {
       color: var(--gray-600);
-      line-height: 1.75;
-      max-width: 600px;
+      margin-bottom: 20px;
+      line-height: 1.8;
     }
 
-    .post-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--accent-blue);
-      text-transform: uppercase;
+    .policy-wrap ul {
+      margin: 0 0 20px 0;
+      padding-left: 24px;
     }
-    .post-cta::after { content: '→'; }
+    .policy-wrap ul li {
+      color: var(--gray-600);
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+    .policy-wrap ul li strong { color: var(--black); }
+
+    .policy-contact {
+      margin-top: 56px;
+      padding: 32px;
+      background: var(--gray-100);
+      border-radius: 8px;
+    }
+    .policy-contact p { margin-bottom: 4px; }
+    .policy-contact p:last-child { margin-bottom: 0; }
 
     /* ── FOOTER ── */
     footer {
@@ -307,8 +255,7 @@
     .footer-copy span { color: rgba(255,255,255,0.5); }
 
     @media (max-width: 768px) {
-      .blog-wrap { padding: 120px 20px 80px; }
-      .post-read { margin-left: 0; }
+      .policy-wrap { padding: 120px 20px 80px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       footer { padding: 48px 20px 24px; }
     }
@@ -327,71 +274,79 @@
       <ul class="nav-links">
         <li><a href="/#features">Features</a></li>
         <li><a href="/#how">How It Works</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/about.html">About</a></li>
         <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta">Get Started Free</a></li>
       </ul>
     </nav>
   </div>
 
   <main>
-    <div class="blog-wrap">
+    <div class="policy-wrap">
 
-      <div class="blog-label">Blog</div>
-      <h1>Insights &amp; Case Studies</h1>
-      <p class="blog-subtitle">Guides, results, and ideas from the Agency AI team on running profitable paid ads for Shopify stores.</p>
+      <div class="policy-label">Legal</div>
+      <h1>Terms of Service</h1>
+      <p class="policy-meta">Last updated: July 13, 2025</p>
 
-      <div class="post-list">
+      <p>These Terms of Service ("Terms") govern your access to and use of Agency AI's platform and services ("Service"), provided by Agency AI, LLC ("Agency AI", "we", "us", or "our"). By installing or using the Service, you agree to these Terms.</p>
 
-        <a href="blog/2026-05-21-google-youtube-shopify-setup.html" class="post-card">
-          <div class="post-meta">
-            <span class="post-date">May 21, 2026</span>
-            <div class="post-tags">
-              <span class="post-tag">Tutorial</span>
-              <span class="post-tag">Shopify</span>
-              <span class="post-tag">Google</span>
-              <span class="post-tag">YouTube</span>
-            </div>
-            <span class="post-read">5 min read</span>
-          </div>
-          <h2>How to Set Up Google &amp; YouTube with Shopify (2026) – Complete Guide</h2>
-          <p class="post-excerpt">Connect your Shopify store to Google Merchant Center, Google Ads, and YouTube. Learn how to sync products, enable free listings, and run smart campaigns with this 2026 tutorial.</p>
-          <span class="post-cta">Read guide</span>
-        </a>
+      <h2>Eligibility</h2>
+      <p>You must be at least 18 years old and have the legal authority to enter into these Terms on behalf of yourself or your business. By using the Service, you represent that you meet these requirements.</p>
 
-        <a href="blog/2026-04-20-vapor95-meta-ads-case-study.html" class="post-card">
-          <div class="post-meta">
-            <span class="post-date">Apr 20, 2026</span>
-            <div class="post-tags">
-              <span class="post-tag">Case Study</span>
-              <span class="post-tag">Meta Ads</span>
-              <span class="post-tag">Ecommerce</span>
-            </div>
-            <span class="post-read">3 min read</span>
-          </div>
-          <h2>How Vapor95 Reduced Meta Ad Costs by 59% Using Agency AI</h2>
-          <p class="post-excerpt">Vapor95 paused Meta ads for three months after disappointing results. After switching to Agency AI they cut CPA from $52 to $21.50 — a 59% reduction — and reported a 200% increase in ROI.</p>
-          <span class="post-cta">Read case study</span>
-        </a>
+      <h2>Description of Service</h2>
+      <p>Agency AI is a marketing automation platform for Shopify merchants. We help you create, manage, and optimize paid advertising campaigns across Meta, Google, and other third-party platforms on your behalf using AI-driven recommendations and automation.</p>
 
-        <a href="blog/2025-01-01-facebook-instagram-shopify-setup.html" class="post-card">
-          <div class="post-meta">
-            <span class="post-date">Jan 1, 2025</span>
-            <div class="post-tags">
-              <span class="post-tag">Tutorial</span>
-              <span class="post-tag">Shopify</span>
-              <span class="post-tag">Facebook</span>
-              <span class="post-tag">Instagram</span>
-            </div>
-            <span class="post-read">4 min read</span>
-          </div>
-          <h2>Set Up Facebook &amp; Instagram with Shopify (2025) – Full Integration Guide</h2>
-          <p class="post-excerpt">Learn how to connect your Shopify store with Facebook &amp; Instagram using the Meta app. Step-by-step guide to sync your catalog, run ads, and sell on social media.</p>
-          <span class="post-cta">Read guide</span>
-        </a>
+      <h2>Account Responsibilities</h2>
+      <p>You are responsible for:</p>
+      <ul>
+        <li>Maintaining the confidentiality of your account credentials</li>
+        <li>All activities that occur under your account</li>
+        <li>Ensuring your use of the Service complies with applicable laws and platform policies (including Meta and Google advertising policies)</li>
+        <li>Providing accurate and complete information when connecting your accounts</li>
+      </ul>
 
+      <h2>Acceptable Use</h2>
+      <p>You agree not to use the Service to:</p>
+      <ul>
+        <li>Violate any applicable law or regulation</li>
+        <li>Infringe any third-party intellectual property or privacy rights</li>
+        <li>Transmit spam, malware, or other harmful content</li>
+        <li>Attempt to reverse-engineer, decompile, or extract source code from the Service</li>
+        <li>Use the Service in a manner that could damage, disable, or impair our infrastructure</li>
+      </ul>
+
+      <h2>Fees and Payment</h2>
+      <p>Subscription fees are billed through the Shopify Billing API. By subscribing, you authorize Shopify to charge your account per the plan you selected. Ad spend is billed directly by the respective advertising platforms (Meta, Google, etc.) and is separate from Agency AI subscription fees.</p>
+
+      <h2>Intellectual Property</h2>
+      <p>Agency AI and its licensors retain all rights, title, and interest in the Service, including all software, algorithms, and content we provide. Your use of the Service does not grant you any ownership rights. You retain ownership of all content and data you provide to us.</p>
+
+      <h2>Third-Party Services</h2>
+      <p>The Service integrates with third-party platforms such as Shopify, Meta, and Google. Your use of those platforms is governed by their respective terms and policies. Agency AI is not responsible for the availability, accuracy, or conduct of any third-party service.</p>
+
+      <h2>Disclaimer of Warranties</h2>
+      <p>The Service is provided "as is" and "as available" without warranties of any kind, express or implied. We do not warrant that the Service will be uninterrupted, error-free, or that results from advertising campaigns will meet your expectations.</p>
+
+      <h2>Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, Agency AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service. Our total aggregate liability shall not exceed the fees paid by you to Agency AI in the three months preceding the claim.</p>
+
+      <h2>Termination</h2>
+      <p>Either party may terminate these Terms at any time by uninstalling the app or canceling the subscription. Upon termination, your right to use the Service ceases immediately. We may also suspend or terminate your access if you violate these Terms.</p>
+
+      <h2>Changes to These Terms</h2>
+      <p>We may update these Terms periodically. We will notify you of material changes by updating the "Last updated" date. Continued use of the Service after changes constitutes acceptance of the revised Terms.</p>
+
+      <h2>Governing Law</h2>
+      <p>These Terms are governed by the laws of the State of Wyoming, without regard to conflict of law principles. Any disputes shall be resolved exclusively in the courts of Wyoming.</p>
+
+      <h2>Contact</h2>
+      <div class="policy-contact">
+        <p><strong>Agency AI, LLC</strong></p>
+        <p>30 N Gould St Ste R</p>
+        <p>Sheridan, WY 82801</p>
       </div>
+
     </div>
   </main>
 
@@ -408,16 +363,15 @@
         <ul class="footer-links">
           <li><a href="/#features">Features</a></li>
           <li><a href="/#how">How It Works</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
           <li><a href="/#integrations">Integrations</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
-          <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/about.html">About</a></li>
           <li><a href="#">Careers</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
