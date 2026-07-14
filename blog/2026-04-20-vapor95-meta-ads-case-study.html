@@ -116,6 +116,18 @@
     }
     .nav-cta:hover { opacity: 0.8; }
 
+    .nav-dashboard {
+      background: var(--black);
+      color: var(--accent-green) !important;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-dashboard:hover { opacity: 0.85; }
+
     .nav-toggle {
       display: none;
       flex-direction: column;
@@ -153,6 +165,7 @@
       .nav-links.open { display: flex; }
       .nav-links a { font-size: 16px; color: var(--black); }
       .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
+      .nav-dashboard { padding: 14px 32px !important; font-size: 15px !important; }
     }
 
     /* ── ARTICLE ── */
@@ -439,6 +452,7 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links">
+        <li><a href="https://dashboard.agencyai.app/" class="nav-dashboard" target="_blank" rel="noopener">Dashboard</a></li>
         <li><a href="/#features">Features</a></li>
         <li><a href="/#how">How It Works</a></li>
         <li><a href="../pricing.html">Pricing</a></li>
