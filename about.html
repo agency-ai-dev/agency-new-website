@@ -131,6 +131,22 @@
     }
     .nav-cta:hover { opacity: 0.8; }
 
+    .nav-dashboard {
+      background: transparent;
+      color: var(--black) !important;
+      padding: 10px 20px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: border-color 0.2s, background 0.2s !important;
+    }
+    .nav-dashboard:hover {
+      border-color: var(--black);
+      background: var(--gray-100);
+    }
+
     /* hamburger */
     .nav-toggle {
       display: none;
@@ -177,6 +193,7 @@
       .nav-links.open { display: flex; }
       .nav-links a { font-size: 16px; color: var(--black); }
       .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
+      .nav-dashboard { padding: 14px 32px !important; font-size: 15px !important; }
     }
 
     /* ── ARTICLE LAYOUT ── */
@@ -363,6 +380,7 @@
         <li><a href="pricing.html">Pricing</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="about.html">About</a></li>
+        <li><a href="https://dashboard.agencyai.app/" class="nav-dashboard">Dashboard</a></li>
         <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta">Get Started Free</a></li>
       </ul>
     </nav>

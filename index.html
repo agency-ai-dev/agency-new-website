@@ -130,6 +130,21 @@
       transform: translateY(-1px) !important;
     }
 
+    .nav-dashboard {
+      background: transparent;
+      color: var(--black) !important;
+      padding: 10px 22px;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: border-color 0.2s, background 0.2s !important;
+    }
+    .nav-dashboard:hover {
+      border-color: var(--black);
+      background: var(--gray-100);
+    }
+
     /* ── MOBILE MENU ── */
     .nav-toggle {
       display: none;
@@ -176,6 +191,7 @@
       .nav-links.open { display: flex; }
       .nav-links a { font-size: 16px; color: var(--black); }
       .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
+      .nav-dashboard { padding: 14px 32px !important; font-size: 15px !important; }
     }
 
     /* ── TICKER ── */
@@ -1615,6 +1631,7 @@
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="blog.html">Blog</a></li>
         <li><a href="about.html">About</a></li>
+      <li><a href="https://dashboard.agencyai.app/" class="nav-dashboard">Dashboard</a></li>
       <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta" style="display:inline-flex;align-items:center;gap:8px;"><img src="assets/logos/shopify.png" alt="" style="height:16px;width:auto;"/>Get Started Free</a></li>
     </ul>
   </nav>
