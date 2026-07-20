@@ -1608,6 +1608,7 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="assets/css/newsletter.css"/>
 </head>
 <body>
 
@@ -2256,6 +2257,25 @@
   </section>
 
   <!-- CTA -->
+  <!-- Newsletter — The Operator Brief -->
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <div class="newsletter-eyebrow"><span class="newsletter-dash">—</span> The Operator Brief</div>
+      <h2 class="newsletter-headline">Steal our <em>benchmarks</em></h2>
+      <p class="newsletter-sub">Once a month: median ROAS and CPA by vertical, the creative angles beating control, and every feature drop. No fluff, no funnel.</p>
+      <form class="newsletter-form" novalidate>
+        <label class="newsletter-hp" aria-hidden="true">Website
+          <input type="text" name="website" tabindex="-1" autocomplete="off"/>
+        </label>
+        <div class="newsletter-row">
+          <input class="newsletter-input" type="email" name="email" placeholder="you@yourstore.com" aria-label="Email address" autocomplete="email" required/>
+          <button class="newsletter-submit" type="submit">Get the brief</button>
+        </div>
+        <p class="newsletter-status" role="status" aria-live="polite">1 email/month · Unsubscribe in one click<span class="newsletter-note-extra"> · We never sell your data</span></p>
+      </form>
+    </div>
+  </section>
+
   <section class="cta-section">
     <h2 class="cta-headline">Ready to<br/>Outgrow<br/>The Competition?</h2>
     <div class="cta-actions" style="justify-content:center;flex-direction:column;align-items:center;gap:16px;">
@@ -2403,5 +2423,6 @@
     });
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   </script>
+  <script src="assets/js/newsletter.js" defer></script>
 </body>
 </html>

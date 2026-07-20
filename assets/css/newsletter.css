@@ -1,0 +1,157 @@
+/* ── NEWSLETTER — THE OPERATOR BRIEF ──
+   Full-bleed section on index.html, directly above the final CTA. Relies on the
+   design tokens declared in the page's inline :root block (--mono, --sans,
+   --display, --black, --white, --accent-green). */
+
+.newsletter {
+  background: var(--black);
+  padding: 120px 48px;
+  text-align: center;
+}
+
+.newsletter-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.newsletter-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 26px;
+}
+
+.newsletter-dash { color: var(--accent-green); }
+
+.newsletter-headline {
+  font-family: var(--display);
+  font-size: clamp(52px, 7.5vw, 108px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 26px;
+}
+
+.newsletter-headline em {
+  font-style: normal;
+  color: var(--accent-green);
+}
+
+.newsletter-sub {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 720px;
+  margin: 0 auto 44px;
+}
+
+.newsletter-form {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.newsletter-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.newsletter-input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 19px 22px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.newsletter-input::placeholder { color: rgba(255, 255, 255, 0.32); }
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Only flag a bad address once the user has finished typing, never mid-entry. */
+.newsletter.is-invalid .newsletter-input {
+  border-color: #E5484D;
+}
+
+.newsletter-submit {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--accent-green);
+  border: 1px solid var(--accent-green);
+  border-radius: 999px;
+  padding: 19px 44px;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.newsletter-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 32px rgba(52, 211, 153, 0.28);
+}
+
+/* Kept genuinely disabled until the address is valid, but only lightly dimmed:
+   the resting state is what most visitors see, and a heavy dim made the section
+   read as switched off rather than inviting. */
+.newsletter-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* Reserve the line's height so switching states never shifts the section. */
+.newsletter-status {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 18px;
+  min-height: 20px;
+}
+
+.newsletter-status[data-state="success"] { color: var(--accent-green); }
+.newsletter-status[data-state="error"]   { color: #E5484D; }
+
+/* Honeypot: hidden from people and assistive tech, still fillable by bots. */
+.newsletter-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .newsletter { padding: 72px 24px; }
+  .newsletter-eyebrow { font-size: 10px; margin-bottom: 20px; }
+  .newsletter-sub { font-size: 16px; margin-bottom: 34px; }
+  .newsletter-row { flex-direction: column; gap: 12px; }
+  .newsletter-input { padding: 18px 20px; }
+  .newsletter-submit { padding: 18px 32px; width: 100%; }
+  /* Dropped on narrow screens, where it wraps to a line of its own. */
+  .newsletter-note-extra { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-input,
+  .newsletter-submit {
+    transition: none;
+  }
+  .newsletter-submit:hover:not(:disabled) { transform: none; }
+}
