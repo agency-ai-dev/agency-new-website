@@ -488,6 +488,7 @@
       footer { padding: 48px 20px 24px; }
     }
   </style>
+  <link rel="stylesheet" href="../assets/css/newsletter.css"/>
 </head>
 <body>
 
@@ -696,6 +697,24 @@
         </ul>
       </div>
     </div>
+    <!-- Newsletter signup -->
+    <div class="newsletter">
+      <div class="newsletter-copy">
+        <div class="newsletter-title">Get the brief</div>
+        <p class="newsletter-blurb">Growth tactics for Shopify operators — what's working, what isn't, and what we're seeing across the stores we run.</p>
+      </div>
+      <form class="newsletter-form" novalidate>
+        <label class="newsletter-hp" aria-hidden="true">Website
+          <input type="text" name="website" tabindex="-1" autocomplete="off"/>
+        </label>
+        <div class="newsletter-row">
+          <input class="newsletter-input" type="email" name="email" placeholder="you@store.com" aria-label="Email address" autocomplete="email" required/>
+          <button class="newsletter-submit" type="submit">Subscribe</button>
+        </div>
+        <p class="newsletter-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
     <div class="footer-bottom">
       <div class="footer-copy">© 2026 Agency AI, Inc. Built with <span>♥</span> for Shopify merchants.</div>
       <div class="footer-copy">Built by operators. Tuned for <span style="color:#5E8EE0;">Shopify</span>.</div>
@@ -722,5 +741,6 @@
     });
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   </script>
+  <script src="../assets/js/newsletter.js" defer></script>
 </body>
 </html>

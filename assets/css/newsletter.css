@@ -1,0 +1,138 @@
+/* ── FOOTER NEWSLETTER SIGNUP ──
+   Shared across every page. Relies on the design tokens declared in each page's
+   inline :root block (--mono, --sans, --white, --black, --gray-400,
+   --accent-blue, --accent-green). */
+
+.newsletter {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 32px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 40px;
+}
+
+.newsletter-copy {
+  max-width: 420px;
+}
+
+.newsletter-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 10px;
+}
+
+.newsletter-blurb {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.7;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 380px;
+}
+
+.newsletter-row {
+  display: flex;
+  gap: 10px;
+}
+
+.newsletter-input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 13px 16px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.newsletter-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Only flag a bad address once the user has finished typing, never mid-entry. */
+.newsletter.is-invalid .newsletter-input {
+  border-color: #E5484D;
+}
+
+.newsletter-submit {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  background: var(--accent-green);
+  border: 1px solid var(--accent-green);
+  border-radius: 10px;
+  padding: 13px 26px;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.newsletter-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(52, 211, 153, 0.25);
+}
+
+.newsletter-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Reserve the line's height so switching states never shifts the footer. */
+.newsletter-status {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  min-height: 16px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.newsletter-status[data-state="success"] { color: var(--accent-green); }
+.newsletter-status[data-state="error"]   { color: #E5484D; }
+
+/* Honeypot: hidden from people and assistive tech, still fillable by bots. */
+.newsletter-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .newsletter {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .newsletter-form { min-width: 0; }
+}
+
+@media (max-width: 640px) {
+  .newsletter-row { flex-direction: column; }
+  .newsletter-submit { padding: 13px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-input,
+  .newsletter-submit {
+    transition: none;
+  }
+  .newsletter-submit:hover:not(:disabled) { transform: none; }
+}
