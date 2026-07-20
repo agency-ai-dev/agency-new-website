@@ -1,6 +1,6 @@
-/* ── FOOTER NEWSLETTER SIGNUP ──
-   Progressive enhancement over the markup already in each page's footer.
-   Loaded with `defer` on every page. */
+/* ── NEWSLETTER — THE OPERATOR BRIEF ──
+   Progressive enhancement over the section markup already in index.html.
+   Loaded with `defer`. */
 
 (function () {
   'use strict';
@@ -12,12 +12,15 @@
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   var MESSAGES = {
-    idle: 'One email a week. Unsubscribe anytime.',
     loading: 'Signing you up…',
     success: "You're in. Check your inbox to confirm.",
     invalid: 'That email address does not look right.',
     error: 'Something went wrong. Try again in a moment.'
   };
+
+  // The reassurance line doubles as the resting state of the status region. It
+  // lives in the markup rather than here so it renders without JS, and so CSS
+  // owns the responsive part — a width measured once in JS goes stale on resize.
 
   /**
    * The single seam between the UI and the backend.
@@ -52,10 +55,17 @@
     if (!form || !input || !button || !status) return;
 
     var submitting = false;
+    var idleHTML = status.innerHTML;
 
+    // Idle restores the markup's own copy (which carries a span CSS hides on
+    // narrow screens); every other state is plain text.
     function setStatus(state, message) {
       status.setAttribute('data-state', state);
-      status.textContent = message;
+      if (state === 'idle') {
+        status.innerHTML = idleHTML;
+      } else {
+        status.textContent = message;
+      }
     }
 
     function isValid() {
@@ -71,7 +81,7 @@
     input.addEventListener('input', function () {
       root.classList.remove('is-invalid');
       if (status.getAttribute('data-state') === 'error') {
-        setStatus('idle', MESSAGES.idle);
+        setStatus('idle');
       }
       syncButton();
     });
@@ -107,7 +117,7 @@
         });
     });
 
-    setStatus('idle', MESSAGES.idle);
+    setStatus('idle');
     syncButton();
   }
 
