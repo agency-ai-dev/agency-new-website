@@ -46,6 +46,12 @@ test('closing band carries the GROW ghost wordmark and mint apply CTA', () => {
   assert.match(partners, /class="p-closing__cta"[\s\S]*?Apply to partner/);
 });
 
+test('placeholder partner grid is hidden until real data lands', () => {
+  assert.match(partners, /<section class="p-curated" id="curatedSection" hidden>/);
+  assert.match(partners, /const SHOW_PLACEHOLDER_PARTNERS = false;/);
+  assert.match(partners, /if \(!SHOW_PLACEHOLDER_PARTNERS\) return;/);
+});
+
 // ── Data source + cards (AGY-2) ──
 test('partners render from a data array, not hardcoded markup', () => {
   assert.match(partners, /const PARTNERS = \[/);
