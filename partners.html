@@ -541,8 +541,11 @@
       </div>
     </section>
 
-    <!-- ═══ Curated partner grid (2-up desktop / 1-up mobile) ═══ -->
-    <section class="p-curated">
+    <!-- ═══ Curated partner grid (2-up desktop / 1-up mobile) ═══
+         Hidden while the seed data is placeholder copy — flip
+         SHOW_PLACEHOLDER_PARTNERS in the script below once real
+         partners are loaded. -->
+    <section class="p-curated" id="curatedSection" hidden>
       <div class="p-curated__inner">
         <div class="p-curated__head">
           <span class="p-curated__count" id="partnerCount">[ Current partners &middot; 00 ]</span>
@@ -615,6 +618,10 @@
        Fields: name, category, description, offerLabel, offerText, url,
                monogram, tone, sortOrder.
        ─────────────────────────────────────────────────────────────── */
+    // Entries below are placeholders — keep the grid hidden until real
+    // partner data lands, then set this to true.
+    const SHOW_PLACEHOLDER_PARTNERS = false;
+
     const PARTNERS = [
       {
         name: 'Northbeam Labs',
@@ -696,8 +703,11 @@
       track.innerHTML = one + one;
     })();
 
-    // Render partner cards + auto-count
+    // Render partner cards + auto-count (section stays hidden while the
+    // seed data is placeholder copy)
     (function renderPartners() {
+      if (!SHOW_PLACEHOLDER_PARTNERS) return;
+      document.getElementById('curatedSection').hidden = false;
       const grid = document.getElementById('partnerGrid');
       const list = [...PARTNERS].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
       grid.innerHTML = list.map((p) => `
