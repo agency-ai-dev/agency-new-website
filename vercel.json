@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     { "source": "/vision",             "destination": "/" },
     { "source": "/vision/",            "destination": "/" },
