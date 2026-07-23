@@ -9,7 +9,7 @@ const OTHER_PAGES = [
   'cookie-policy.html',
   'terms-of-service.html',
   'privacy-policy.html',
-  'blog/2025-01-01-facebook-instagram-shopify-setup.html',
+  'blog/2026-01-01-facebook-instagram-shopify-setup.html',
   'blog/2026-04-20-vapor95-meta-ads-case-study.html',
   'blog/2026-05-21-google-youtube-shopify-setup.html'
 ];
