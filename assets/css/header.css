@@ -1,0 +1,252 @@
+/* ── HEADER ── */
+/* Shared sitewide header (all 11 pages). Self-contained: depends only on
+   --sans, which every page already declares in :root.
+   Colors ship exactly as the hero deliverable specifies — they are NOT
+   remapped onto the site's --accent-* tokens.
+   Pairs with assets/css/mobile-menu.css + assets/js/mobile-menu.js;
+   .hdr-burger is the [data-mm-open] trigger. */
+
+/* the header is fixed, so hash targets need to clear it */
+html { scroll-padding-top: var(--hdr-scroll-offset, 76px); }
+/* Pages with the ticker (index.html) raise --hdr-scroll-offset to 110px:
+   60px header + 34px ticker + 16px breathing room. */
+
+.hdr-wrap {
+  border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250, 247, 242, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 60px;
+  padding: 0 40px;
+}
+
+/* ---- brand lockup ---- */
+.hdr-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  text-decoration: none;
+}
+.hdr-mark {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 8px;
+  background: #0B0F0D; /* the mark is transparent — it must sit on a dark tile */
+  display: grid;
+  place-items: center;
+}
+.hdr-mark img { display: block; width: 18px; height: 18px; }
+.hdr-word {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #0A0A0A;
+  white-space: nowrap;
+}
+
+/* ---- desktop nav ---- */
+.hdr-nav {
+  /* defensive resets: the legacy pages carry a bare `nav { ... }` rule */
+  position: static;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 22px;
+  min-width: 0;
+}
+.hdr-nav a {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #46463F;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.12s ease;
+}
+.hdr-nav a:hover { color: #2F7BFF; }
+
+/* ---- right-hand actions ---- */
+.hdr-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: none;
+}
+
+/* one segmented control, not two competing buttons */
+.hdr-seg {
+  display: flex;
+  align-items: stretch;
+  height: 36px;
+  border: 1px solid rgba(10, 10, 10, 0.14);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(10, 10, 10, 0.04);
+}
+.hdr-seg-dash,
+.hdr-seg-cta {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.12s ease;
+}
+.hdr-seg-dash {
+  gap: 8px;
+  padding: 0 14px;
+  color: #0A0A0A;
+}
+.hdr-seg-dash:hover { background: rgba(10, 10, 10, 0.04); color: #0A0A0A; }
+.hdr-dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: #00C79F;
+}
+.hdr-seg-div {
+  width: 1px;
+  flex: none;
+  background: rgba(10, 10, 10, 0.12);
+}
+.hdr-seg-cta {
+  gap: 9px;
+  padding: 0 15px;
+  background: #0A0A0A;
+  color: #fff;
+}
+.hdr-seg-cta:hover { background: #1a1a1a; color: #fff; }
+.hdr-seg-cta svg { flex: none; display: block; }
+.hdr-seg-short { display: none; }
+
+/* ---- hamburger — the mobile-menu trigger ---- */
+.hdr-burger {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  /* 3x2px bars + 2x4px gaps = 14px, centred in 44px -> every bar on a whole pixel */
+  width: 44px;
+  height: 44px;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hdr-burger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background: #0A0A0A;
+}
+
+/* ---- focus ---- */
+/* the outline follows each element's own border-radius; only the
+   square-cornered links get a softened one */
+.hdr a:focus-visible,
+.hdr button:focus-visible {
+  outline: 2px solid #0A0A0A;
+  outline-offset: 3px;
+}
+.hdr-nav a:focus-visible,
+.hdr-brand:focus-visible { border-radius: 6px; }
+
+/* ---- desktop: full nav from 900px up ---- */
+/* sync:desktop */
+@media (min-width: 900px) {
+  .hdr-nav { display: flex; }
+}
+/* narrow desktop band — tighten so the nav + control still fit on one line */
+/* sync:desktop */
+@media (min-width: 900px) and (max-width: 1099px) {
+  .hdr { padding: 0 24px; gap: 14px; }
+  .hdr-nav { gap: 16px; }
+  .hdr-actions { gap: 10px; }
+  .hdr-seg-full { display: none; }
+  .hdr-seg-short { display: inline; }
+}
+
+/* ---- below 900px the hamburger takes over ---- */
+/* sync:desktop-1 */
+@media (max-width: 899px) {
+  .hdr-burger { display: flex; }
+}
+
+/* ---- tablet 640–899px ---- */
+/* sync:desktop-1 */
+@media (min-width: 640px) and (max-width: 899px) {
+  .hdr { height: 68px; padding: 0 22px 0 28px; }
+  .hdr-seg {
+    height: auto;          /* the segments carry the 44px touch target */
+    border-radius: 12px;
+    box-shadow: none;
+  }
+  .hdr-seg-dash { height: 44px; padding: 0 15px; font-size: 12.5px; }
+  .hdr-seg-cta { height: 44px; gap: 8px; padding: 0 16px; font-size: 12.5px; }
+  .hdr-seg-full { display: none; }
+  .hdr-seg-short { display: inline; }
+}
+
+/* ---- mobile under 640px: Dashboard pill + hamburger ---- */
+@media (max-width: 639px) {
+  .hdr { height: 60px; padding: 0 14px 0 18px; gap: 10px; }
+  .hdr-mark { width: 26px; height: 26px; }
+  .hdr-mark img { width: 17px; height: 17px; }
+  .hdr-word { font-size: 16px; }
+  .hdr-actions { gap: 10px; }
+  .hdr-seg {
+    height: auto;          /* the pill itself carries the 44px touch target */
+    border-radius: 11px;
+    box-shadow: none;
+  }
+  /* the segmented control collapses to the standalone Dashboard pill */
+  .hdr-seg-div,
+  .hdr-seg-cta { display: none; }
+  .hdr-seg-dash { height: 44px; gap: 7px; padding: 0 14px; font-size: 12px; }
+  .hdr-dot { width: 5px; height: 5px; }
+  .hdr-burger span { width: 19px; }
+}
+
+@media (max-width: 359px) {
+  .hdr-word { display: none; } /* keep the lockup from crowding the pill */
+}
+
+
+/* ── wordmark supplied as artwork ── */
+.hdr-word img { display: block; width: auto; height: 18px; }
+@media (max-width: 639px) { .hdr-word img { height: 16px; } }
