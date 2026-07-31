@@ -139,13 +139,14 @@ test('FAQPage JSON-LD stays in sync with the visible FAQ', () => {
 /* ── the redesigned home page sections ── */
 
 test('home page renders every redesigned section in the designed order', () => {
+  // round 2: the strategist band moved directly below the hero
   const order = [
     'class="hero-v2"',
+    'id="strategist"',
     'id="video"',
     'id="problem"',
     'id="features"',
     'id="how"',
-    'id="strategist"',
     'id="mcp"',
     'id="integrations"',
   ];

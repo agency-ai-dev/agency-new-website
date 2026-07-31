@@ -206,8 +206,8 @@
       background: rgba(200,255,0,0.04);
     }
     .problem-icon {
-      width: 44px;
-      height: 44px;
+      width: 28px;
+      height: 28px;
       color: var(--lime);
       display: flex;
       align-items: center;
@@ -221,11 +221,10 @@
       display: block;
     }
     .problem-title {
-      font-size: 22px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--white);
-      margin-bottom: 0;
-      line-height: 1.35;
+      margin-bottom: 4px;
     }
     .problem-desc {
       font-size: 14px;
@@ -993,6 +992,7 @@
     html { scroll-padding-top: 110px; } /* 60px header + 34px ticker + 16px breathing room */
 
     .hdr-wrap {
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
@@ -1008,7 +1008,6 @@
       gap: 20px;
       height: 60px;
       padding: 0 40px;
-      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
     }
 
     /* ---- brand lockup ---- */
@@ -1137,6 +1136,7 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
+      /* 3x2px bars + 2x4px gaps = 14px, centred in 44px -> every bar on a whole pixel */
       width: 44px;
       height: 44px;
       flex: none;
@@ -1150,7 +1150,7 @@
     .hdr-burger span {
       display: block;
       width: 20px;
-      height: 1.8px;
+      height: 2px;
       border-radius: 1px;
       background: #0A0A0A;
     }
@@ -1323,7 +1323,8 @@
     .hv-h1 {
       margin: 20px 0 0;
       font-family: var(--display);
-      font-weight: 400;
+      /* matches .section-headline: UA bold on a 400-only face = synthetic bold */
+      font-weight: bold;
       font-size: clamp(48px, 7.2vw, 104px);
       line-height: 1.02;
       letter-spacing: 0.004em;
@@ -2422,14 +2423,6 @@
   line-height: 1.3;
 }
 
-.cb-hint {
-  margin: 0;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--cb-text-2);
-  text-align: center;
-}
-
 /* ---- motion (decorative — off under reduced motion) ---- */
 @media (prefers-reduced-motion: no-preference) {
   .cb-dot { animation: cb-drift 3s ease-in-out infinite; }
@@ -2499,7 +2492,6 @@
   .cb-chips { flex-direction: column; flex-wrap: nowrap; gap: 8px; }
   .cb-chip { padding: 11px 15px; font-size: 14px; text-align: left; }
   .cb-chip--hide-mobile { display: none; }
-  .cb-hint { font-size: 11px; }
 }
 
 /* ── MCP CONNECTOR ── */
@@ -2633,7 +2625,7 @@
 .mcp-tab[aria-selected="true"] {
       background: none;
       box-shadow: inset 0 0 0 1px var(--accent-green);
-      color: var(--mcp-muted);
+      color: var(--mcp-white);
     }
 .mcp-tabs__meta { margin-left: auto; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.2em; color: #5C5C5C; }
 
@@ -3428,6 +3420,52 @@ body.mm-locked { overflow: hidden; }
   </div>
 </section>
 
+<section class="cb" id="strategist">
+  <a class="cb-link" href="https://dashboard.agencyai.app/" target="_blank" rel="noopener" aria-label="Ask your AI Strategist">
+    <div class="cb-col">
+
+      <div class="cb-head">
+        <div class="cb-identity">
+          <span class="cb-dot" aria-hidden="true"></span>
+          <span class="cb-role">AI Strategist</span>
+          <span class="cb-sync">SYNCED 2M AGO</span>
+        </div>
+        <h2 class="cb-headline">Ask your strategist</h2>
+        <p class="cb-sub">
+          <span class="cb-d">It has already read this week&rsquo;s Meta, Google and Shopify numbers &mdash; 290 campaigns, swept two minutes ago.</span>
+          <span class="cb-t">Already read this week&rsquo;s Meta, Google and Shopify numbers &mdash; 290 campaigns, swept two minutes ago.</span>
+          <span class="cb-m">Meta, Google and Shopify data &mdash; synced 2 min ago.</span>
+        </p>
+      </div>
+
+      <div class="cb-ring">
+        <span class="cb-ring__spin" aria-hidden="true"></span>
+        <div class="cb-card">
+          <p class="cb-typed" aria-hidden="true"><span class="cb-typed__text" data-cb-typed>I need to run a clearance sale, what type campaigns do you recommend I make?</span><span class="cb-caret"></span></p>
+          <div class="cb-actions" aria-hidden="true">
+            <div class="cb-pills">
+              <span class="cb-pill"><span class="cb-pill__dot cb-pill__dot--mint"></span>Top creative</span>
+              <span class="cb-pill"><span class="cb-pill__dot cb-pill__dot--blue"></span>Top campaigns</span>
+            </div>
+            <span class="cb-send">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h13M12 5l7 7-7 7"></path></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cb-chips">
+        <span class="cb-chip">How are my campaigns performing this week?</span>
+        <span class="cb-chip cb-chip--hide-mobile">What&rsquo;s my best creative right now?</span>
+        <span class="cb-chip">Where should I shift budget?</span>
+      </div>
+
+
+    </div>
+  </a>
+</section>
+
+
 
   <!-- Video -->
   <section class="video-section" id="video">
@@ -3451,6 +3489,8 @@ body.mm-locked { overflow: hidden; }
     </div>
   </section>
 
+<!-- ══ "ASK YOUR STRATEGIST" BANNER (NEW — insert after the 4-steps section) ══ -->
+
   <!-- Problem -->
   <section class="problem" id="problem">
     <div class="container">
@@ -3473,6 +3513,19 @@ body.mm-locked { overflow: hidden; }
             </div>
             <div>
               <div class="problem-title">Ad management eats your day</div>
+              <div class="problem-desc">Constantly tweaking bids, swapping creatives, and A/B testing burns hours that belong on product and customer experience.</div>
+            </div>
+          </li>
+          <li>
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <polyline points="3 17 8 11 13 14 21 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="17 6 21 6 21 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="problem-title">The on-ramp to scaled paid growth</div>
+              <div class="problem-desc">Agencies do their best work when you're already scaling. Agency AI is how you get there — automated execution that takes you from your first $10K month to the point an agency makes sense.</div>
             </div>
           </li>
           <li>
@@ -3484,6 +3537,7 @@ body.mm-locked { overflow: hidden; }
             </div>
             <div>
               <div class="problem-title">Slow iteration kills momentum</div>
+              <div class="problem-desc">By the time you've briefed a designer and copywriter, your competitor has already tested 12 new ad variations.</div>
             </div>
           </li>
         </ul>
@@ -3641,52 +3695,6 @@ body.mm-locked { overflow: hidden; }
   </div>
 </section>
 
-<!-- ══ "ASK YOUR STRATEGIST" BANNER (NEW — insert after the 4-steps section) ══ -->
-<section class="cb" id="strategist">
-  <a class="cb-link" href="https://dashboard.agencyai.app/" target="_blank" rel="noopener" aria-label="Ask your AI Strategist">
-    <div class="cb-col">
-
-      <div class="cb-head">
-        <div class="cb-identity">
-          <span class="cb-dot" aria-hidden="true"></span>
-          <span class="cb-role">AI Strategist</span>
-          <span class="cb-sync">SYNCED 2M AGO</span>
-        </div>
-        <h2 class="cb-headline">Ask your strategist</h2>
-        <p class="cb-sub">
-          <span class="cb-d">It has already read this week&rsquo;s Meta, Google and Shopify numbers &mdash; 290 campaigns, swept two minutes ago.</span>
-          <span class="cb-t">Already read this week&rsquo;s Meta, Google and Shopify numbers &mdash; 290 campaigns, swept two minutes ago.</span>
-          <span class="cb-m">Meta, Google and Shopify data &mdash; synced 2 min ago.</span>
-        </p>
-      </div>
-
-      <div class="cb-ring">
-        <span class="cb-ring__spin" aria-hidden="true"></span>
-        <div class="cb-card">
-          <p class="cb-typed" aria-hidden="true"><span class="cb-typed__text" data-cb-typed>I need to run a clearance sale, what type campaigns do you recommend I make?</span><span class="cb-caret"></span></p>
-          <div class="cb-actions" aria-hidden="true">
-            <div class="cb-pills">
-              <span class="cb-pill"><span class="cb-pill__dot cb-pill__dot--mint"></span>Top creative</span>
-              <span class="cb-pill"><span class="cb-pill__dot cb-pill__dot--blue"></span>Top campaigns</span>
-            </div>
-            <span class="cb-send">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h13M12 5l7 7-7 7"></path></svg>
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cb-chips">
-        <span class="cb-chip">How are my campaigns performing this week?</span>
-        <span class="cb-chip cb-chip--hide-mobile">What&rsquo;s my best creative right now?</span>
-        <span class="cb-chip">Where should I shift budget?</span>
-      </div>
-
-      <p class="cb-hint" aria-hidden="true">Enter sends &middot; Shift + Enter for a new line</p>
-
-    </div>
-  </a>
-</section>
 
 <!-- ══ MCP CONNECTOR (NEW — insert after the "Ask your strategist" banner) ══ -->
 <section class="mcp-sec" id="mcp">
