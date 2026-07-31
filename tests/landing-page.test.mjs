@@ -68,10 +68,18 @@ test('landing includes the ai phone conversation section', () => {
   assert.match(html, /Session summary/i);
 });
 
-test('landing includes the faq section before the cta', () => {
+test('landing includes the faq section above the closing bands', () => {
   assert.match(html, /<section class="faq" id="faq">/);
   assert.match(html, /Does Agency AI replace my agency\?/);
-  assert.ok(html.indexOf('id="faq"') < html.indexOf('class="cta-section"'));
+  assert.ok(html.indexOf('id="faq"') < html.indexOf('class="newsletter"'));
+});
+
+// Removed in round 1 (docx image12): the mint "Ready to Outgrow The Competition?"
+// band with the ghost GROW wordmark and the Install-free-on-Shopify button.
+test('the final CTA band stays removed', () => {
+  assert.doesNotMatch(html, /class="cta-section"/);
+  assert.doesNotMatch(html, /cta-headline/);
+  assert.doesNotMatch(html, /Ready to<br\/>Outgrow/);
 });
 
 test('landing uses public proof brands instead of fabricated testimonial names', () => {

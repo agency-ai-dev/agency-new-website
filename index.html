@@ -846,49 +846,12 @@
     }
 
     /* ── CTA SECTION ── */
-    .cta-section {
-      padding: 140px 48px;
-      background: var(--black);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-section::before {
-      content: 'GROW';
-      font-family: var(--display);
-      font-size: 340px;
-      line-height: 1;
-      color: rgba(255,255,255,0.04);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    .cta-headline {
-      font-family: var(--display);
-      font-size: clamp(52px, 6vw, 96px);
-      line-height: 0.9;
-      text-transform: uppercase;
-      color: var(--lime);
-      margin-bottom: 24px;
-      position: relative;
-      z-index: 2;
-    }
     .cta-sub {
       font-size: 18px;
       font-weight: 300;
       color: rgba(255,255,255,0.55);
       max-width: 480px;
       margin: 0 auto 48px;
-      position: relative;
-      z-index: 2;
-    }
-    .cta-actions {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
       position: relative;
       z-index: 2;
     }
@@ -1012,7 +975,6 @@
 
     @media (max-width: 640px) {
       .footer-top { grid-template-columns: 1fr; }
-      .cta-actions { flex-direction: column; align-items: center; }
       .ai-call { padding: 60px 0; overflow: hidden; }
       .call-layout { grid-template-columns: 1fr; }
       .call-card { display: none; }
@@ -4135,17 +4097,6 @@ body.mm-locked { overflow: hidden; }
         </div>
         <p class="newsletter-status" role="status" aria-live="polite">1 email/month · Unsubscribe in one click<span class="newsletter-note-extra"> · We never sell your data</span></p>
       </form>
-    </div>
-  </section>
-
-  <section class="cta-section">
-    <h2 class="cta-headline">Ready to<br/>Outgrow<br/>The Competition?</h2>
-    <div class="cta-actions" style="justify-content:center;flex-direction:column;align-items:center;gap:16px;">
-      <a href="https://apps.shopify.com/agency-ai" class="btn-white" style="display:inline-flex;align-items:center;gap:12px;background:var(--accent-green);color:var(--black);border-radius:10px;padding:18px 40px;font-size:15px;">
-        <img src="assets/logos/shopify-black.png" alt="Shopify" width="2400" height="2737" loading="lazy" decoding="async" style="height:24px;width:auto;"/>
-        INSTALL FREE ON SHOPIFY
-      </a>
-      <p style="color:rgba(255,255,255,0.55);font-size:14px;font-family:var(--sans);margin:0;">No credit card · Installs in 2 minutes</p>
     </div>
   </section>
 

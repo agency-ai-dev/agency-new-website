@@ -30,13 +30,17 @@ test('index carries the signup section with the approved copy', () => {
   assert.match(index, /placeholder="you@yourstore\.com"/);
 });
 
-test('the section sits directly above the final CTA', () => {
+// The "Ready to Outgrow The Competition?" band that used to close the page was
+// removed in round 1, so the signup is now the last content band before the footer.
+test('the section is the last band before the footer', () => {
   const section = index.indexOf('<section class="newsletter">');
-  const cta = index.indexOf('<section class="cta-section">');
-  assert.ok(section > -1 && cta > -1, 'section or CTA missing');
-  assert.ok(section < cta, 'signup renders below the final CTA');
-  // Nothing but whitespace between them — they read as one block.
-  assert.match(index.slice(index.lastIndexOf('</section>', cta) + 10, cta), /^\s*$/);
+  const footer = index.indexOf('<footer>');
+  assert.ok(section > -1 && footer > -1, 'section or footer missing');
+  assert.ok(section < footer, 'signup renders below the footer');
+  // Nothing but whitespace and comments between them — they read as one block.
+  const between = index.slice(index.lastIndexOf('</section>', footer) + 10, footer);
+  assert.match(between.replace(/<!--[\s\S]*?-->/g, ''), /^\s*$/);
+  assert.doesNotMatch(index, /class="cta-section"/, 'the removed final CTA band is back');
 });
 
 test('the signup appears on index only', () => {
