@@ -2978,15 +2978,12 @@
   border-radius: 50%;
   background: transparent;
 }
-.mm-link[aria-current="page"],
-.mm-link[aria-current="true"] {
+.mm-link[aria-current="page"] {
   color: var(--mm-ink);
   font-weight: 600;
 }
-.mm-link[aria-current="page"]:hover,
-.mm-link[aria-current="true"]:hover { color: var(--mm-ink); }
-.mm-link[aria-current="page"]::before,
-.mm-link[aria-current="true"]::before { background: var(--mm-mint); }
+.mm-link[aria-current="page"]:hover { color: var(--mm-ink); }
+.mm-link[aria-current="page"]::before { background: var(--mm-mint); }
 
 /* staggered entrance */
 .mm-panel .mm-link {
@@ -3476,8 +3473,6 @@ body.mm-locked { overflow: hidden; }
       </div>
     </div>
   </section>
-
-<!-- ══ "ASK YOUR STRATEGIST" BANNER (NEW — insert after the 4-steps section) ══ -->
 
   <!-- Problem -->
   <section class="problem" id="problem">

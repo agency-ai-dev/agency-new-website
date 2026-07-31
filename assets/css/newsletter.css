@@ -148,7 +148,6 @@
   .newsletter-row { flex-direction: column; gap: 12px; }
   .newsletter-input { padding: 18px 20px; }
   .newsletter-submit { padding: 18px 32px; width: 100%; }
-  /* Dropped on narrow screens, where it wraps to a line of its own. */
 }
 
 @media (prefers-reduced-motion: reduce) {

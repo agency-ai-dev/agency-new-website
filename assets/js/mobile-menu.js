@@ -15,7 +15,9 @@
   'use strict';
 
   var FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
-  var DESKTOP = '(min-width: 900px)'; /* must match the breakpoint in mobile-menu.css */
+  /* Must match the `@media (min-width: 900px)` menu rules, which are inlined
+     in the <style> block of every page that ships this menu. */
+  var DESKTOP = '(min-width: 900px)';
 
   function toArray(list) {
     return Array.prototype.slice.call(list || []);
