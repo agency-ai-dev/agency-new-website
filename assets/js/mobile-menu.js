@@ -15,8 +15,9 @@
   'use strict';
 
   var FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
-  /* Must match the `@media (min-width: 900px)` menu rules, which are inlined
-     in the <style> block of every page that ships this menu. */
+  /* Media queries tagged "sync:desktop" in assets/css/header.css and
+     assets/css/mobile-menu.css must match this value; "sync:desktop-1" ones
+     sit one pixel below it. tests/site-chrome.test.mjs enforces both. */
   var DESKTOP = '(min-width: 900px)';
 
   function toArray(list) {

@@ -87,3 +87,46 @@ test('only index.html raises the scroll offset for the ticker', () => {
     }
   }
 });
+
+const menuJs = read('../assets/js/mobile-menu.js');
+
+/* A media query tagged sync:desktop must switch at the DESKTOP value in
+   mobile-menu.js; one tagged sync:desktop-1 closes the band one pixel below it.
+   Untagged breakpoints (640px, 639px, 359px) are independent of the menu and
+   are deliberately not checked. */
+function taggedBreakpoints(css, marker, prop) {
+  const lines = css.split('\n');
+  const found = [];
+  lines.forEach((line, i) => {
+    if (line.trim() !== `/* ${marker} */`) return;
+    const next = lines[i + 1] ?? '';
+    const m = next.match(new RegExp(`${prop}: (\\d+)px`));
+    assert.ok(m, `${marker} must sit directly above a ${prop} media query, got: ${next.trim()}`);
+    found.push(Number(m[1]));
+  });
+  return found;
+}
+
+test('every breakpoint tagged sync:desktop tracks the menu JS', () => {
+  const declared = menuJs.match(/var DESKTOP = '\(min-width: (\d+)px\)'/);
+  assert.ok(declared, 'mobile-menu.js: could not find the DESKTOP constant');
+  const desktop = Number(declared[1]);
+
+  const sheets = [['header.css', headerCss], ['mobile-menu.css', menuCss]];
+  let tagged = 0;
+
+  for (const [name, css] of sheets) {
+    for (const width of taggedBreakpoints(css, 'sync:desktop', 'min-width')) {
+      tagged += 1;
+      assert.equal(width, desktop,
+        `${name}: ${width}px must equal the DESKTOP constant in mobile-menu.js (${desktop}px)`);
+    }
+    for (const width of taggedBreakpoints(css, 'sync:desktop-1', 'max-width')) {
+      tagged += 1;
+      assert.equal(width, desktop - 1,
+        `${name}: ${width}px must close the band one pixel below DESKTOP (${desktop - 1}px)`);
+    }
+  }
+
+  assert.equal(tagged, 5, `expected 5 tagged breakpoints, found ${tagged} - a tag was lost`);
+});
