@@ -47,11 +47,19 @@ test('landing includes the product video section', () => {
   assert.match(html, /<video[\s\S]*controls[\s\S]*playsinline/);
 });
 
-test('the product video is click-to-play, never autoplay', () => {
+test('the product video autoplays muted in-view at no initial-load cost', () => {
   const video = html.slice(html.indexOf('<video'), html.indexOf('</video>'));
+  // muted + playsinline are what make programmatic playback permissible on mobile
+  assert.match(video, /muted/);
+  assert.match(video, /playsinline/);
+  // controls stay so a viewer can unmute
   assert.match(video, /controls/);
+  // nothing but the header is fetched until the band is actually visible
   assert.match(video, /preload="metadata"/);
-  assert.doesNotMatch(video, /autoplay/);
+  // playback is driven by the observer, never by the autoplay attribute
+  assert.doesNotMatch(video, /\bautoplay\b(?!-in-view)/);
+  assert.match(video, /data-autoplay-in-view/);
+  assert.match(html, /IntersectionObserver[\s\S]{0,600}data-autoplay-in-view|data-autoplay-in-view[\s\S]{0,900}IntersectionObserver/);
 });
 
 test('landing includes the ai phone conversation section', () => {

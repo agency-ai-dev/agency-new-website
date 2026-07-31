@@ -814,14 +814,18 @@ body.mm-locked { overflow: hidden; }
 @media (min-width: 900px) {
   .mm-panel { display: none; }
 }
+    /* ── ROUND 1: wordmark supplied as artwork ── */
+    .hdr-word img { display: block; width: auto; height: 18px; }
+    .mm-logo-word img { display: block; width: auto; height: 20px; }
+    @media (max-width: 639px) { .hdr-word img { height: 16px; } }
   </style>
 </head>
 <body>  <!-- Navigation -->
   <div class="hdr-wrap">
     <header class="hdr">
       <a class="hdr-brand" href="/" aria-label="Agency AI — home">
-        <span class="hdr-mark"><img src="assets/hero/agency-mark.png" alt="" width="124" height="124" fetchpriority="high" decoding="async"/></span>
-        <span class="hdr-word">agency ai</span>
+        <span class="hdr-mark"><img src="assets/hero/agency-mark-green.png" alt="" width="124" height="124" fetchpriority="high" decoding="async"/></span>
+        <span class="hdr-word"><img src="assets/hero/agency-wordmark.png" alt="" width="260" height="55" fetchpriority="high" decoding="async"/></span>
       </a>
 
       <nav class="hdr-nav" aria-label="Primary">
@@ -860,8 +864,8 @@ body.mm-locked { overflow: hidden; }
     <div class="mm-inner">
       <div class="mm-bar">
         <a class="mm-logo" href="/" aria-label="Agency AI — home">
-          <span class="mm-logo-tile"><img src="assets/hero/agency-mark.png" alt="" width="124" height="124" decoding="async"/></span>
-          <span class="mm-logo-word">agency ai</span>
+          <span class="mm-logo-tile"><img src="assets/hero/agency-mark-green.png" alt="" width="124" height="124" decoding="async"/></span>
+          <span class="mm-logo-word"><img src="assets/hero/agency-wordmark.png" alt="" width="260" height="55" decoding="async"/></span>
         </a>
 
         <button class="mm-close" type="button" data-mm-close aria-label="Close menu">
