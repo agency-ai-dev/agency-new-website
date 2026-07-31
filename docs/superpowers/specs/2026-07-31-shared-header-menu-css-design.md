@@ -145,7 +145,9 @@ there should be none. Verify in the browser on a root page and a `blog/` page,
 covering the fixed header, the desktop/mobile breakpoint switch, and the menu
 open/close/scroll-lock cycle.
 
-**First-paint cost.** One extra cached request against ~23KB less HTML per page.
+**First-paint cost.** One extra cached request against ~15KB less HTML per page
+(measured: 15,206 bytes on the ten non-index pages, 15,239 on `index.html`; the
+two stylesheets total 14.8KB and are cached across all 11).
 Expected to be a wash or slightly better. PR #49 moved LCP 4.15s → 2.9s; this
 should not regress it. The known render-blocking Google Fonts stylesheet
 (~850ms) remains the dominant cost and stays out of scope.

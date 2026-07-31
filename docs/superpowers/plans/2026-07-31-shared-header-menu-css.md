@@ -543,7 +543,7 @@ On `index.html`, follow an in-page link such as `#features`. Confirm the target 
 The spec's second risk is that the extra request costs more than the smaller HTML saves. Confirm the trade is roughly as expected rather than measuring LCP properly:
 
 - In the network panel, confirm `header.css` and `mobile-menu.css` each transfer at well under 10KB, and that a second page load serves both from cache (`304`, or `disk cache`).
-- Confirm each page's HTML document is ~20KB smaller than on `main`.
+- Confirm each page's HTML document is ~15KB smaller than at commit `02799ef` (the pre-extraction baseline — compare against that commit, not `main`, which also lacks this branch's unrelated homepage rebuild).
 
 If either stylesheet is unexpectedly large or is re-downloaded per page, stop and report — the caching assumption behind this design is wrong. A proper LCP comparison belongs on the Vercel preview deployment, not the local server, and is out of scope here.
 
