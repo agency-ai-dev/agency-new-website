@@ -124,6 +124,10 @@
   min-height: 20px;
 }
 
+/* No resting copy, so the box collapses until the JS writes a status.
+   min-height is kept for the message state so it does not jump twice. */
+.newsletter-status:empty { margin-top: 0; min-height: 0; }
+
 .newsletter-status[data-state="success"] { color: var(--accent-green); }
 .newsletter-status[data-state="error"]   { color: #E5484D; }
 
@@ -145,7 +149,6 @@
   .newsletter-input { padding: 18px 20px; }
   .newsletter-submit { padding: 18px 32px; width: 100%; }
   /* Dropped on narrow screens, where it wraps to a line of its own. */
-  .newsletter-note-extra { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

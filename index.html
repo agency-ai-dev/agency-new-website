@@ -2273,12 +2273,6 @@
   text-align: center;
 }
 .cb-identity { display: flex; align-items: center; gap: 9px; }
-.cb-dot {
-  width: 7px; height: 7px;
-  flex: none;
-  border-radius: 99px;
-  background: var(--cb-mint);
-}
 .cb-role {
   font-family: var(--display);
   font-weight: 400;
@@ -2425,7 +2419,6 @@
 
 /* ---- motion (decorative — off under reduced motion) ---- */
 @media (prefers-reduced-motion: no-preference) {
-  .cb-dot { animation: cb-drift 3s ease-in-out infinite; }
   .cb-ring__spin { animation: cb-spin 8.4s linear infinite; }
   .cb-caret { animation: cb-caret-blink 1.15s steps(1) infinite; }
 }
@@ -2436,10 +2429,6 @@
 @keyframes cb-caret-blink {
   0%, 49%   { opacity: 1; }
   50%, 100% { opacity: 0; }
-}
-@keyframes cb-drift {
-  0%, 100% { opacity: 0.45; }
-  50%      { opacity: 1; }
 }
 
 /* ---- hover: whole-banner only, never the fake pills/chips ---- */
@@ -3426,7 +3415,6 @@ body.mm-locked { overflow: hidden; }
 
       <div class="cb-head">
         <div class="cb-identity">
-          <span class="cb-dot" aria-hidden="true"></span>
           <span class="cb-role">AI Strategist</span>
           <span class="cb-sync">SYNCED 2M AGO</span>
         </div>
@@ -4103,7 +4091,7 @@ body.mm-locked { overflow: hidden; }
           <input class="newsletter-input" type="email" name="email" placeholder="you@yourstore.com" aria-label="Email address" autocomplete="email" required/>
           <button class="newsletter-submit" type="submit">Get the brief</button>
         </div>
-        <p class="newsletter-status" role="status" aria-live="polite">1 email/month · Unsubscribe in one click<span class="newsletter-note-extra"> · We never sell your data</span></p>
+        <p class="newsletter-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>

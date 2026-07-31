@@ -86,17 +86,24 @@ test('client code talks only to our own endpoint through one seam', () => {
   assert.equal(clientJs.match(/fetch\(/g).length, 1);
 });
 
-test('the resting message lives in the markup so it renders without JS', () => {
-  assert.match(index, /1 email\/month · Unsubscribe in one click/);
-  assert.match(index, /<span class="newsletter-note-extra"> · We never sell your data<\/span>/);
+// Round 3, owner-authorised: the resting reassurance microcopy was removed. The
+// element itself must stay — newsletter.js hard-requires .newsletter-status and
+// returns early without it, which would silently disable the whole form.
+test('the status region survives with no resting copy', () => {
+  assert.match(index, /<p class="newsletter-status" role="status" aria-live="polite"><\/p>/);
+  assert.doesNotMatch(index, /1 email\/month/);
+  assert.doesNotMatch(index, /Unsubscribe in one click/);
+  assert.doesNotMatch(index, /We never sell your data/);
+  assert.doesNotMatch(index, /newsletter-note-extra/);
   // The old weekly claim must not survive the copy change.
   assert.doesNotMatch(index, /email a week/i);
   assert.doesNotMatch(clientJs, /email a week/i);
 });
 
-test('the third clause is dropped on narrow screens by CSS, not by JS', () => {
+test('the empty status box collapses until a message is written', () => {
   const css = read('assets/css/newsletter.css');
-  assert.match(css, /@media \(max-width: 640px\)[\s\S]*\.newsletter-note-extra \{ display: none; \}/);
+  assert.match(css, /\.newsletter-status:empty \{[^}]*min-height: 0;/);
+  assert.doesNotMatch(css, /newsletter-note-extra/);
   // A width measured once in JS goes stale on resize, and read 0 in a
   // backgrounded tab — which silently hid the desktop copy.
   assert.doesNotMatch(clientJs, /matchMedia/);
