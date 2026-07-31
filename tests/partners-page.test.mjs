@@ -89,9 +89,13 @@ test('partners grid collapses to a single column on mobile', () => {
 });
 
 // ── Reuse of existing site chrome (AGY-1) ──
+// The header/nav was replaced sitewide by the shared hdr-wrap + mobile-menu
+// component; this test tracks that component instead of the retired .site-header
+// / .nav-links markup. The footer is unchanged.
 test('partners page reuses the existing site nav and footer', () => {
-  assert.match(partners, /class="site-header"/);
-  assert.match(partners, /class="nav-links"/);
+  assert.match(partners, /class="hdr-wrap"/);
+  assert.match(partners, /class="hdr-nav"/);
+  assert.match(partners, /data-mm-panel/);
   assert.match(partners, /class="footer-top"/);
 });
 

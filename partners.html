@@ -30,6 +30,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Archivo (partners sections) + Bebas Neue / DM Sans (reused site nav+footer) + JetBrains Mono -->
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/header.css"/>
+  <link rel="stylesheet" href="assets/css/mobile-menu.css"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -60,8 +62,6 @@
     }
     a, button { cursor: pointer; }
 
-    /* ════════════ NAVIGATION (reused site component) ════════════ */
-    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
     nav {
       position: relative;
       display: flex;
@@ -82,87 +82,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-    .nav-links a {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--gray-600);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--black); }
-    .nav-cta {
-      background: var(--black);
-      color: var(--white) !important;
-      padding: 10px 22px;
-      border-radius: 2px;
-      font-weight: 600 !important;
-      letter-spacing: 0.04em !important;
-      transition: background 0.2s, transform 0.15s !important;
-    }
-    .nav-cta:hover { background: var(--orange) !important; color: var(--white) !important; transform: translateY(-1px) !important; }
-    .nav-dashboard {
-      display: none; /* SHO22-470: hidden until dashboard launch is ready */
-      background: var(--black);
-      color: var(--accent-green) !important;
-      padding: 10px 22px;
-      border-radius: 2px;
-      font-weight: 600 !important;
-      letter-spacing: 0.04em !important;
-      transition: opacity 0.2s !important;
-    }
-    .nav-dashboard:hover { opacity: 0.85; }
-
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 36px;
-      height: 36px;
-      background: none;
-      border: none;
-      padding: 4px;
-      cursor: pointer;
-      position: relative;
-      z-index: 1002;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: var(--black);
-      border-radius: 2px;
-      transition: transform 0.25s, opacity 0.25s;
-      transform-origin: center;
-    }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    body.menu-open { overflow: hidden; }
-
-    @media (max-width: 640px) {
-      .nav-toggle { display: flex; }
-      .nav-links {
-        display: none;
-        position: fixed;
-        inset: 0;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 32px;
-        background: rgba(249, 247, 244, 0.98);
-        backdrop-filter: blur(16px);
-        z-index: 1001;
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { font-size: 16px; color: var(--black); }
-      .nav-cta { padding: 14px 32px !important; font-size: 15px !important; }
-      .nav-dashboard { padding: 14px 32px !important; font-size: 15px !important; }
     }
 
     /* ════════════ PARTNERS PAGE (Variant A "Curated") ════════════
@@ -492,7 +411,7 @@
       .footer-top { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
-      .nav-links { display: none; }
+
       .footer-top { grid-template-columns: 1fr; }
     }
 
@@ -504,26 +423,77 @@
 </head>
 <body>
 
-  <!-- Navigation (reused site component — Partners intentionally NOT added, SHO22-524 rollout) -->
-  <div class="site-header">
-    <nav>
-      <a href="/" class="logo">
-        <img src="assets/logos/agencyailogo-black.png" alt="Agency AI" style="height:80px;width:160px;" />
+  <!-- Navigation (reused site component — Partners intentionally NOT added, SHO22-524 rollout) -->  <!-- Navigation -->
+  <div class="hdr-wrap">
+    <header class="hdr">
+      <a class="hdr-brand" href="/" aria-label="Agency AI — home">
+        <span class="hdr-mark"><img src="assets/hero/agency-mark-green.png" alt="" width="124" height="124" fetchpriority="high" decoding="async"/></span>
+        <span class="hdr-word"><img src="assets/hero/agency-wordmark.png" alt="" width="260" height="55" fetchpriority="high" decoding="async"/></span>
       </a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="https://dashboard.agencyai.app/" class="nav-dashboard" target="_blank" rel="noopener">Dashboard</a></li>
-        <li><a href="/#features">Features</a></li>
-        <li><a href="/#how">How It Works</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="https://apps.shopify.com/agency-ai" class="nav-cta">Get Started Free</a></li>
-      </ul>
-    </nav>
+
+      <nav class="hdr-nav" aria-label="Primary">
+        <a href="/#features">Features</a>
+        <a href="/#how">How it works</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <div class="hdr-actions">
+        <div class="hdr-seg">
+          <a class="hdr-seg-dash" href="https://dashboard.agencyai.app/" target="_blank" rel="noopener">
+            <span class="hdr-dot" aria-hidden="true"></span>Dashboard
+          </a>
+          <span class="hdr-seg-div" aria-hidden="true"></span>
+          <a class="hdr-seg-cta" href="https://apps.shopify.com/agency-ai">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7.5 8.5V6.6a4.5 4.5 0 0 1 9 0v1.9" stroke="#00E0B6" stroke-width="2" stroke-linecap="round"></path><rect x="3.6" y="8.4" width="16.8" height="12.2" rx="3.2" fill="#00E0B6"></rect></svg>
+            <span class="hdr-seg-full">Download on Shopify</span><span class="hdr-seg-short">Shopify</span>
+          </a>
+        </div>
+
+        <button class="hdr-burger" type="button" data-mm-open aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
   </div>
+  <!-- /Navigation -->
+
+  <!-- Mobile menu — must stay a SIBLING of .hdr-wrap, never a child:
+       .hdr-wrap uses backdrop-filter, which would trap this position:fixed panel. -->
+  <div class="mm-panel" id="mobile-menu" data-mm-panel role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+    <div class="mm-wash" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <div class="mm-inner">
+      <div class="mm-bar">
+        <a class="mm-logo" href="/" aria-label="Agency AI — home">
+          <span class="mm-logo-tile"><img src="assets/hero/agency-mark-green.png" alt="" width="124" height="124" decoding="async"/></span>
+          <span class="mm-logo-word"><img src="assets/hero/agency-wordmark.png" alt="" width="260" height="55" decoding="async"/></span>
+        </a>
+
+        <button class="mm-close" type="button" data-mm-close aria-label="Close menu">
+          <span></span><span></span>
+        </button>
+      </div>
+
+      <nav class="mm-nav" aria-label="Primary">
+        <a class="mm-link" href="https://dashboard.agencyai.app/" target="_blank" rel="noopener" data-mm-dismiss>Dashboard</a>
+        <a class="mm-link" href="/#features" data-mm-dismiss>Features</a>
+        <a class="mm-link" href="/#how" data-mm-dismiss>How it works</a>
+        <a class="mm-link" href="pricing.html" data-mm-dismiss>Pricing</a>
+        <a class="mm-link" href="blog.html" data-mm-dismiss>Blog</a>
+        <a class="mm-link" href="about.html" data-mm-dismiss>About</a>
+      </nav>
+
+      <div class="mm-spacer"></div>
+
+      <div class="mm-foot">
+        <a class="mm-cta" href="https://apps.shopify.com/agency-ai" data-mm-dismiss>Get started free</a>
+        <p class="mm-aside">Already have an account? <a href="https://dashboard.agencyai.app/" target="_blank" rel="noopener" data-mm-dismiss>Log in</a></p>
+      </div>
+    </div>
+  </div>
+  <!-- /Mobile menu -->
 
   <main class="partners-page">
 
@@ -731,31 +701,7 @@
       document.getElementById('partnerCount').innerHTML = `[ Current partners &middot; ${count} ]`;
     })();
 
-    // Nav shrink on scroll (reused site behavior)
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      nav.style.padding = window.scrollY > 60 ? '2px 48px' : '4px 48px';
-    });
-
-    // Mobile menu (reused site behavior)
-    const navToggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    const navEl = document.querySelector('nav');
-    function closeMenu() {
-      navLinks.classList.remove('open');
-      navToggle.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', false);
-      document.body.classList.remove('menu-open');
-      navEl.style.backdropFilter = '';
-    }
-    navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('open', open);
-      navToggle.setAttribute('aria-expanded', open);
-      document.body.classList.toggle('menu-open', open);
-      navEl.style.backdropFilter = open ? 'none' : '';
-    });
-    navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
   </script>
+  <script src="assets/js/mobile-menu.js" defer></script>
 </body>
 </html>

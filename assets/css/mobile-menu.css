@@ -1,0 +1,277 @@
+/* ============================================================
+   agency ai — mobile menu 1a "Quiet stack"
+   Adapted from the 1a-quiet-stack handoff. Vanilla, no build step.
+   Pairs with assets/js/mobile-menu.js.
+
+   The trigger (hamburger) lives in the site header and is styled
+   by the .hdr- header CSS, so this file owns the panel only.
+
+   Markup contract the JS relies on:
+     <button class="hdr-burger" data-mm-open aria-controls="mobile-menu" aria-expanded="false">
+     <div id="mobile-menu" class="mm-panel" data-mm-panel role="dialog" aria-modal="true" aria-hidden="true">
+       ... <button data-mm-close> ... <a data-mm-dismiss> ...
+   ============================================================ */
+
+/* Tokens live on the panel itself, so no ancestor class is required.
+   .mm-scope is kept as an alias for the handoff's install instructions. */
+.mm-panel,
+.mm-scope {
+  --mm-cream:        #FBF7F2;
+  --mm-ink:          #0D0D0D;
+  --mm-ink-hover:    #1C1C1C;
+  --mm-tile:         #0B0F0D;  /* logo tile — mark is transparent, never on light */
+  --mm-mint:         #3CE18C;  /* accents on dark surfaces */
+  --mm-mint-deep:    #0B8F55;  /* accent text on cream (AA on light) */
+  --mm-hairline:     rgba(13, 13, 13, 0.08);
+  --mm-muted:        rgba(13, 13, 13, 0.58); /* inactive nav labels */
+  --mm-muted-soft:   rgba(13, 13, 13, 0.64); /* all text under 14px  */
+
+  --mm-gutter:       24px;
+  --mm-nav-size:     27px;
+  --mm-row-pad:      19px;
+  --mm-tap:          48px;  /* never go below 44px */
+  --mm-radius-pill:  999px;
+  --mm-ease:         cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- overlay ---------- */
+
+.mm-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1200; /* above the fixed header (100) and every legacy overlay (max 1002) */
+  display: flex;
+  flex-direction: column;
+  background: var(--mm-cream);
+  font-family: var(--sans, 'DM Sans', sans-serif);
+  color: var(--mm-ink);
+  -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  /* visibility flips as a delayed step, not an interpolated transition: it must
+     become `visible` synchronously on open or the focus move to the close button
+     is dropped (you cannot focus inside a visibility:hidden subtree). */
+  transition: opacity 0.28s var(--mm-ease), transform 0.28s var(--mm-ease), visibility 0s linear 0.28s;
+}
+.mm-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.28s var(--mm-ease), transform 0.28s var(--mm-ease), visibility 0s linear 0s;
+}
+
+/* soft brand wash — purely decorative */
+.mm-wash { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.mm-wash i {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  display: block;
+}
+.mm-wash i:nth-child(1) { top: -70px; left: -80px; width: 290px; height: 290px; background: #DCEFE3; opacity: 0.75; }
+.mm-wash i:nth-child(2) { top: 40%;   right: -100px; width: 270px; height: 270px; background: #F1E7DB; opacity: 0.85; }
+.mm-wash i:nth-child(3) { bottom: 40px; left: -50px;  width: 250px; height: 250px; background: #E5EFF2; opacity: 0.80; }
+
+.mm-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: env(safe-area-inset-top);
+}
+
+/* ---------- panel header ---------- */
+
+.mm-bar {
+  height: 64px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 var(--mm-gutter);
+}
+
+/* real logo lockup — dark/ink treatment, the panel is cream */
+.mm-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--mm-tap); /* tap target ≥44px */
+  color: var(--mm-ink);
+  text-decoration: none;
+}
+.mm-logo-tile {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--mm-tile);
+  display: grid;
+  place-items: center;
+}
+.mm-logo-tile img { display: block; width: 18px; height: 18px; }
+.mm-logo-word {
+  font-family: var(--sans, 'DM Sans', sans-serif);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--mm-ink);
+}
+
+.mm-close {
+  position: relative;
+  flex: none;
+  width: var(--mm-tap);
+  height: var(--mm-tap);
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(13, 13, 13, 0.12);
+  border-radius: var(--mm-radius-pill);
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mm-close:hover { background: rgba(13, 13, 13, 0.05); }
+.mm-close span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.6px;
+  margin: -0.8px 0 0 -7px;
+  border-radius: 2px;
+  background: var(--mm-ink);
+}
+.mm-close span:nth-child(1) { transform: rotate(45deg); }
+.mm-close span:nth-child(2) { transform: rotate(-45deg); }
+
+/* ---------- nav ---------- */
+
+.mm-nav {
+  /* defensive resets: the legacy pages carry a bare `nav { ... }` rule */
+  position: relative;
+  background: none;
+  border: 0;
+  backdrop-filter: none;
+  margin: 0;
+
+  padding: 26px var(--mm-gutter) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mm-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: var(--mm-row-pad) 0;
+  min-height: var(--mm-tap);
+  border-top: 1px solid var(--mm-hairline);
+  color: var(--mm-muted);
+  font-family: var(--sans, 'DM Sans', sans-serif);
+  font-size: var(--mm-nav-size);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition: opacity 0.18s var(--mm-ease);
+}
+.mm-link:first-child { border-top-color: transparent; }
+.mm-link:hover { opacity: 0.6; color: var(--mm-muted); }
+/* the dot is the only "you are here" signal — no pills in the list */
+.mm-link::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: transparent;
+}
+.mm-link[aria-current="page"] {
+  color: var(--mm-ink);
+  font-weight: 600;
+}
+.mm-link[aria-current="page"]:hover { color: var(--mm-ink); }
+.mm-link[aria-current="page"]::before { background: var(--mm-mint); }
+
+/* staggered entrance */
+.mm-panel .mm-link {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.34s var(--mm-ease), transform 0.34s var(--mm-ease);
+  transition-delay: calc(60ms + var(--i, 0) * 34ms);
+}
+.mm-panel.is-open .mm-link { opacity: 1; transform: none; }
+.mm-panel.is-open .mm-link:hover { opacity: 0.6; }
+
+.mm-spacer { flex: 1 1 auto; min-height: 24px; }
+
+/* ---------- footer ---------- */
+
+.mm-foot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 var(--mm-gutter) calc(34px + env(safe-area-inset-bottom));
+}
+.mm-cta {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mm-radius-pill);
+  background: var(--mm-ink);
+  color: var(--mm-cream);
+  font-family: var(--sans, 'DM Sans', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background 0.18s var(--mm-ease);
+}
+.mm-cta:hover { background: var(--mm-ink-hover); color: var(--mm-cream); }
+.mm-aside {
+  margin: 0;
+  text-align: center;
+  font-family: var(--sans, 'DM Sans', sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mm-muted-soft); /* keep ≥0.62 alpha: AA at this size */
+}
+.mm-aside a { color: var(--mm-mint-deep); text-decoration: none; }
+.mm-aside a:hover { color: var(--mm-ink); }
+
+/* ---------- focus + motion ---------- */
+
+/* the outline already follows each element's own border-radius, so the radius is
+   only softened on the square-cornered rows — never on the round buttons */
+.mm-panel :focus-visible {
+  outline: 2px solid var(--mm-mint-deep);
+  outline-offset: 3px;
+}
+.mm-link:focus-visible,
+.mm-logo:focus-visible,
+.mm-aside a:focus-visible { border-radius: 6px; }
+body.mm-locked { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-panel,
+  .mm-panel .mm-link { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+}
+
+/* menu is mobile/tablet only; the desktop nav takes over at 900px */
+/* sync:desktop */
+@media (min-width: 900px) {
+  .mm-panel { display: none; }
+}
+
+/* ── wordmark supplied as artwork ── */
+.mm-logo-word img { display: block; width: auto; height: 20px; }
