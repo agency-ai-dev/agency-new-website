@@ -31,3 +31,59 @@ test('the two stylesheets do not overlap', () => {
   assert.doesNotMatch(headerCss, /\.mm-[\w-]+\s*[,{]/, 'header.css must not style the panel');
   assert.doesNotMatch(menuCss, /\.hdr-[\w-]+\s*[,{]/, 'mobile-menu.css must not style the header');
 });
+
+/* Every page that carries the shared header + mobile menu. */
+const SHARED_HEADER_PAGES = [
+  '../index.html',
+  '../about.html',
+  '../blog.html',
+  '../pricing.html',
+  '../partners.html',
+  '../privacy-policy.html',
+  '../terms-of-service.html',
+  '../cookie-policy.html',
+  '../blog/2026-01-01-facebook-instagram-shopify-setup.html',
+  '../blog/2026-04-20-vapor95-meta-ads-case-study.html',
+  '../blog/2026-05-21-google-youtube-shopify-setup.html',
+];
+
+const hrefPrefix = (page) => (page.startsWith('../blog/') ? '../' : '');
+
+/* Inline <style> contents with CSS comments stripped. Comments must go first:
+   pages legitimately mention .hdr-wrap in prose (the hero's --hv-header-offset
+   note) and a naive scan would match those and fail for the wrong reason. */
+function inlineCss(pageHtml) {
+  const blocks = pageHtml.match(/<style[^>]*>[\s\S]*?<\/style>/g) ?? [];
+  return blocks.join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
+}
+
+test('every page links both shared stylesheets', () => {
+  for (const page of SHARED_HEADER_PAGES) {
+    const html = read(page);
+    const prefix = hrefPrefix(page);
+    const headerLink = `<link rel="stylesheet" href="${prefix}assets/css/header.css"/>`;
+    const menuLink = `<link rel="stylesheet" href="${prefix}assets/css/mobile-menu.css"/>`;
+    assert.ok(html.includes(headerLink), `${page}: missing ${headerLink}`);
+    assert.ok(html.includes(menuLink), `${page}: missing ${menuLink}`);
+  }
+});
+
+test('no page carries inline header or menu CSS', () => {
+  for (const page of SHARED_HEADER_PAGES) {
+    const found = [...new Set(inlineCss(read(page)).match(/\.(?:hdr|mm)-[\w-]+/g) ?? [])];
+    assert.deepEqual(found, [],
+      `${page}: header/menu CSS belongs in assets/css/, found ${found.join(', ')}`);
+  }
+});
+
+test('only index.html raises the scroll offset for the ticker', () => {
+  for (const page of SHARED_HEADER_PAGES) {
+    const css = inlineCss(read(page));
+    if (page === '../index.html') {
+      assert.match(css, /--hdr-scroll-offset:\s*110px/, 'index.html must clear the ticker');
+    } else {
+      assert.doesNotMatch(css, /--hdr-scroll-offset/,
+        `${page}: has no ticker, so it must not override the offset`);
+    }
+  }
+});
