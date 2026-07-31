@@ -131,7 +131,9 @@ Reusing the stylesheet-assertion pattern already in
    `backdrop-filter` fix and must stay.
 
    Verified on `02799ef`: once the three blocks above are extracted, that comment
-   is the *only* remaining `.hdr-`/`.mm-` occurrence outside them on all 11 pages.
+   and `index.html`'s `--hv-header-offset: 94px; /* fixed .hdr-wrap 60px + .tick
+   34px */` note (inside its inline `<style>`) are the only remaining
+   `.hdr-`/`.mm-` occurrences outside the shared stylesheets on all 11 pages.
 3. The breakpoint invariant above.
 4. `index.html` sets `--hdr-scroll-offset`; the other ten do not.
 

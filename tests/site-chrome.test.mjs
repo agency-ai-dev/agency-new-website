@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 
 const read = (p) => readFileSync(new URL(p, import.meta.url), 'utf8');
+const stripComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
 
 const headerCss = read('../assets/css/header.css');
 const menuCss = read('../assets/css/mobile-menu.css');
@@ -28,24 +29,41 @@ test('mobile-menu.css owns the panel rules', () => {
 });
 
 test('the two stylesheets do not overlap', () => {
-  assert.doesNotMatch(headerCss, /\.mm-[\w-]+\s*[,{]/, 'header.css must not style the panel');
-  assert.doesNotMatch(menuCss, /\.hdr-[\w-]+\s*[,{]/, 'mobile-menu.css must not style the header');
+  /* Strip comments first so a future comment mentioning the other sheet's
+     class (e.g. documenting why it was moved out) can't false-positive.
+     Widen the selector match past bare `{`/`,` to catch pseudo-class and
+     pseudo-element forms like `.mm-panel:hover` or `.mm-panel::before`. */
+  const headerNoComments = stripComments(headerCss);
+  const menuNoComments = stripComments(menuCss);
+  assert.doesNotMatch(headerNoComments, /\.mm-[\w-]+(?:::?[\w-]+)?\s*[,{]/,
+    'header.css must not style the panel');
+  assert.doesNotMatch(menuNoComments, /\.hdr-[\w-]+(?:::?[\w-]+)?\s*[,{]/,
+    'mobile-menu.css must not style the header');
 });
 
-/* Every page that carries the shared header + mobile menu. */
+/* Every page that carries the shared header + mobile menu, discovered from
+   disk rather than hand-listed. A hardcoded list gives a twelfth page zero
+   coverage by default - exactly the copy-paste failure this suite exists to
+   prevent. The pages live in the repo root and in blog/. */
+const repoRootDir = new URL('../', import.meta.url);
+const blogDir = new URL('../blog/', import.meta.url);
+
+const htmlFilesIn = (dir, prefix) =>
+  readdirSync(dir)
+    .filter((name) => name.endsWith('.html'))
+    .sort()
+    .map((name) => `${prefix}${name}`);
+
 const SHARED_HEADER_PAGES = [
-  '../index.html',
-  '../about.html',
-  '../blog.html',
-  '../pricing.html',
-  '../partners.html',
-  '../privacy-policy.html',
-  '../terms-of-service.html',
-  '../cookie-policy.html',
-  '../blog/2026-01-01-facebook-instagram-shopify-setup.html',
-  '../blog/2026-04-20-vapor95-meta-ads-case-study.html',
-  '../blog/2026-05-21-google-youtube-shopify-setup.html',
+  ...htmlFilesIn(repoRootDir, '../'),
+  ...htmlFilesIn(blogDir, '../blog/'),
 ];
+
+test('discovers exactly the known 11 shared-header pages', () => {
+  assert.equal(SHARED_HEADER_PAGES.length, 11,
+    `expected 11 pages (8 in the repo root + 3 in blog/), found ${SHARED_HEADER_PAGES.length}: ` +
+    `${SHARED_HEADER_PAGES.join(', ')} - adding or removing a page must be a deliberate, visible change`);
+});
 
 const hrefPrefix = (page) => (page.startsWith('../blog/') ? '../' : '');
 
@@ -54,7 +72,7 @@ const hrefPrefix = (page) => (page.startsWith('../blog/') ? '../' : '');
    note) and a naive scan would match those and fail for the wrong reason. */
 function inlineCss(pageHtml) {
   const blocks = pageHtml.match(/<style[^>]*>[\s\S]*?<\/style>/g) ?? [];
-  return blocks.join('\n').replace(/\/\*[\s\S]*?\*\//g, '');
+  return stripComments(blocks.join('\n'));
 }
 
 test('every page links both shared stylesheets', () => {
@@ -107,6 +125,29 @@ function taggedBreakpoints(css, marker, prop) {
   return found;
 }
 
+/* Finds min-/max-width media queries whose value equals `value` but whose
+   preceding line is NOT the given sync marker. The invariant above only
+   walks breakpoints it already found via the marker, so it is blind to a
+   query at the DESKTOP value that never got tagged in the first place - this
+   closes that hole by scanning for the value directly. Numbers are compared
+   as integers (not string-embedded in a regex) so e.g. a hypothetical 1900px
+   elsewhere can't be mistaken for an untagged 900px via substring match. */
+function untaggedBreakpoints(css, marker, prop, value) {
+  const lines = css.split('\n');
+  const re = new RegExp(`${prop}:\\s*(\\d+)px`, 'g');
+  const bad = [];
+  lines.forEach((line, i) => {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(line))) {
+      if (Number(m[1]) !== value) continue;
+      const prev = (lines[i - 1] ?? '').trim();
+      if (prev !== `/* ${marker} */`) bad.push(line.trim());
+    }
+  });
+  return bad;
+}
+
 test('every breakpoint tagged sync:desktop tracks the menu JS', () => {
   const declared = menuJs.match(/var DESKTOP = '\(min-width: (\d+)px\)'/);
   assert.ok(declared, 'mobile-menu.js: could not find the DESKTOP constant');
@@ -129,4 +170,14 @@ test('every breakpoint tagged sync:desktop tracks the menu JS', () => {
   }
 
   assert.equal(tagged, 5, `expected 5 tagged breakpoints, found ${tagged} - a tag was lost`);
+
+  for (const [name, css] of sheets) {
+    const untaggedDesktop = untaggedBreakpoints(css, 'sync:desktop', 'min-width', desktop);
+    assert.deepEqual(untaggedDesktop, [],
+      `${name}: found min-width: ${desktop}px not tagged /* sync:desktop */: ${untaggedDesktop.join(' | ')}`);
+
+    const untaggedDesktopMinusOne = untaggedBreakpoints(css, 'sync:desktop-1', 'max-width', desktop - 1);
+    assert.deepEqual(untaggedDesktopMinusOne, [],
+      `${name}: found max-width: ${desktop - 1}px not tagged /* sync:desktop-1 */: ${untaggedDesktopMinusOne.join(' | ')}`);
+  }
 });

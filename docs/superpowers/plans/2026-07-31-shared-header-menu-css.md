@@ -32,7 +32,7 @@
 **Modify:**
 - All 11 pages: delete the three inline blocks, add two `<link>` tags before `<style>`. `index.html` additionally gains a `:root { --hdr-scroll-offset: 110px; }` declaration.
 
-**Expected net change:** pages drop from 14,889 to 9,214 lines (−5,675); the two stylesheets add 524. **Net −5,151 lines.**
+**Expected net change:** pages drop from 14,889 to 9,214 lines (−5,675); the two stylesheets add 529. **Net −5,146 lines.**
 
 ---
 
