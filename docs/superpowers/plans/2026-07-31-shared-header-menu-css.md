@@ -16,16 +16,17 @@
 - Tests run with `node --test tests/*.test.mjs`. All 68 existing tests must stay green.
 - The 11 pages carrying the shared header are exactly: `index.html`, `about.html`, `blog.html`, `pricing.html`, `partners.html`, `cookie-policy.html`, `privacy-policy.html`, `terms-of-service.html`, `blog/2026-01-01-facebook-instagram-shopify-setup.html`, `blog/2026-04-20-vapor95-meta-ads-case-study.html`, `blog/2026-05-21-google-youtube-shopify-setup.html`.
 - Stylesheet href is `assets/css/…` from the eight root pages and `../assets/css/…` from the three `blog/` posts.
-- Desktop breakpoint is `900px`. It must be identical in `header.css`, `mobile-menu.css`, and the `DESKTOP` constant in `assets/js/mobile-menu.js`.
-- `639px` is a header-only wordmark breakpoint and is deliberately NOT part of the `900px` invariant.
+- Desktop breakpoint is `900px`. It must be identical in `header.css`, `mobile-menu.css`, and the `DESKTOP` constant in `assets/js/mobile-menu.js`. Its complement `899px` — the `max-width` that closes the mobile band — must always be exactly one pixel below it.
+- Breakpoints coupled to the menu are tagged in the CSS with a comment on the line directly above: `/* sync:desktop */` above a `min-width` query, `/* sync:desktop-1 */` above a `max-width` query. There are exactly **5** tags: 4 in `header.css`, 1 in `mobile-menu.css`. The test checks tagged queries only.
+- `640px`, `639px` and `359px` are independent layout breakpoints, deliberately untagged and NOT part of the invariant.
 - Scroll offset: `76px` default for pages with no ticker; `110px` on `index.html` (60px header + 34px ticker + 16px breathing room).
 - The HTML comment *"must stay a SIBLING of .hdr-wrap, never a child"* is load-bearing documentation of the `backdrop-filter` fix from PR #8. It stays in the markup on every page and must not be deleted.
 
 ## File Structure
 
 **Create:**
-- `assets/css/header.css` — the `.hdr-*` block: fixed wrapper, brand lockup, desktop nav, `.hdr-burger` trigger, the two `900px` desktop media queries, the scroll-offset default, and the `.hdr-word img` wordmark rules. Expected: **248 lines**.
-- `assets/css/mobile-menu.css` — the `.mm-*` block: panel, tokens, links, focus styles, `body.mm-locked`, reduced-motion, the `900px` desktop hide, and `.mm-logo-word img`. Expected: **276 lines**.
+- `assets/css/header.css` — the `.hdr-*` block: fixed wrapper, brand lockup, desktop nav, `.hdr-burger` trigger, the `900px`/`899px` menu breakpoints (tagged), the independent `640px`/`639px`/`359px` layout breakpoints (untagged), the scroll-offset default, and the `.hdr-word img` wordmark rules. Expected: **252 lines**.
+- `assets/css/mobile-menu.css` — the `.mm-*` block: panel, tokens, links, focus styles, `body.mm-locked`, reduced-motion, the tagged `900px` desktop hide, and `.mm-logo-word img`. Expected: **277 lines**.
 - `tests/site-chrome.test.mjs` — link assertions, the anti-drift scan, and the breakpoint invariant.
 
 **Modify:**
@@ -130,21 +131,51 @@ header += ("\n\n/* ── wordmark supplied as artwork ── */\n"
 menu += ("\n\n/* ── wordmark supplied as artwork ── */\n"
          ".mm-logo-word img { display: block; width: auto; height: 20px; }\n")
 
+# Tag the breakpoints that must track the DESKTOP constant in mobile-menu.js.
+# 640px / 639px / 359px are independent layout breakpoints and stay untagged.
+TAGS = {
+    'header': [
+        ('@media (min-width: 900px) {', 'sync:desktop'),
+        ('@media (min-width: 900px) and (max-width: 1099px) {', 'sync:desktop'),
+        ('@media (max-width: 899px) {', 'sync:desktop-1'),
+        ('@media (min-width: 640px) and (max-width: 899px) {', 'sync:desktop-1'),
+    ],
+    'menu': [
+        ('@media (min-width: 900px) {', 'sync:desktop'),
+    ],
+}
+
+def tag(css, rules):
+    out, applied = [], 0
+    for line in css.split('\n'):
+        for needle, marker in rules:
+            if line.strip() == needle:
+                out.append(f'/* {marker} */')
+                applied += 1
+                break
+        out.append(line)
+    return '\n'.join(out), applied
+
+header, n_header = tag(header, TAGS['header'])
+menu, n_menu = tag(menu, TAGS['menu'])
+assert n_header == 4, f"expected to tag 4 header breakpoints, tagged {n_header}"
+assert n_menu == 1, f"expected to tag 1 menu breakpoint, tagged {n_menu}"
+
 os.makedirs('assets/css', exist_ok=True)
 open('assets/css/header.css', 'w').write(header)
 open('assets/css/mobile-menu.css', 'w').write(menu)
-print(f"header.css      {len(header.splitlines())} lines")
-print(f"mobile-menu.css {len(menu.splitlines())} lines")
+print(f"header.css      {len(header.splitlines())} lines, {n_header} tagged breakpoints")
+print(f"mobile-menu.css {len(menu.splitlines())} lines, {n_menu} tagged breakpoint")
 ```
 
 Expected output:
 
 ```
-header.css      248 lines
-mobile-menu.css 276 lines
+header.css      252 lines, 4 tagged breakpoints
+mobile-menu.css 277 lines, 1 tagged breakpoint
 ```
 
-If the line counts differ, stop and investigate — the block markers in `index.html` have moved and the spans are wrong.
+If the line counts differ, stop and investigate — the block markers in `index.html` have moved and the spans are wrong. The two `assert` lines fail loudly if a media query the tagger expects has been reworded.
 
 - [ ] **Step 4: Run the test to verify it passes**
 
@@ -352,63 +383,102 @@ Append to `tests/site-chrome.test.mjs`:
 ```js
 const menuJs = read('../assets/js/mobile-menu.js');
 
-test('the desktop breakpoint agrees across the menu JS and both stylesheets', () => {
+/* A media query tagged sync:desktop must switch at the DESKTOP value in
+   mobile-menu.js; one tagged sync:desktop-1 closes the band one pixel below it.
+   Untagged breakpoints (640px, 639px, 359px) are independent of the menu and
+   are deliberately not checked. */
+function taggedBreakpoints(css, marker, prop) {
+  const lines = css.split('\n');
+  const found = [];
+  lines.forEach((line, i) => {
+    if (line.trim() !== `/* ${marker} */`) return;
+    const next = lines[i + 1] ?? '';
+    const m = next.match(new RegExp(`${prop}: (\\d+)px`));
+    assert.ok(m, `${marker} must sit directly above a ${prop} media query, got: ${next.trim()}`);
+    found.push(Number(m[1]));
+  });
+  return found;
+}
+
+test('every breakpoint tagged sync:desktop tracks the menu JS', () => {
   const declared = menuJs.match(/var DESKTOP = '\(min-width: (\d+)px\)'/);
   assert.ok(declared, 'mobile-menu.js: could not find the DESKTOP constant');
-  const breakpoint = declared[1];
+  const desktop = Number(declared[1]);
 
-  for (const [name, css] of [['header.css', headerCss], ['mobile-menu.css', menuCss]]) {
-    const widths = [...css.matchAll(/@media \(min-width: (\d+)px\)/g)].map((m) => m[1]);
-    assert.ok(widths.length > 0, `${name}: expected at least one min-width media query`);
-    for (const width of widths) {
-      assert.equal(width, breakpoint,
-        `${name}: ${width}px must match the DESKTOP constant in mobile-menu.js (${breakpoint}px)`);
+  const sheets = [['header.css', headerCss], ['mobile-menu.css', menuCss]];
+  let tagged = 0;
+
+  for (const [name, css] of sheets) {
+    for (const width of taggedBreakpoints(css, 'sync:desktop', 'min-width')) {
+      tagged += 1;
+      assert.equal(width, desktop,
+        `${name}: ${width}px must equal the DESKTOP constant in mobile-menu.js (${desktop}px)`);
+    }
+    for (const width of taggedBreakpoints(css, 'sync:desktop-1', 'max-width')) {
+      tagged += 1;
+      assert.equal(width, desktop - 1,
+        `${name}: ${width}px must close the band one pixel below DESKTOP (${desktop - 1}px)`);
     }
   }
+
+  assert.equal(tagged, 5, `expected 5 tagged breakpoints, found ${tagged} - a tag was lost`);
 });
 ```
 
-Note the regex matches the `min-width` prefix of `@media (min-width: 900px) and (max-width: 1099px)`, which is intended. `max-width` queries — the `639px` wordmark rule and the `359px` lockup rule — are header-only and correctly ignored.
+Why tags rather than "check every media query": `header.css` legitimately contains `640px`, `639px` and `359px` breakpoints that have nothing to do with the menu. A blanket check fails on those. Tagging also catches the subtler coupling — `899px` is not an independent number, it is `desktop - 1`, and a blanket `min-width` check would never look at it.
 
 - [ ] **Step 2: Prove the test actually catches drift**
 
-The invariant already holds, so this test passes on arrival. That is not evidence it works. Break it on purpose:
+The invariant already holds, so this test passes on arrival. That is not evidence it works. Exercise all four drift modes, restoring the file after each. Run `node --test tests/site-chrome.test.mjs` after every edit.
+
+**a) The desktop breakpoint moves:**
 
 ```bash
 sed -i '' 's/@media (min-width: 900px) {/@media (min-width: 901px) {/' assets/css/header.css
 ```
 
-Then run:
+Expected: FAIL — `header.css: 901px must equal the DESKTOP constant in mobile-menu.js (900px)`. Restore with `git checkout assets/css/header.css`.
+
+**b) The complement drifts off by one:**
 
 ```bash
-node --test tests/site-chrome.test.mjs
+sed -i '' 's/max-width: 899px/max-width: 898px/g' assets/css/header.css
 ```
 
-Expected: FAIL with `header.css: 901px must match the DESKTOP constant in mobile-menu.js (900px)`.
+Expected: FAIL — `header.css: 898px must close the band one pixel below DESKTOP (899px)`. Restore with `git checkout assets/css/header.css`.
 
-Now restore:
+**c) The JS constant moves:**
 
 ```bash
-git checkout assets/css/header.css
+sed -i '' "s/(min-width: 900px)'/(min-width: 1024px)'/" assets/js/mobile-menu.js
 ```
 
-And confirm green again:
+Expected: FAIL — `header.css: 900px must equal the DESKTOP constant in mobile-menu.js (1024px)`. Restore with `git checkout assets/js/mobile-menu.js`.
+
+**d) A tag is lost in a future edit:** delete any one `/* sync:desktop */` line from `assets/css/header.css` by hand.
+
+Expected: FAIL — `expected 5 tagged breakpoints, found 4 - a tag was lost`. Restore with `git checkout assets/css/header.css`.
+
+**e) Confirm an unrelated breakpoint does NOT trip it:**
 
 ```bash
-node --test tests/site-chrome.test.mjs
+sed -i '' 's/min-width: 640px/min-width: 700px/' assets/css/header.css
 ```
 
-Expected: PASS.
+Expected: PASS — `640px` is a layout breakpoint, not a menu breakpoint. Restore with `git checkout assets/css/header.css`, then confirm the suite is green before moving on.
 
 - [ ] **Step 3: Make the JS comment name the real files**
 
 The comment written in commit `02799ef` describes the pre-extraction world. Replace lines 18-20 of `assets/js/mobile-menu.js`:
 
 ```js
-  /* Must match the (min-width: …) media queries in assets/css/header.css and
-     assets/css/mobile-menu.css. tests/site-chrome.test.mjs enforces this. */
+  /* Media queries tagged "sync:desktop" in assets/css/header.css and
+     assets/css/mobile-menu.css must match this value; "sync:desktop-1" ones
+     sit one pixel below it. tests/site-chrome.test.mjs enforces both. */
   var DESKTOP = '(min-width: 900px)';
 ```
+
+Name the tags in quotes, not as literal `/*` … `*/` comment syntax — nesting a comment terminator inside a block comment closes it early and breaks the file.
 
 - [ ] **Step 4: Run the full suite**
 
@@ -493,4 +563,6 @@ If everything passes, no commit is needed — the work is already committed. If 
 
 **Do not delete the sibling comment.** Every page's markup carries *"must stay a SIBLING of .hdr-wrap, never a child"*. It documents the `backdrop-filter` fix from PR #8 and is markup, not CSS — the extraction scripts do not touch it, and it must survive.
 
-**This plan was dry-run.** The extraction was executed against a throwaway copy of the tree at commit `02799ef`: all 68 existing tests passed afterwards, no inline `.hdr-`/`.mm-` rules remained on any page, and the `900px` value collapsed from 34 places to 4. The line counts quoted throughout are measured, not estimated.
+**This plan was dry-run, and the dry run corrected it.** The extraction was executed against a throwaway copy of the tree at commit `02799ef`: all 68 existing tests passed afterwards, no inline `.hdr-`/`.mm-` rules remained on any page, and the `900px` value collapsed from 34 places to 4. The line counts quoted throughout are measured, not estimated.
+
+The first draft of the Task 3 invariant asserted that *every* `min-width` query in both stylesheets equals `900px`. Running it against the dry-run tree failed: `header.css` has a legitimate `@media (min-width: 640px) and (max-width: 899px)` tablet band. That is why the invariant is tag-based. All five drift modes in Task 3 Step 2 were then executed against the dry-run tree and confirmed to behave as documented — four fail, the unrelated `640px` edit stays green.
