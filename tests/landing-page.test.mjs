@@ -70,7 +70,7 @@ test('landing includes the ai phone conversation section', () => {
 
 test('landing includes the faq section above the closing bands', () => {
   assert.match(html, /<section class="faq" id="faq">/);
-  assert.match(html, /Does Agency AI replace my agency\?/);
+  assert.match(html, /Does Agency AI replace my ad agency\?/);
   assert.ok(html.indexOf('id="faq"') < html.indexOf('class="newsletter"'));
 });
 
@@ -106,32 +106,99 @@ test('head metadata and structured data survive the redesign', () => {
   assert.match(html, /"@type": "Organization"/);
 });
 
-/* ── FAQPage structured data must mirror the visible FAQ ──
-   Google requires FAQ rich-result markup to match on-page content. This test is
-   the guard: every question and answer in the JSON-LD has to appear verbatim in
-   the rendered FAQ section. */
+/* ── the FAQ accordion ──
+   Native <details>/<summary>, zero JavaScript. All 12 answers are real text in
+   the static HTML, because AI crawlers do not execute JS. Google additionally
+   requires FAQ rich-result markup to match on-page content, so the JSON-LD and
+   the visible copy are held word-for-word identical in both directions. */
+
+const FAQ_SECTION = (() => {
+  const from = html.indexOf('<section class="faq" id="faq">');
+  assert.ok(from > -1, 'FAQ section is missing');
+  return html.slice(from, html.indexOf('</section>', from));
+})();
+
+/* Parsed straight out of the raw HTML string — not a DOM — so this also proves
+   the copy ships in view-source rather than being injected at runtime. */
+const FAQ_VISIBLE = [
+  ...FAQ_SECTION.matchAll(
+    /<details class="faq-item"([^>]*)>[\s\S]*?<span class="faq-index"[^>]*>([^<]*)<\/span>\s*<h3 class="faq-q">([\s\S]*?)<\/h3>[\s\S]*?<p class="faq-answer">([\s\S]*?)<\/p>/g,
+  ),
+].map((m) => ({ attrs: m[1], index: decode(m[2]), q: decode(m[3]), a: decode(m[4]) }));
+
+/* The 12 questions, in shipped order. Reordering or retitling one is a content
+   decision that has to be made here too. */
+const FAQ_QUESTIONS = [
+  'What does Agency AI do?',
+  'How quickly can I get started?',
+  'What platforms does Agency AI support?',
+  'How does pricing work?',
+  'Do I need ads experience to use Agency AI?',
+  'Does Agency AI replace my ad agency?',
+  'How does the AI Strategist work?',
+  'Can Agency AI create the ads, not just manage them?',
+  'What is the MCP connector?',
+  'What results can I expect?',
+  'Is my data and ad account information secure?',
+  'Can I cancel anytime? What happens to my ads?',
+];
+
+test('the FAQ ships all 12 questions as a native details/summary accordion', () => {
+  assert.equal(FAQ_VISIBLE.length, 12, 'the FAQ must render exactly 12 <details> items');
+  assert.deepEqual(FAQ_VISIBLE.map((v) => v.q), FAQ_QUESTIONS);
+  // zero-padded 01–12 index numerals, in order
+  assert.deepEqual(
+    FAQ_VISIBLE.map((v) => v.index),
+    FAQ_QUESTIONS.map((_, i) => String(i + 1).padStart(2, '0')),
+  );
+  // every answer is non-trivial static text, present at load
+  for (const item of FAQ_VISIBLE) {
+    assert.ok(item.a.length > 40, `FAQ answer is missing or truncated for "${item.q}"`);
+  }
+  // each question is a real heading inside its summary
+  const summaries = FAQ_SECTION.match(/<summary class="faq-summary">/g) || [];
+  assert.equal(summaries.length, 12, 'every FAQ item needs a <summary>');
+});
+
+test('the first FAQ item ships open and the rest ship closed', () => {
+  assert.match(FAQ_VISIBLE[0].attrs, /\bopen\b/, 'item 01 must carry the open attribute');
+  for (const item of FAQ_VISIBLE.slice(1)) {
+    assert.doesNotMatch(item.attrs, /\bopen\b/, `"${item.q}" must ship closed`);
+  }
+});
+
+test('the FAQ accordion carries no JavaScript', () => {
+  assert.doesNotMatch(FAQ_SECTION, /<script/i, 'the FAQ section must contain no <script>');
+  assert.doesNotMatch(FAQ_SECTION, /\son[a-z]+=/i, 'the FAQ section must carry no inline handlers');
+  // the scroll-reveal observer would leave the accordion at opacity 0 with JS off
+  assert.doesNotMatch(FAQ_SECTION, /class="[^"]*\breveal\b/, 'the FAQ must not use scroll-reveal');
+});
 
 test('FAQPage JSON-LD stays in sync with the visible FAQ', () => {
   const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((m) => JSON.parse(m[1]));
   const faqLd = blocks.find((b) => b['@type'] === 'FAQPage');
   assert.ok(faqLd, 'FAQPage JSON-LD block is missing');
+  assert.equal(faqLd.mainEntity.length, 12, 'FAQPage must carry all 12 entries');
 
-  const from = html.indexOf('<section class="faq" id="faq">');
-  const section = html.slice(from, html.indexOf('</section>', from));
-  const visible = [...section.matchAll(/<h3>([\s\S]*?)<\/h3>\s*<p>([\s\S]*?)<\/p>/g)].map((m) => ({
-    q: decode(m[1]),
-    a: decode(m[2]),
-  }));
-
-  assert.ok(faqLd.mainEntity.length > 0, 'FAQPage has no entries');
+  // schema -> page
   for (const entry of faqLd.mainEntity) {
-    const match = visible.find((v) => v.q === entry.name);
+    const match = FAQ_VISIBLE.find((v) => v.q === entry.name);
     assert.ok(match, `FAQ question in JSON-LD is not on the page: "${entry.name}"`);
     assert.equal(
       entry.acceptedAnswer.text,
       match.a,
       `FAQ answer in JSON-LD does not match the visible answer for "${entry.name}"`,
+    );
+  }
+  // page -> schema
+  for (const item of FAQ_VISIBLE) {
+    const entry = faqLd.mainEntity.find((e) => e.name === item.q);
+    assert.ok(entry, `visible FAQ question is missing from the JSON-LD: "${item.q}"`);
+    assert.equal(
+      entry.acceptedAnswer.text,
+      item.a,
+      `visible FAQ answer does not match the JSON-LD for "${item.q}"`,
     );
   }
 });
