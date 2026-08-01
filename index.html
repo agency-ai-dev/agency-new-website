@@ -666,6 +666,14 @@
       margin-top: 100px;
       position: relative;
     }
+    /* Mobile drops the whole blurred "Future Pricing Tiers" preview — three
+       stacked, unreadable placeholder cards are noise on a phone. 768px is the
+       site-wide mobile breakpoint (about/blog/partners/legal pages all use it).
+       display:none also drops the 100px margin-top, so the pricing section's own
+       120px bottom padding is all that remains — no orphaned gap. */
+    @media (max-width: 768px) {
+      .pricing-future { display: none; }
+    }
     .pricing-future-label {
       text-align: center;
       margin-bottom: 40px;
@@ -808,44 +816,225 @@
     .plan.popular .btn-plan { background: var(--orange); border-color: var(--orange); color: var(--white); }
 
     /* ── FAQ ── */
+    /* Native <details>/<summary> accordion. ZERO JavaScript by design: every
+       answer is real text in the HTML at load, so it is crawlable by AI/search
+       bots, findable with Cmd-F, and openable with JS disabled. Do not add a
+       click handler, a height-measuring effect, or a JS toggle to this section.
+       Responsive uses a plain media query (not the handoff's container query) to
+       match the rest of this stylesheet's convention. */
     .faq {
-      padding: 120px 0;
-      background: #eff7f6;
+      /* colour */
+      --faq-hairline: rgba(8, 8, 8, 0.12);
+      --faq-hairline-active: var(--black);
+      --faq-index-ink: rgba(8, 8, 8, 0.34);
+      --faq-mark-ink: rgba(8, 8, 8, 0.42);
+      --faq-row-wash: rgba(8, 8, 8, 0.024);
+      --faq-answer-ink: #55534E;
+      /* type scale */
+      --faq-eyebrow-size: 12px;
+      --faq-title-size: 76px;
+      --faq-question-size: 27px;
+      --faq-answer-size: 16.5px;
+      --faq-index-size: 14px;
+      /* geometry */
+      --faq-header-gap: 60px;
+      --faq-row-inset: 24px;
+      --faq-index-col: 64px;
+      --faq-col-gap: 24px;
+      --faq-answer-indent: calc(var(--faq-index-col) + var(--faq-col-gap));
+      --faq-row-pad-y: 30px;
+      --faq-row-pad-y-open: 18px;
+      --faq-panel-pad-bottom: 36px;
+      --faq-mark-size: 26px;
+      --faq-mark-weight: 1.5px;
+      --faq-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+      padding: 152px 0 168px;
+      background: var(--white); /* the site's --white is the handoff's #F9F7F4 warm ground */
     }
 
-    .faq-grid {
+    /* section header — same elements as every other band, FAQ-specific numbers */
+    .faq .section-label {
+      font-size: var(--faq-eyebrow-size);
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      color: var(--accent-blue);
+      margin-bottom: 24px;
+    }
+    .faq .section-label::before {
+      width: 28px;
+      height: 2px;
+      background: var(--accent-blue);
+    }
+    .faq .section-headline {
+      font-size: var(--faq-title-size);
+      line-height: 0.9;
+      letter-spacing: 0.005em;
+    }
+
+    /* list — pulled out by the row inset so the wash and hairlines bleed past
+       the text edge while the text stays on the container line */
+    .faq-list {
+      margin: var(--faq-header-gap) calc(var(--faq-row-inset) * -1) 0;
+      border-bottom: 1px solid var(--faq-hairline);
+    }
+
+    .faq-item { border-top: 1px solid var(--faq-hairline); }
+    .faq-item[open] { border-top-color: var(--faq-hairline-active); }
+
+    .faq-summary {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-      margin-top: 56px;
+      grid-template-columns: var(--faq-index-col) 1fr var(--faq-mark-size);
+      align-items: start;
+      column-gap: var(--faq-col-gap);
+      padding: var(--faq-row-pad-y) var(--faq-row-inset);
+      cursor: pointer;
+      list-style: none;
+      transition: background-color 0.15s var(--faq-ease);
+    }
+    /* suppress the default disclosure triangle in every engine */
+    .faq-summary::-webkit-details-marker { display: none; }
+    .faq-summary::marker { content: ''; }
+    .faq-summary:hover { background: var(--faq-row-wash); }
+    .faq-summary:focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: -4px;
+      background: var(--faq-row-wash);
     }
 
-    .faq-item {
-      padding: 36px 34px;
-      background: var(--white);
-      border-top: 3px solid transparent;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    .faq-index {
+      padding-top: 8px;
+      font-family: var(--mono);
+      font-size: var(--faq-index-size);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+      color: var(--faq-index-ink);
+      transition: color 0.15s var(--faq-ease);
     }
 
-    .faq-item:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent-green);
-      box-shadow: 0 16px 40px rgba(8, 8, 8, 0.06);
-    }
-
-    .faq-item h3 {
+    .faq-q {
+      margin: 0;
       font-family: var(--display);
-      font-size: 30px;
-      letter-spacing: 0.02em;
+      font-weight: 400;
+      font-size: var(--faq-question-size);
+      line-height: 1.1;
+      letter-spacing: 0.015em;
       text-transform: uppercase;
-      line-height: 0.95;
-      margin-bottom: 14px;
+      text-wrap: balance;
     }
 
-    .faq-item p {
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--gray-600);
+    .faq-summary:hover .faq-index,
+    .faq-summary:focus-visible .faq-index,
+    .faq-item[open] .faq-index { color: var(--accent-blue); }
+
+    /* plus → minus, two pseudo-element bars, no icon asset */
+    .faq-mark {
+      position: relative;
+      width: var(--faq-mark-size);
+      height: var(--faq-mark-size);
+      margin-top: 4px;
+    }
+    .faq-mark::before,
+    .faq-mark::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      top: 50%;
+      height: var(--faq-mark-weight);
+      background: var(--faq-mark-ink);
+      transition: transform 0.24s var(--faq-ease), background-color 0.15s var(--faq-ease);
+    }
+    .faq-mark::before { transform: translateY(-50%); }
+    .faq-mark::after { transform: translateY(-50%) rotate(90deg); }
+
+    .faq-summary:hover .faq-mark::before,
+    .faq-summary:hover .faq-mark::after,
+    .faq-summary:focus-visible .faq-mark::before,
+    .faq-summary:focus-visible .faq-mark::after { background: var(--black); }
+
+    .faq-item[open] .faq-mark::before,
+    .faq-item[open] .faq-mark::after { background: var(--accent-blue); }
+    /* the vertical stroke retracts: plus becomes minus */
+    .faq-item[open] .faq-mark::after { transform: translateY(-50%) rotate(90deg) scaleX(0); }
+
+    .faq-item[open] .faq-summary { padding-bottom: var(--faq-row-pad-y-open); }
+
+    .faq-panel {
+      padding: 0 var(--faq-row-inset) var(--faq-panel-pad-bottom)
+               calc(var(--faq-row-inset) + var(--faq-answer-indent));
+    }
+
+    .faq-answer {
+      margin: 0;
+      max-width: 65ch;
+      font-size: var(--faq-answer-size);
+      line-height: 1.62;
+      color: var(--faq-answer-ink);
+      text-wrap: pretty;
+    }
+
+    .faq-mono {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      letter-spacing: -0.01em;
+      color: var(--black);
+    }
+
+    /* open/close motion — progressive enhancement, still zero JS. Engines
+       without interpolate-size toggle instantly, which is why this is behind
+       @supports rather than a script. Nothing here uses display:none, so
+       Chrome's hidden-until-found find-in-page still reveals closed answers. */
+    @supports (interpolate-size: allow-keywords) {
+      .faq-item { interpolate-size: allow-keywords; }
+      .faq-item::details-content {
+        block-size: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          block-size 0.3s var(--faq-ease),
+          opacity 0.22s var(--faq-ease),
+          content-visibility 0.3s var(--faq-ease) allow-discrete;
+      }
+      .faq-item[open]::details-content { block-size: auto; opacity: 1; }
+    }
+
+    /* mobile — single column at every breakpoint, never two */
+    @media (max-width: 720px) {
+      .faq {
+        padding: 84px 0 96px;
+        --faq-header-gap: 40px;
+        --faq-title-size: 44px;
+        --faq-question-size: 21px;
+        --faq-answer-size: 15px;
+        --faq-index-size: 12px;
+        --faq-index-col: 30px;
+        --faq-col-gap: 12px;
+        --faq-row-inset: 12px;
+        --faq-row-pad-y: 22px;
+        --faq-row-pad-y-open: 12px;
+        --faq-panel-pad-bottom: 28px;
+        --faq-mark-size: 20px;
+      }
+      .faq .container { padding: 0 20px; }
+      .faq-index { padding-top: 5px; }
+      .faq-mark { margin-top: 2px; }
+      .faq-q { text-wrap: pretty; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq *,
+      .faq *::before,
+      .faq *::after,
+      .faq-item::details-content { transition-duration: 0.01ms !important; }
+    }
+
+    /* print: every answer is already in the DOM, so force all panels visible */
+    @media print {
+      .faq { background: #FFFFFF; }
+      .faq-item { break-inside: avoid; }
+      .faq-item::details-content { block-size: auto; opacity: 1; content-visibility: visible; }
+      .faq-mark { display: none; }
     }
 
     /* ── CTA SECTION ── */
@@ -968,7 +1157,6 @@
       .problem-inner { grid-template-columns: 1fr; gap: 48px; }
       .integrations-inner { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
-      .faq-grid { grid-template-columns: 1fr; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
       .plan.popular { transform: scale(1); }
       .founder-plan { padding: 40px 28px; }
@@ -2234,7 +2422,11 @@
   .cb .cb-t { display: none; }
   .cb .cb-m { display: inline; }
   .cb-ring__spin { width: 180%; }
-  .cb-card { height: 212px; gap: 14px; padding: 16px; }
+  /* Card is a fixed-height flex column with justify-content:space-between, so the
+     typed line is top-anchored at padding-top while every leftover pixel pools
+     above the bottom-anchored actions row. Extra top padding drops the typed line
+     to the optical centre of the input area without changing card height. */
+  .cb-card { height: 212px; gap: 14px; padding: 40px 16px 16px; }
   .cb-typed { font-size: 18px; line-height: 1.32; }
   .cb-pills { gap: 6px; }
   .cb-pill { padding: 8px 11px; font-size: 12px; }
@@ -2378,6 +2570,12 @@
       box-shadow: inset 0 0 0 1px var(--accent-green);
       color: var(--mcp-white);
     }
+/* Live dot: the selected client reads green, the other stays grey. Keyed off
+   aria-selected, which the existing tab JS already toggles — no extra JS.
+   Colour only: the box metrics stay on `.mcp-tab i` (incl. the 7px mobile
+   override) so switching tabs never shifts layout, and the label colours are
+   untouched (white when selected, --mcp-muted when not). */
+.mcp-tab[aria-selected="true"] i { background: var(--accent-green); opacity: 1; }
 .mcp-tabs__meta { margin-left: auto; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.2em; color: #5C5C5C; }
 
 .mcp-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
@@ -2587,10 +2785,18 @@
     "mainEntity": [
       {
         "@type": "Question",
+        "name": "What does Agency AI do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Agency AI is a Shopify app that plans, creates, and manages your Meta and Google ads. It writes the ad copy, generates on-brand creatives, sets budgets, and gives you clear recommendations, so your store gets the output of a full ad team as software for $59 a month."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "How quickly can I get started?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Install from the Shopify App Store, answer a short onboarding questionnaire, and Agency AI scrapes your site, builds your brand profile, and has your first campaign ready within 24 hours. No briefing documents, no agency calls."
+          "text": "Install from the Shopify App Store in about 3-5 minutes, no credit card. Answer a short onboarding questionnaire, and Agency AI reads your site, builds your brand profile, and has your first ad architecture ready within 24 hours. No briefing documents, no agency calls."
         }
       },
       {
@@ -2598,7 +2804,7 @@
         "name": "What platforms does Agency AI support?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Meta (Facebook and Instagram) and Google Ads — managed together as one funnel, not two separate islands. Additional platform integrations are on the roadmap."
+          "text": "Meta (Facebook and Instagram) and Google Ads, managed together as one funnel instead of two separate islands. You can run one platform or both. More channels are on the roadmap."
         }
       },
       {
@@ -2606,23 +2812,71 @@
         "name": "How does pricing work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Founder pricing is locked at $59/mo. Tiered plans launch in 2026 — merchants who lock in now are grandfathered at the founder rate forever, regardless of what plans cost later."
+          "text": "Founder pricing is locked at $59 per month. Tiered plans launch in 2026, and merchants who join now keep the founder rate forever, no matter what plans cost later."
         }
       },
       {
         "@type": "Question",
-        "name": "Do I maintain control over my campaigns?",
+        "name": "Do I need ads experience to use Agency AI?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. You approve or reject every recommendation before it goes live. Agency AI handles the analysis and execution layer — brand direction, budget limits, and launch decisions stay with you."
+          "text": "No. The AI handles targeting, budgets, copy, and creative, and explains every recommendation in plain language. If you can answer a few questions about your store, you can launch."
         }
       },
       {
         "@type": "Question",
-        "name": "Can I cancel anytime?",
+        "name": "Does Agency AI replace my ad agency?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes — no contracts, no cancellation fees. Cancel directly from your Shopify admin. Your campaigns continue running on Meta and Google; Agency AI just stops managing them."
+          "text": "For most growing stores, yes. Agencies do their best work when you already spend at scale. Agency AI takes you from your first $10K month to the point where an agency makes sense, at a fraction of the cost."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the AI Strategist work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It reads your live Meta, Google, and Shopify numbers, then works like a personal CMO available 24/7. Ask it anything about your ads and it answers with your real data, plus recommendations for scaling, budget shifts, new creative variations, and cutting wasted spend."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Agency AI create the ads, not just manage them?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The AI design studio generates on-brand images from your logo, colors, and tone of voice, and the copy generator writes the text. A new ad can be live in 2-3 minutes, and video and product feed ads are supported too."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the MCP connector?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It links your ad data to Claude or ChatGPT. Add https://s.agencyai.app/mcp as a connector in Claude (Max plan) or ChatGPT (Business, Enterprise, or Edu) and chat with your live campaign performance wherever you already work, with less token spend and faster answers than standard direct-to-platform MCPs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What results can I expect?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Results depend on your store, but merchants rate Agency AI 5.0, and stores like Vapor95 report close to a 200% ROI increase. The system's job is simple: more tested creatives, faster iteration, and budgets moved to what performs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data and ad account information secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Your data is used only to run and optimize your campaigns. We never sell or rent it to third parties, and you can revoke access at any time through your platform settings, like Facebook's Business Integrations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I cancel anytime? What happens to my ads?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cancel anytime, right from Shopify. Your ad accounts belong to you, so every campaign Agency AI built stays in your Meta and Google accounts and keeps running until you pause it."
         }
       }
     ]
@@ -2686,20 +2940,25 @@
 <div class="tick">
   <div class="tick-track">
     <div class="tick-half">
-      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">✦</span>24/7 Optimization</span>
+      <!-- One marker for every item. The old alternating ✦ rendered as a green
+           speck at 10px and read as a stray period between phrases. -->
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>24/7 Optimization</span>
       <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>Launch in Minutes</span>
       <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>Automate Meta Ads</span>
-      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">✦</span>Automate Google Ads</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>Automate Google Ads</span>
       <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>AI Design Studio</span>
-      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">✦</span>AI Ad Copy Generator</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>AI Ad Copy Generator</span>
     </div>
+    <!-- Duplicate run: byte-identical to the run above so the loop seam is
+         invisible. aria-hidden so the row is announced exactly once. The
+         ticker JS clones this run further when the viewport is wider than one run. -->
     <div class="tick-half" aria-hidden="true">
-      <span class="tick-item"><span class="tick-glyph">✦</span>24/7 Optimization</span>
-      <span class="tick-item"><span class="tick-glyph">↑</span>Launch in Minutes</span>
-      <span class="tick-item"><span class="tick-glyph">↑</span>Automate Meta Ads</span>
-      <span class="tick-item"><span class="tick-glyph">✦</span>Automate Google Ads</span>
-      <span class="tick-item"><span class="tick-glyph">↑</span>AI Design Studio</span>
-      <span class="tick-item"><span class="tick-glyph">✦</span>AI Ad Copy Generator</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>24/7 Optimization</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>Launch in Minutes</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>Automate Meta Ads</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>Automate Google Ads</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>AI Design Studio</span>
+      <span class="tick-item"><span class="tick-glyph" aria-hidden="true">↑</span>AI Ad Copy Generator</span>
     </div>
   </div>
 </div>
@@ -2911,7 +3170,7 @@
       <div class="cb-ring">
         <span class="cb-ring__spin" aria-hidden="true"></span>
         <div class="cb-card">
-          <p class="cb-typed" aria-hidden="true"><span class="cb-typed__text" data-cb-typed>I need to run a clearance sale, what type campaigns do you recommend I make?</span><span class="cb-caret"></span></p>
+          <p class="cb-typed" aria-hidden="true"><span class="cb-typed__text" data-cb-typed>I need to run a clearance sale, what type of campaigns do you recommend I run?</span><span class="cb-caret"></span></p>
           <div class="cb-actions" aria-hidden="true">
             <div class="cb-pills">
               <span class="cb-pill"><span class="cb-pill__dot cb-pill__dot--mint"></span>Top creative</span>
@@ -3512,46 +3771,137 @@
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- FAQ — native <details>/<summary> accordion. ZERO JavaScript: all 12 answers
+       are real text in the HTML at load, so crawlers that do not execute JS still
+       read them and Cmd-F still finds them. No `reveal` class in this section on
+       purpose: the scroll-reveal observer would leave it at opacity 0 with JS off. -->
   <section class="faq" id="faq">
     <div class="container">
-      <div class="reveal" style="max-width:720px;">
+      <div style="max-width:720px;">
         <div class="section-label">FAQ</div>
         <h2 class="section-headline">Questions Before<br/><span style="color:var(--accent-blue)">You Launch</span></h2>
       </div>
-      <div class="faq-grid">
-        <article class="faq-item reveal">
-          <h3>How quickly can I get started?</h3>
-          <p>Install from the Shopify App Store, answer a short onboarding questionnaire, and Agency AI scrapes your site, builds your brand profile, and has your first campaign ready within 24 hours. No briefing documents, no agency calls.</p>
-        </article>
-        <article class="faq-item reveal reveal-delay-1">
-          <h3>What platforms does Agency AI support?</h3>
-          <p>Meta (Facebook and Instagram) and Google Ads — managed together as one funnel, not two separate islands. Additional platform integrations are on the roadmap.</p>
-        </article>
-        <article class="faq-item reveal reveal-delay-2">
-          <h3>How does pricing work?</h3>
-          <p>Founder pricing is locked at $59/mo. Tiered plans launch in 2026 — merchants who lock in now are grandfathered at the founder rate forever, regardless of what plans cost later.</p>
-        </article>
-        <article class="faq-item reveal reveal-delay-3">
-          <h3>Is my data and ad account information secure?</h3>
-          <p>Your data is used exclusively to run and optimize your campaigns. We do not sell or rent your information to third parties. You can revoke access at any time through Facebook's Business Integrations settings.</p>
-        </article>
-        <article class="faq-item reveal">
-          <h3>Does Agency AI replace my agency?</h3>
-          <p>Agency AI replaces the repetitive execution layer — bid management, creative testing, budget shifting, cross-channel optimization — and surfaces approval-ready actions so you keep control without paying agency overhead for every tweak.</p>
-        </article>
-        <article class="faq-item reveal reveal-delay-1">
-          <h3>What kind of results can I expect?</h3>
-          <p>Merchants typically see meaningful ROAS improvements within the first 30 days and spend 80%+ less time on ad operations. Results depend on your catalog, budget, and baseline — but the AI is reading signals 24/7 instead of weekly.</p>
-        </article>
-        <article class="faq-item reveal reveal-delay-2">
-          <h3>Do I maintain control over my campaigns?</h3>
-          <p>Yes. You approve or reject every recommendation before it goes live. Agency AI handles the analysis and execution layer — brand direction, budget limits, and launch decisions stay with you.</p>
-        </article>
-        <article class="faq-item reveal reveal-delay-3">
-          <h3>Can I cancel anytime?</h3>
-          <p>Yes — no contracts, no cancellation fees. Cancel directly from your Shopify admin. Your campaigns continue running on Meta and Google; Agency AI just stops managing them.</p>
-        </article>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">01</span>
+            <h3 class="faq-q">What does Agency AI do?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Agency AI is a Shopify app that plans, creates, and manages your Meta and Google ads. It writes the ad copy, generates on-brand creatives, sets budgets, and gives you clear recommendations, so your store gets the output of a full ad team as software for $59 a month.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">02</span>
+            <h3 class="faq-q">How quickly can I get started?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Install from the Shopify App Store in about 3-5 minutes, no credit card. Answer a short onboarding questionnaire, and Agency AI reads your site, builds your brand profile, and has your first ad architecture ready within 24 hours. No briefing documents, no agency calls.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">03</span>
+            <h3 class="faq-q">What platforms does Agency AI support?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Meta (Facebook and Instagram) and Google Ads, managed together as one funnel instead of two separate islands. You can run one platform or both. More channels are on the roadmap.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">04</span>
+            <h3 class="faq-q">How does pricing work?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Founder pricing is locked at $59 per month. Tiered plans launch in 2026, and merchants who join now keep the founder rate forever, no matter what plans cost later.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">05</span>
+            <h3 class="faq-q">Do I need ads experience to use Agency AI?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">No. The AI handles targeting, budgets, copy, and creative, and explains every recommendation in plain language. If you can answer a few questions about your store, you can launch.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">06</span>
+            <h3 class="faq-q">Does Agency AI replace my ad agency?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">For most growing stores, yes. Agencies do their best work when you already spend at scale. Agency AI takes you from your first $10K month to the point where an agency makes sense, at a fraction of the cost.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">07</span>
+            <h3 class="faq-q">How does the AI Strategist work?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">It reads your live Meta, Google, and Shopify numbers, then works like a personal CMO available 24/7. Ask it anything about your ads and it answers with your real data, plus recommendations for scaling, budget shifts, new creative variations, and cutting wasted spend.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">08</span>
+            <h3 class="faq-q">Can Agency AI create the ads, not just manage them?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Yes. The AI design studio generates on-brand images from your logo, colors, and tone of voice, and the copy generator writes the text. A new ad can be live in 2-3 minutes, and video and product feed ads are supported too.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">09</span>
+            <h3 class="faq-q">What is the MCP connector?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">It links your ad data to Claude or ChatGPT. Add <span class="faq-mono">https://s.agencyai.app/mcp</span> as a connector in Claude (Max plan) or ChatGPT (Business, Enterprise, or Edu) and chat with your live campaign performance wherever you already work, with less token spend and faster answers than standard direct-to-platform MCPs.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">10</span>
+            <h3 class="faq-q">What results can I expect?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Results depend on your store, but merchants rate Agency AI 5.0, and stores like Vapor95 report close to a 200% ROI increase. The system's job is simple: more tested creatives, faster iteration, and budgets moved to what performs.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">11</span>
+            <h3 class="faq-q">Is my data and ad account information secure?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Yes. Your data is used only to run and optimize your campaigns. We never sell or rent it to third parties, and you can revoke access at any time through your platform settings, like Facebook's Business Integrations.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-index" aria-hidden="true">12</span>
+            <h3 class="faq-q">Can I cancel anytime? What happens to my ads?</h3>
+            <span class="faq-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-panel">
+            <p class="faq-answer">Cancel anytime, right from Shopify. Your ad accounts belong to you, so every campaign Agency AI built stays in your Meta and Google accounts and keeps running until you pause it.</p>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -3679,24 +4029,45 @@
     document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
 
 
-    // Ticker marquee — rAF, delta-time driven, duplicated track.
+    // Ticker marquee — rAF, delta-time driven, self-duplicating track.
     // Gated on prefers-reduced-motion; reacts live to the media-query changing.
     (function () {
       var wrap = document.querySelector('.tick');
       if (!wrap) return;
       var track = wrap.querySelector('.tick-track');
       if (!track) return;
+      var unit = track.querySelector('.tick-half');
+      if (!unit) return;
 
-      var LOOP_MS = 40000;   // time to travel one half-track (README: ~40s)
-      var half = 0;
+      var LOOP_MS = 40000;   // time to travel one run of the copy (README: ~40s)
+      var half = 0;          // width of one run == the loop distance
       var pos = 0;
       var last = 0;
       var raf = 0;
       var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
+      // Each clone repeats the authored run verbatim, so the seam is invisible.
+      // Clones are aria-hidden — the row is announced exactly once.
+      function makeRun() {
+        var c = unit.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        return c;
+      }
+
       function measure() {
-        half = track.scrollWidth / 2;
-        if (half > 0 && pos >= half) pos = pos % half;
+        // getBoundingClientRect keeps the sub-pixel width. scrollWidth/2 rounds
+        // to whole pixels and leaves a fractional hitch at every loop point.
+        var runW = unit.getBoundingClientRect().width;
+        if (runW <= 0) { half = 0; return; }
+        // The track must stay at least one full run wider than the visible strip,
+        // or the right edge runs out of copy before the loop point and a blank
+        // band opens up (two runs alone starve above ~1056px viewport width).
+        var need = Math.max(2, Math.ceil(wrap.clientWidth / runW) + 1);
+        var runs = track.children.length;
+        while (runs < need) { track.appendChild(makeRun()); runs++; }
+        while (runs > need) { track.removeChild(track.lastElementChild); runs--; }
+        half = runW;
+        if (pos >= half) pos = pos % half;
       }
 
       function frame(now) {
@@ -3758,7 +4129,7 @@
   if (!el) return;
 
   var QUERIES = [
-    'I need to run a clearance sale, what type campaigns do you recommend I make?',
+    'I need to run a clearance sale, what type of campaigns do you recommend I run?',
     'Which campaigns should I pause and where do I move that budget?',
     'Show me my best performing creative from the last 30 days',
     "Build a retargeting campaign for people who viewed but didn't buy",

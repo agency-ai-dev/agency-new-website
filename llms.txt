@@ -29,17 +29,32 @@ Pricing: one plan, $59 per month.
 
 ## Connect Claude or ChatGPT (MCP)
 
-Agency AI runs an MCP server at https://s.agencyai.app/mcp. Merchants can add it as a connector in Claude or ChatGPT and work with their live ad data by chat: performance analysis and strategy today, with campaign actions rolling out. Available for Claude Max and for ChatGPT Business, Enterprise, and Edu workspaces. Built for token-efficient access to marketing data.
+Agency AI runs an MCP server at https://s.agencyai.app/mcp. Merchants add it as a connector in Claude (Max plan) or ChatGPT (Business, Enterprise, or Edu workspace) and work with their live ad data by chat.
+
+What you can do with it today:
+
+- Ask about live campaign performance across Meta Ads, Google Ads, and Shopify in one place
+- Get budget recommendations, creative comparisons, and scaling calls based on your store's real numbers
+- Pull ROAS, CPA, spend pacing, and week-over-week changes without opening a dashboard
+
+How to connect: in Claude, open Settings, then Connectors, add a custom connector, and paste https://s.agencyai.app/mcp. In ChatGPT, open Settings, then Connectors, and add the same URL. An Agency AI account with a connected store is required.
+
+Why it is different: it is built for marketing data, so it answers with less token spend and faster responses than standard direct-to-ad-platform MCPs. Campaign actions (launch, pause, budget changes) are rolling out next.
 
 ## Common questions
 
-- What does Agency AI do? It plans, creates, and manages Meta and Google ad campaigns for Shopify stores, with AI ad copy, AI creatives, and budget recommendations.
-- How much does Agency AI cost? $59 per month, one flat plan.
-- Which platforms does it support? Meta Ads and Google Ads, for Shopify stores. You can run one platform or both.
-- How fast can I start? The app installs in about 3-5 minutes with no credit card. After a short onboarding questionnaire, your ad setup is ready within 24 hours.
-- Do I need an ad agency? Agency AI is built to take you from your first $10K month to the point where an agency makes sense, at a fraction of agency cost.
-- How do I connect my store's ad data to Claude or ChatGPT? Add a connector with the link https://s.agencyai.app/mcp in Claude (Max plan) or ChatGPT (Business, Enterprise, or Edu workspace).
-- What results do merchants report? Merchants rate it 5.0, with results like a near 200% ROI increase reported by Vapor95.
+- What does Agency AI do? It is a Shopify app that plans, creates, and manages your Meta and Google ads: ad copy, on-brand creatives, budgets, and clear recommendations. The output of a full ad team as software for $59 a month.
+- How quickly can I get started? Install from the Shopify App Store in about 3-5 minutes, no credit card. Answer a short onboarding questionnaire and your first ad architecture is ready within 24 hours. No briefing documents, no agency calls.
+- What platforms does Agency AI support? Meta (Facebook and Instagram) and Google Ads, managed together as one funnel. Run one platform or both. More channels are on the roadmap.
+- How does pricing work? Founder pricing is locked at $59 per month. Tiered plans launch in 2026, and merchants who join now keep the founder rate forever.
+- Do I need ads experience to use Agency AI? No. The AI handles targeting, budgets, copy, and creative, and explains every recommendation in plain language.
+- Does Agency AI replace my ad agency? For most growing stores, yes. Agencies do their best work at scale; Agency AI takes you from your first $10K month to the point where an agency makes sense, at a fraction of the cost.
+- How does the AI Strategist work? It reads your live Meta, Google, and Shopify numbers and works like a personal CMO available 24/7, answering with your real data plus recommendations for scaling, budget shifts, new creative variations, and cutting wasted spend.
+- Can Agency AI create the ads, not just manage them? Yes. The AI design studio generates on-brand images from your logo, colors, and tone of voice, and the copy generator writes the text. A new ad can be live in 2-3 minutes, and video and product feed ads are supported.
+- What is the MCP connector? It links your ad data to Claude or ChatGPT. Add https://s.agencyai.app/mcp as a connector in Claude (Max plan) or ChatGPT (Business, Enterprise, or Edu) and chat with your live campaign performance, with less token spend and faster answers than standard direct-to-platform MCPs.
+- What results can I expect? Results depend on your store, but merchants rate Agency AI 5.0 and stores like Vapor95 report close to a 200% ROI increase. The job is simple: more tested creatives, faster iteration, and budgets moved to what performs.
+- Is my data and ad account information secure? Yes. Your data is used only to run and optimize your campaigns. We never sell or rent it to third parties, and you can revoke access at any time in your platform settings, like Facebook's Business Integrations.
+- Can I cancel anytime? What happens to my ads? Cancel anytime from Shopify. Your ad accounts belong to you, so every campaign Agency AI built stays in your Meta and Google accounts and keeps running until you pause it.
 
 ## Optional
 
