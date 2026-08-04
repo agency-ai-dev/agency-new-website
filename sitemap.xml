@@ -53,4 +53,8 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+
+  <url>
+    <loc>https://www.agencyai.app/blog/shopify-ad-benchmarks-2026</loc>
+  </url>
 </urlset>
